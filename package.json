@@ -1,0 +1,30 @@
+{
+  "name": "livesandbox",
+  "version": "0.1.0",
+  "description": "In-browser JavaScript IDE with live execution",
+  "main": "index.htm",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertdmunn/livesandbox.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "IDE"
+  ],
+  "author": "Robert Munn <robertdmunn@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robertdmunn/livesandbox/issues"
+  },
+  "homepage": "https://github.com/robertdmunn/livesandbox#readme",
+  "dependencies": {
+    "codemirror": "^5.43.0"
+  }
+}

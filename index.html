@@ -1,0 +1,86 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+  <script src="node_modules/codemirror/lib/codemirror.js"></script>
+  <script src="node_modules/codemirror/mode/xml/xml.js"></script>
+  <script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+  <script src="node_modules/codemirror/mode/css/css.js"></script>
+  <script src="node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans;
+  }
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
+  .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
+</style>
+
+<script>
+  var editor;
+  function config(){
+    editor = CodeMirror.fromTextArea( document.getElementById( "codeWindow" ), {
+      lineNumbers: true
+
+    });
+    takeOverConsole();
+  }
+
+  function run(){
+    // clean up previous execution
+    document.querySelector( "#codeConsole" ).innerText = "";
+    if( document.querySelector( "#codeBlock" ) !== null ){
+      document.body.removeChild( document.querySelector( "#codeBlock" ) );
+    }
+    var scriptTag = document.createElement("script");
+    scriptTag.setAttribute( "id", "codeBlock" );
+    var inline = document.createTextNode( editor.getValue() );
+    scriptTag.appendChild( inline );
+    document.body.appendChild( scriptTag );
+  }
+
+  // this bit of code based on solution by Toby Ho
+  // http://tobyho.com/2012/07/27/taking-over-console-log/
+  function takeOverConsole(){
+    var console = window.console;
+    if (!console) return;
+    function intercept(method){
+        var original = console[method];
+        console[method] = function(){
+            // capture and push to our output div
+            document.querySelector( "#codeConsole" ).innerText += Array.prototype.slice.apply(arguments).join(' ') + "\n";
+            if (original.apply){
+                // Do this for normal browsers
+                original.apply(console, arguments);
+            }else{
+                // Do this for IE
+                var message = Array.prototype.slice.apply(arguments).join(' ');
+                original(message);
+            }
+        }
+    }
+    var methods = ['log', 'warn', 'error'];
+    for (var i = 0; i < methods.length; i++)
+        intercept(methods[i]);
+}
+</script>
+</head>
+
+<body onload="config();">
+  <h3>livesandbox - in-browser JavaScript environment</h3>
+<form>
+<label for="codeWindow">Write some code here ...</label>
+<textarea id="codeWindow" style="width: 80%; height: 50%; border: 1px solid silver;"></textarea>
+<label for="codeConsole">Console output ...</label>
+<div id="codeConsole" style="width: 100%; height: 200px; border: 1px solid silver; overflow: scroll;">
+
+</div>
+
+<button type="button" onclick="run();">Run</button>
+</form>
+</body>
+</html>
