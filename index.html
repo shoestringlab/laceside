@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
   <script src="node_modules/codemirror/lib/codemirror.js"></script>
   <script src="node_modules/codemirror/mode/xml/xml.js"></script>
@@ -9,16 +10,7 @@
   <script src="node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
   <script src="node_modules/codemirror/addon/edit/matchbrackets.js"></script>
 
-<style>
-  body {
-    font-family: Arial, sans;
-  }
-  .CodeMirror { height: auto; border: 1px solid #ddd; }
-  .CodeMirror-scroll { max-height: 200px; }
-  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
-  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
-  .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
-</style>
+
 
 <script>
   var editor;
@@ -27,32 +19,46 @@
       lineNumbers: true
 
     });
-    takeOverConsole();
   }
 
   function run(){
     // clean up previous execution
     document.querySelector( "#codeConsole" ).innerText = "";
-    if( document.querySelector( "#codeBlock" ) !== null ){
-      document.body.removeChild( document.querySelector( "#codeBlock" ) );
+    var doc = document.getElementById('iframe').contentWindow.document;
+    if( doc.querySelector( "#codeBlock" ) !== null ){
+      doc.head.removeChild( doc.querySelector( "#codeBlock" ) );
     }
-    var scriptTag = document.createElement("script");
+
+    var scriptTag = doc.createElement("script");
     scriptTag.setAttribute( "id", "codeBlock" );
-    var inline = document.createTextNode( editor.getValue() );
+    var inline = doc.createTextNode( editor.getValue() );
     scriptTag.appendChild( inline );
-    document.body.appendChild( scriptTag );
+    doc.open();
+    doc.write( "<html><body></body></html>" );
+    takeOverConsole();
+    doc.body.appendChild( scriptTag );
+    doc.close();
+    //writeToIFrame( scriptTag );
+  }
+
+  function writeToIFrame( contents ){
+    var doc = document.getElementById('iframe').contentWindow.document;
+    doc.open();
+    doc.head.appendChild( contents );
+    doc.close();
   }
 
   // this bit of code based on solution:
   // http://tobyho.com/2012/07/27/taking-over-console-log/
   function takeOverConsole(){
-    var console = window.console;
+    var win = document.getElementById('iframe').contentWindow;
+    var console = win.console;
     if (!console) return;
     function intercept(method){
         var original = console[method];
         console[method] = function(){
             // capture and push to our output div
-            document.querySelector( "#codeConsole" ).innerText += Array.prototype.slice.apply(arguments).join(' ') + "\n";
+            window.document.querySelector( "#codeConsole" ).innerText += Array.prototype.slice.apply(arguments).join(' ') + "\n";
             if (original.apply){
                 // Do this for normal browsers
                 original.apply(console, arguments);
@@ -71,16 +77,29 @@
 </head>
 
 <body onload="config();">
-  <h3>livesandbox - in-browser JavaScript environment</h3>
-<form>
-<label for="codeWindow">Write some code here ...</label>
-<textarea id="codeWindow" style="width: 80%; height: 50%; border: 1px solid silver;"></textarea>
-<label for="codeConsole">Console output ...</label>
-<div id="codeConsole" style="width: 100%; height: 200px; border: 1px solid silver; overflow: scroll;">
+<h3>livesandbox - in-browser JavaScript environment</h3>
+<div class="row">
+  <div class="col-50">
+    <form>
+    <div class="row">
+
+      <label for="codeWindow">Write some code here ...</label>
+      <textarea id="codeWindow"></textarea>
+      <label for="codeConsole">Console output ...</label>
+    </div>
+    <div id="codeConsole">
+
+    </div>
+
+    <button type="button" onclick="run();">Run</button>
+    </form>
+  </div>
+  <div class="col-50">
+    <label for="iframe">HTML document ...</label>
+    <iframe id="iframe"></iframe>
+  </div>
 
 </div>
 
-<button type="button" onclick="run();">Run</button>
-</form>
 </body>
 </html>
