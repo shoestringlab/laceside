@@ -19,6 +19,8 @@
       lineNumbers: true
 
     });
+
+    takeOverConsole();
   }
 
   function run(){
@@ -31,20 +33,12 @@
 
     var scriptTag = doc.createElement("script");
     scriptTag.setAttribute( "id", "codeBlock" );
+    doc.open();
     var inline = doc.createTextNode( editor.getValue() );
     scriptTag.appendChild( inline );
-    doc.open();
-    doc.write( "<html><body></body></html>" );
-    takeOverConsole();
-    doc.body.appendChild( scriptTag );
-    doc.close();
-    //writeToIFrame( scriptTag );
-  }
 
-  function writeToIFrame( contents ){
-    var doc = document.getElementById('iframe').contentWindow.document;
-    doc.open();
-    doc.head.appendChild( contents );
+    doc.write( "<html><body></body></html>" );
+    doc.head.appendChild( scriptTag );
     doc.close();
   }
 
