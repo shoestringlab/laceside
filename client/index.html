@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <title>
+      JavaScript Sandbox
+    </title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+  	<link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css">
+  	<link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css">
+    <script src="/lib/codemirror/lib/codemirror.js"></script>
+    <script src="/lib/codemirror/mode/xml/xml.js"></script>
+    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/lib/codemirror/mode/css/css.js"></script>
+    <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
+
+    <script type="module">
+    import {application} from '/js/app.js';
+    import {collapsiblepane,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+
+    constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
+		{
+			title : "Libraries",
+			//path : "/dist/",
+			collapse: false,
+      headerColor: '#fff',
+      headerBackgroundColor: '#999',
+      borderColor: '#999',
+      borderRadius: 0
+		}]);
+
+    constructor( collapsiblepane, [ document.querySelector( "#scripts" ),
+		{
+			title : "Scripts",
+			//path : "/dist/",
+			collapse: true,
+      headerColor: '#fff',
+      headerBackgroundColor: '#999',
+      borderColor: '#999',
+      borderRadius: '0'
+		}]);
+
+    constructor( collapsiblepane, [ document.querySelector( "div[name='HTMLEditor']" ),
+		{
+			title : "HTML",
+			//path : "/dist/",
+			collapse: true,
+      headerColor: '#fff',
+      headerBackgroundColor: '#999',
+      borderColor: '#999',
+      borderRadius: 0
+		}]);
+
+    constructor( collapsiblepane, [ document.querySelector( "div[name='JSEditor']" ),
+    {
+      title : "JS",
+      //path : "/dist/",
+      collapse: false,
+      headerColor: '#fff',
+      headerBackgroundColor: '#999',
+      borderColor: '#999',
+      borderRadius: 0
+    }]);
+
+    constructor( collapsiblepane, [ document.querySelector( "div[name='CSSEditor']" ),
+    {
+      title : "CSS",
+      //path : "/dist/",
+      collapse: true,
+      headerColor: '#fff',
+      headerBackgroundColor: '#999',
+      borderColor: '#999',
+      borderRadius: 0
+    }]);
+
+    var app = application();
+
+    </script>
+  </head>
+
+  <body>
+
+
+
+    <div id="anon">
+
+    </div>
+    <div id="secure">
+      <div class="wrapper">
+        <div class="box header">
+          <div id="headerLeft" class="headerCol"></div>
+          <div id="headerRight" class="headerCol"></div>
+        </div>
+        <div id="sidebar" class="box sidebar">
+          <div id="libraries">
+          </div>
+          <div id="scripts">
+          </div>
+        </div>
+        <div class="box app">
+          <div id="sandBox" class="sandBox">
+              <div id="editors">
+                <div name="HTMLEditor" class="editor"></div>
+                <div name="CSSEditor" class="editor"></div>
+                <div name="JSEditor" class="editor"></div>
+              </div>
+              <div name="console" class="console"></div>
+              <div name="htmlFrame" class="htmlFrame">
+                <label for="iframe">HTML document ...</label>
+                <iframe id="iframe"></iframe>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </body>
+</html>

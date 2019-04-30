@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+  <script src="node_modules/codemirror/lib/codemirror.js"></script>
+  <script src="node_modules/codemirror/mode/xml/xml.js"></script>
+  <script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+  <script src="node_modules/codemirror/mode/css/css.js"></script>
+  <script src="node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans;
+  }
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
+  .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
+</style>
+
+  <script type="module">
+    import {application} from './app.js';
+
+    var app = application();
+
+  </script>
+</head>
+
+<body>
+<!--- <div name="header"></div>
+<div name="editor"></div>
+<div name="console"></div>
+ --->
+ <div class="row">
+   <div class="col-50">
+     <form>
+     <div class="row" id="codeDiv">
+
+       <label for="codeWindow">Write some code here ...</label>
+       <textarea id="codeWindow"></textarea>
+
+     </div>
+     <div class="row" id="consoleDiv">
+       <label for="codeConsole">Console output ...</label>
+       <div id="codeConsole">
+
+       </div>
+     </div>
+     <button type="button" onclick="run();">Run</button>
+     </form>
+   </div>
+   <div class="col-50">
+     <label for="iframe">HTML document ...</label>
+     <iframe id="iframe"></iframe>
+   </div>
+
+ </div>
+</body>
+</html>
