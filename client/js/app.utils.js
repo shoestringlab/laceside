@@ -1,6 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 
-export { formatDate, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
+export { formatDate, addModLazy, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
 
 var formatDate = function( dateString, format ){
   let date = new Date( dateString );
@@ -19,6 +19,13 @@ var formatDate = function( dateString, format ){
       break;
   }
   return dateStr;
+},
+
+addModLazy = function( doc ){
+    let mlTag = doc.createElement("script");
+    mlTag.setAttribute( "src", "/lib/modlazy/dist/modlazy.js" );
+    mlTag.setAttribute( "class", "jsapp" );
+    doc.head.appendChild( mlTag );
 },
 
 formatDateByOffset = function( dateString ){

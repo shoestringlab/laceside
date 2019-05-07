@@ -59,7 +59,9 @@ a{
 
 .header,
 .footer {
-  background-color: #999;
+  background-color: #ccf;
+  color: #444;
+  font-weight: bold;
 }
 
 .profileHeader{
@@ -178,18 +180,55 @@ button{
   grid-area:sandBox;
   display: grid;
   grid-template-columns: 50% 49%;
-  grid-template-rows: 80% 20%;
+  grid-template-rows: auto 70px 200px;
   grid-template-areas:
     "editors htmlFrame"
+    "buttonBar htmlFrame"
     "console htmlFrame";
   height:100%;
   width:100%;
 }
 
-.editors{
+#editors{
   grid-area: editors;
-  padding:.25em;
-  height:90%;
+
+  border: 1px solid silver;
+}
+
+.tabs{
+  background-color: #ccf;
+  padding: 1em .5em .1em .5em;
+  margin-top: .5em;
+}
+
+.tabs div{
+  display: inline;
+  padding: .5em 1em .2em 1em;
+  background-color: #77f;
+  color: white;
+  margin: 0 .5em;
+  font-weight: bold;
+  border-radius: .25em .25em 0 0;
+}
+
+.tabs div:hover{
+  background-color: #99f;
+}
+
+.editor{
+  height: 65%;
+}
+
+#HTMLEditor, #CSSEditor{
+  display:none;
+}
+
+#JSEditor{
+  display:block;
+}
+
+#buttonBar{
+  padding-top:1.5em;
 }
 
 .console{
@@ -198,7 +237,7 @@ button{
   border: 1px solid silver;
   overflow: scroll;
   border-radius: .25em;
-  margin-bottom: .5em;
+  margin-bottom: 2em;
 }
 
 .htmlFrame{

@@ -1,6 +1,6 @@
 {
   "name": "livesandbox",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "In-browser JavaScript IDE with live execution",
   "main": "index.htm",
   "directories": {
@@ -32,6 +32,7 @@
     "gadget-ui": "^6.0.1",
     "js-base64": "^2.5.1",
     "mariadb": "^2.0.3",
+    "modlazy": "^1.0.0",
     "sha.js": "^2.4.11"
   }
 }

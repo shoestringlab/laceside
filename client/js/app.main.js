@@ -1,10 +1,11 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {Console} from '/js/components/console.js';
-import {Editor} from '/js/components/editor.js';
 import {Header} from '/js/components/header.js';
 import {LoginForm} from '/js/components/loginform.js';
 import {Menu} from '/js/components/menu.js';
 import {Libraries} from '/js/components/libraries.js';
+import {Tabs} from '/js/components/tabs.js';
+import {ButtonBar} from '/js/components/buttonbar.js';
 import {ui} from '/js/app.ui.js';
 
 export var main = (function() {
@@ -31,8 +32,8 @@ export var main = (function() {
       Header( { id: 'header', user: user, selector: "#headerRight" } );
       Menu( { id: 'menu', menuItems: menuItems, selector: "#headerLeft" } );
       Libraries( { id: 'libraries', selector: "#libraries" } );
-
-      Editor( { id: 'jseditor', selector: "div[name='JSEditor']" } );
+      Tabs( { id: 'tabs', selector: "#editors" } );
+      ButtonBar( { id: 'buttonbar', selector: '#buttonBar' } );
 
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
 

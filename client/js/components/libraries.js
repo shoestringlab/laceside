@@ -39,9 +39,8 @@ export var Libraries = function Libraries(props) {
         activeLibs.push( lib );
       }else{
         for( var ix = 0; ix < activeLibs.length; ix++ ){
-          if( activeLibs.libraryID === parseInt( event.currentTarget.value, 10 ) ){
+          if( activeLibs[ix].libraryID === parseInt( event.currentTarget.value, 10 ) ){
             activeLibs.splice( ix, 1 );
-            return true;
           }
         }
       }

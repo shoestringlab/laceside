@@ -24,9 +24,9 @@
 			title : "Libraries",
 			//path : "/dist/",
 			collapse: false,
-      headerColor: '#fff',
-      headerBackgroundColor: '#999',
-      borderColor: '#999',
+      headerColor: '#444',
+      headerBackgroundColor: '#ccf',
+      borderColor: '#ccf',
       borderRadius: 0
 		}]);
 
@@ -35,12 +35,12 @@
 			title : "Scripts",
 			//path : "/dist/",
 			collapse: true,
-      headerColor: '#fff',
-      headerBackgroundColor: '#999',
-      borderColor: '#999',
+      headerColor: '#444',
+      headerBackgroundColor: '#ccf',
+      borderColor: '#ccf',
       borderRadius: '0'
 		}]);
-
+/*
     constructor( collapsiblepane, [ document.querySelector( "div[name='HTMLEditor']" ),
 		{
 			title : "HTML",
@@ -68,12 +68,12 @@
       title : "CSS",
       //path : "/dist/",
       collapse: true,
-      headerColor: '#fff',
+      headerColor: '#77f',
       headerBackgroundColor: '#999',
       borderColor: '#999',
       borderRadius: 0
     }]);
-
+ */
     var app = application();
 
     </script>
@@ -101,14 +101,15 @@
         <div class="box app">
           <div id="sandBox" class="sandBox">
               <div id="editors">
-                <div name="HTMLEditor" class="editor"></div>
-                <div name="CSSEditor" class="editor"></div>
-                <div name="JSEditor" class="editor"></div>
+
               </div>
+              <div id="buttonBar" class="buttonBar"></div>
               <div name="console" class="console"></div>
               <div name="htmlFrame" class="htmlFrame">
                 <label for="iframe">HTML document ...</label>
-                <iframe id="iframe"></iframe>
+                <iframe id="iframe">
+
+                </iframe>
               </div>
           </div>
         </div>
