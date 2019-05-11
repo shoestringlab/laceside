@@ -1,11 +1,11 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 
-export { getLibraries, create, read, deleteById };
+export { getApps, create, update, read, deleteById };
 
-var getLibraries = function( obj ){
+var getApps = function( obj ){
     var params = { method: 'GET' };
-    var promise = a7.remote.fetch( "/libraries?offset=" + obj.offset, params, true );
+    var promise = a7.remote.fetch( "/apps?offset=" + obj.offset, params, true );
 
     promise
       .then( function( response ) {
@@ -13,14 +13,15 @@ var getLibraries = function( obj ){
         return response.json();
       })
       .then( function( json ){
-        let libraries = ( obj.offset === 0 ? [] : a7.model.get( "libraries" ) );
+        let apps = ( obj.offset === 0 ? [] : a7.model.get( "apps" ) );
         if( json.records ){
-          json.records.forEach( function( library, idx ){
-            libraries.push( library );
+          json.records.forEach( function( app, idx ){
+            app.esModule = app.esModule.data[0];
+            apps.push( app );
           });
         }
-        a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: libraries, library: { libraryID: 0, name: "", link: "" } } );
+        a7.model.set( "apps", apps );
+        a7.ui.getView('apps').setState( { apps: apps, app: { appID: 0, name: "" } } );
       });
   },
   create = function( obj ){
@@ -34,11 +35,15 @@ var getLibraries = function( obj ){
                     },
                     body: JSON.stringify({
                       name: obj.name,
-                      link: obj.link
+                      jsCode: obj.jsCode,
+                      htmlCode: obj.htmlCode,
+                      cssCode: obj.cssCode,
+                      libraries: obj.libraries,
+                      esModule: obj.esModule
                     })
                   };
 
-    var promise = a7.remote.fetch( "/library", params, true );
+    var promise = a7.remote.fetch( "/app", params, true );
 
     promise
       .then( function( response ) {
@@ -46,12 +51,13 @@ var getLibraries = function( obj ){
         return response.json();
       })
       .then( function( json ){
-        var library = json;
-        var libraries = a7.model.get( "libraries" );
-        libraries.push( library );
-        a7.model.set( "libraries", libraries );
+        var app = json;
+        app.esModule = app.esModule.data[0];
+        var apps = a7.model.get( "apps" ) || [];
+        apps.push( app );
+        a7.model.set( "apps", apps );
 
-        a7.ui.getView('libraries').setState( { libraries: libraries, library: library } );
+        a7.ui.getView('apps').setState( { apps: apps, app: app } );
       });
   },
   read = function( obj ){
@@ -64,7 +70,7 @@ var getLibraries = function( obj ){
                     }
                   };
 
-    var promise = a7.remote.fetch( "/library/" + obj.library.libraryID, params, true );
+    var promise = a7.remote.fetch( "/app/" + obj.app.appID, params, true );
 
     promise
       .then( function( response ) {
@@ -83,12 +89,16 @@ var getLibraries = function( obj ){
                       'Accept': 'application/json, application/xml, text/play, text/html, *.*',
                       'Content-Type': 'application/json; charset=utf-8'
                     },
-                    body: JSON.stringify( { libraryID: obj.libraryID,
-                    name: obj.name,
-                    link: obj.link } )
+                    body: JSON.stringify( {
+                      name: obj.name,
+                      jsCode: obj.jsCode,
+                      htmlCode: obj.htmlCode,
+                      cssCode: obj.cssCode,
+                      libraries: obj.libraries,
+                      esModule: obj.esModule } )
                   };
 
-    var promise = a7.remote.fetch( "/library/" + obj.libraryID, params, true );
+    var promise = a7.remote.fetch( "/app/" + obj.appID, params, true );
 
     promise
       .then( function( response ) {
@@ -96,17 +106,17 @@ var getLibraries = function( obj ){
         return response.json();
       })
       .then( function( json ){
-        var library = json;
+        var app = json;
 
-        var libraries = a7.model.get( "libraries" );
-        for( var ix = 0; ix < libraries.length; ix++ ){
-          if (libraries[ix].libraryID === library.libraryID) {
-            libraries[ix] = library;
+        var apps = a7.model.get( "apps" );
+        for( var ix = 0; ix < apps.length; ix++ ){
+          if (apps[ix].appID === app.appID) {
+            apps[ix] = app;
             break;
           }
         }
-        a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library } );
+        a7.model.set( "apps", apps );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app } );
       });
   },
   deleteById = function( obj ){
@@ -119,7 +129,7 @@ var getLibraries = function( obj ){
                     }
                   };
 
-    var promise = a7.remote.fetch( "/library/" + obj.libraryID, params, true );
+    var promise = a7.remote.fetch( "/app/" + obj.appID, params, true );
 
     promise
       .then( function( response ) {
@@ -128,17 +138,17 @@ var getLibraries = function( obj ){
       })
       .then( function( json ){
         if( json ){
-          var libraries = a7.model.get( "libraries" );
+          var apps = a7.model.get( "apps" );
 
-          var deleted = libraries.find( function( library, idx ){
-              if (library.libraryID === parseInt( obj.libraryID, 10 ) ) {
-                libraries.splice( idx, 1 );
+          var deleted = apps.find( function( app, idx ){
+              if (app.appID === parseInt( obj.appID, 10 ) ) {
+                apps.splice( idx, 1 );
                   return true;
               }
           });
         }
 
-        a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" } } );
+        a7.model.set( "apps", apps );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' } } );
       });
   };

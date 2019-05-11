@@ -14,6 +14,9 @@ module.exports = function(app) {
   // get a library by ID
   app.get( "/library/:ID", librarycontroller.read );
 
+  // update a library
+  app.put( "/library/:ID", jsonParser, librarycontroller.create );
+
   //delete a library
   app.delete( "/library/:ID", librarycontroller.delete );
 

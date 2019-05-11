@@ -11,10 +11,12 @@ app.use( "/lib/cuid", express.static( 'node_modules/cuid' ) );
 app.use( "/lib/feather-icons", express.static( 'node_modules/feather-icons' ) );
 app.use( "/lib/gadget-ui", express.static( 'node_modules/gadget-ui' ) );
 app.use( "/lib/modlazy", express.static( 'node_modules/modlazy' ) );
+app.use( "/lib/velocity", express.static( 'node_modules/velocity-animate' ) );
 
 app.use( httpinterceptor.checkHTTPAuth );
 
 // routes for the API
+require( './routes/apps.js' )(app);
 require( './routes/auth.js' )(app);
 require( './routes/libraries.js' )(app);
 require( './routes/users.js' )(app);

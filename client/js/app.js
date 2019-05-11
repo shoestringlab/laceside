@@ -6,7 +6,7 @@ import {auth} from '/js/app.auth.js';
 import {main} from '/js/app.main.js';
 import {ui} from '/js/app.ui.js';
 import * as libraries from '/js/remote/libraries.js';
-import * as scripts from '/js/remote/scripts.js';
+import * as apps from '/js/remote/apps.js';
 
 // you only need to import the floatingpane if you use it as the container for the console
 //import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
@@ -15,8 +15,8 @@ var app = {
   main: main,
   auth: auth,
   remote: {
-    libraries: libraries,
-    scripts: scripts
+    apps: apps,
+    libraries: libraries
 	},
   ui: ui,
 	utils: utils

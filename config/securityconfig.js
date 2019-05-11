@@ -1,4 +1,7 @@
 const secured = [
+  /\/app\/[0-9]+/,
+  /\/apps/,
+  /\/app/,
   /\/library\/[0-9]+/,
   /\/libraries/,
   /\/library/,

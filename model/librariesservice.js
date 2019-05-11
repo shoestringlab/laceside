@@ -14,7 +14,10 @@ module.exports = {
   read: function( libraryID ){
     return( dao.read( libraryID ) );
   },
-  delete: function( libraryID ){
-    return( dao.delete( libraryID ) );
+  update: function( libraryID, userID, link, name ){
+    return( dao.create( libraryID, userID, link, name ) );
+  },
+  delete: function( libraryID, userID ){
+    return( dao.delete( libraryID, userID ) );
   }
 };

@@ -1,6 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 
-export { formatDate, addModLazy, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
+export { formatDate, addModLazy, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
 
 var formatDate = function( dateString, format ){
   let date = new Date( dateString );
@@ -26,6 +26,23 @@ addModLazy = function( doc ){
     mlTag.setAttribute( "src", "/lib/modlazy/dist/modlazy.js" );
     mlTag.setAttribute( "class", "jsapp" );
     doc.head.appendChild( mlTag );
+},
+
+addTag = function( arr, doc, type, href, code ){
+  arr.push( doc.createElement( type ) );
+  arr[ arr.length - 1 ].setAttribute(  "class", "jsapp" );
+  if( type === 'link' ){
+    arr[ arr.length - 1 ].setAttribute(  "rel", "stylesheet" );
+    arr[ arr.length - 1 ].setAttribute(  "href", href );
+  }
+  if( a7.model.get( 'esModule' ) && type === 'script' ){
+    arr[ arr.length - 1 ].setAttribute( "type", "module" );
+  }
+  if( code !== undefined ){
+    let inline = doc.createTextNode( code );
+    arr[ arr.length - 1 ].appendChild( inline );
+  }
+  return arr;
 },
 
 formatDateByOffset = function( dateString ){

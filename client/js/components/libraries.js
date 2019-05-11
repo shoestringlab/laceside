@@ -5,29 +5,65 @@ export var Libraries = function Libraries(props) {
   var libraries = a7.components.Constructor(a7.components.View, [props], true);
 
   libraries.state = {
-    libraries: []
+    libraries: [],
+    library: props.library || { libraryID: 0, name: "", link: "" },
+    activeLibraries: []
   };
 
   libraries.template = function(){
 		let templ = `<form>
-                  <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0"/><br/>
-                  <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js"/><br/>
-                  <button type="button" data-onclick="addLibrary">Save</button>
+                  <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}"/><br/>
+                  <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js" value="${libraries.state.library.link}"/><br/>
+                  <button type="button" data-onclick="saveLibrary">Save</button>
                   `;
 
-    templ +=`<ul>`;
     libraries.state.libraries.forEach( function( library ){
-      templ += `<li><input type="checkbox" name="libraryID" value="${library.libraryID}" data-link="${library.link}" data-onClick="setLibrary"/>${library.name}</li>`;
+      templ += `<div class="row"><div class="inline">
+                <input type="checkbox" name="libraryID" value="${library.libraryID}" data-link="${library.link}" data-onClick="setLibrary"/><a name="lib" data-onClick="editLibrary" data-id="${library.libraryID}">${library.name}</a>
+                </div>
+                <a name="trash" data-id="${library.libraryID}" data-onclick="deleteLibrary">
+                  <svg class="feather">
+                  <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
+                  </svg>
+                </a></div>`;
     });
-    templ += `</ul></form>`;
+    templ += `</form>`;
     return templ;
 	};
 
+  libraries.on( "rendered", function(){
+    let libs = libraries.state.activeLibraries;
+      if( libs ){
+        libraries.state.activeLibraries.forEach( function( activeLib ){
+          if( activeLib !== null ){
+            document.querySelector( libraries.props.selector + " input[type='checkbox'][value='" + activeLib + "']" ).checked = true;
+          }
+        });
+      }
+  });
+
 	libraries.eventHandlers = {
-    addLibrary: function( event ){
-      a7.events.publish( "library.create", {
-        name: document.querySelector( libraries.props.selector + " input[name='name']" ).value,
-        link: document.querySelector( libraries.props.selector + " input[name='link']" ).value,
+    saveLibrary: function( event ){
+      if( libraries.state.library.libraryID === 0 ){
+        a7.events.publish( "library.create", {
+          name: document.querySelector( libraries.props.selector + " input[name='name']" ).value,
+          link: document.querySelector( libraries.props.selector + " input[name='link']" ).value,
+        });
+      }else{
+        a7.events.publish( "library.update", {
+          libraryID: libraries.state.library.libraryID,
+          name: document.querySelector( libraries.props.selector + " input[name='name']" ).value,
+          link: document.querySelector( libraries.props.selector + " input[name='link']" ).value,
+        });
+      }
+    },
+    editLibrary: function( event ){
+      let library = libraries.state.libraries.filter( lib => lib.libraryID == event.currentTarget.attributes['data-id'].value )[0];
+      libraries.setState( { libraries: libraries.state.libraries, library: library });
+    },
+    deleteLibrary: function( event ){
+      a7.events.publish( "library.delete", {
+        libraryID: event.currentTarget.attributes['data-id'].value
       });
     },
     setLibrary: function( event ){

@@ -4,6 +4,7 @@ import {Header} from '/js/components/header.js';
 import {LoginForm} from '/js/components/loginform.js';
 import {Menu} from '/js/components/menu.js';
 import {Libraries} from '/js/components/libraries.js';
+import {Apps} from '/js/components/apps.js';
 import {Tabs} from '/js/components/tabs.js';
 import {ButtonBar} from '/js/components/buttonbar.js';
 import {ui} from '/js/app.ui.js';
@@ -31,7 +32,8 @@ export var main = (function() {
 
       Header( { id: 'header', user: user, selector: "#headerRight" } );
       Menu( { id: 'menu', menuItems: menuItems, selector: "#headerLeft" } );
-      Libraries( { id: 'libraries', selector: "#libraries" } );
+      Libraries( { id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } } );
+      Apps( { id: 'apps', selector: "#apps" } );
       Tabs( { id: 'tabs', selector: "#editors" } );
       ButtonBar( { id: 'buttonbar', selector: '#buttonBar' } );
 
@@ -40,6 +42,7 @@ export var main = (function() {
       if( secure ){
         // initial actions after login
         a7.events.publish( "library.getLibraries", {offset: 0} );
+        a7.events.publish( "app.getApps", {offset: 0} );
       }
       ui.setLayout(secure);
     }

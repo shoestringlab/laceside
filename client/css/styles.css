@@ -15,7 +15,7 @@ a{
   height: 100%;
 }
 
-#libraries, #scripts{
+#libraries, #apps{
   background-color:#fff;
   color: #444;
 }
@@ -95,7 +95,21 @@ a{
 
 div.row{
   vertical-align: top;
-  display:block;
+  display:flex;
+  justify-content: space-between;
+  padding:.25em;
+}
+
+div.row a{
+  color: #77f;
+}
+
+div.row a:hover{
+  color: #aaf;
+}
+
+div.inline{
+  display:inline;
 }
 
 div.col{
