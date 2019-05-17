@@ -1,5 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {ui} from '/js/app.ui.js';
+import {main} from '/js/app.main.js';
 
 export var auth = (function() {
   "use strict";
@@ -25,7 +26,8 @@ export var auth = (function() {
       if( json.success ){
         a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
       }
-      ui.setLayout(json.success);
+      //ui.setLayout(json.success);
+      main.run( json.success );
     }
   };
 })();
