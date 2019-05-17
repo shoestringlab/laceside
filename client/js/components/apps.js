@@ -1,5 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
+import * as utils from '/js/app.utils.js';
 
 export var Apps = function Apps(props) {
   var apps = a7.components.Constructor(a7.components.View, [props], true);
@@ -10,9 +11,10 @@ export var Apps = function Apps(props) {
   };
 
   apps.template = function(){
+    let disabled = ( apps.state.app.name.length > 0 ? '' : 'disabled="disabled"' );
 		let templ = `<form>
-                  <input type="text" name="name" placeholder="Application Name" value="${apps.state.app.name}"/><br/>
-                  <button type="button" data-onclick="saveApp">Save</button>
+                  <input type="text" name="name" placeholder="Application Name" value="${apps.state.app.name}" data-oninput="checkSavable"/><br/>
+                  <button name="save" type="button" data-onclick="saveApp" ${disabled}>Save</button>
                   <button type="button" data-onclick="newApp">New</button>
                   </form>`;
 
@@ -25,17 +27,27 @@ export var Apps = function Apps(props) {
 	};
 
 	apps.eventHandlers = {
-    saveApp: function( event ){
-      if( apps.state.app.appID === 0 ){
-        a7.events.publish( "app.create", {
-          name: document.querySelector( apps.props.selector + " input[name='name']" ).value
-        });
+     checkSavable: function( event ){
+      if( event.currentTarget.value.trim().length > 0  ){
+        apps.element.querySelector( "button[name='save']" ).removeAttribute( "disabled" );
+      }else{
+        apps.element.querySelector( "button[name='save']" ).setAttribute( 'disabled', 'disabled' );
       }
-      else{
-        a7.events.publish( "app.update", {
-          name: document.querySelector( apps.props.selector + " input[name='name']" ).value,
-          appID: apps.state.app.appID
-        });
+    },
+    saveApp: function( event ){
+      let appName = apps.element.querySelector( "input[name='name']" ).value.trim();
+      if( appName.length > 0 ){
+        if( apps.state.app.appID === 0 ){
+          a7.events.publish( "app.create", {
+            name: appName
+          });
+        }
+        else{
+          a7.events.publish( "app.update", {
+            name: appName,
+            appID: apps.state.app.appID
+          });
+        }
       }
     },
     deleteApp: function( event ){
