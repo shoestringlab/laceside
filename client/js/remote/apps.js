@@ -95,7 +95,7 @@ var getApps = function( obj ){
                       htmlCode: obj.htmlCode,
                       cssCode: obj.cssCode,
                       libraries: obj.libraries,
-                      esModule: obj.esModule } )
+                      esModule: ( obj.esModule.data[0] || obj.esModule ) } )
                   };
 
     var promise = a7.remote.fetch( "/app/" + obj.appID, params, true );
