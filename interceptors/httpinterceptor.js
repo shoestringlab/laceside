@@ -3,15 +3,15 @@ const utils = require( '../model/utils' );
 const userservice = require( '../model/userservice' );
 module.exports = {
   checkHTTPAuth : function( request, response, next ){
-    console.log( "checkHTTPAuth: " + request.url );
+    //console.log( "checkHTTPAuth: " + request.url );
 
     let securedRoute = securityconfig.routes.secured.find( function( route ){
       return request.url.match( route );
     });
-    console.log( securedRoute );
+    //console.log( securedRoute );
     if( securedRoute !== null && securedRoute !== undefined ){
       // check token
-      console.log( "Secured route check" );
+      //console.log( "Secured route check" );
       let token = request.headers[ "x-token" ];
       let auth = utils.checkAuthToken( token, securityconfig.ttl );
 
@@ -24,8 +24,8 @@ module.exports = {
             valid = true;
             // remove the password hash from the token so we don't send it outside the system
             delete user.hash;
-            console.log( "checkHTTPAuth: user: " );
-            console.log( user );
+            //console.log( "checkHTTPAuth: user: " );
+            //console.log( user );
 
             // this call sets a user into the request
             request.user = user;

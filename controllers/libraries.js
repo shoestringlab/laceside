@@ -6,7 +6,8 @@ module.exports = {
    getLibraries: function( request, response ){
     service.getLibraries( request.user.userID, 100, parseInt( request.query.offset, 10 ) )
       .then( function( results ){
-        console.log( results );
+        //console.log( results );
+        response.setHeader( "Cache-Control", "no-cache" );
         response.send( JSON.stringify( { records: results[0], total: results[1][0].totalCount } ) );
       })
       .catch( function( error ){

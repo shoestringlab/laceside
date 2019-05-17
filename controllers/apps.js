@@ -23,6 +23,7 @@ module.exports = {
           }
           rows.push( row );
         });
+        response.setHeader( "Cache-Control", "no-cache" );
         response.send( JSON.stringify( { records: rows, total: results[1][0].totalCount } ) );
       })
       .catch( function( error ){
