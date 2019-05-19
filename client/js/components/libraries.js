@@ -11,10 +11,12 @@ export var Libraries = function Libraries(props) {
   };
 
   libraries.template = function(){
+    let disabled = ( libraries.state.library.name.length > 0 ? '' : 'disabled="disabled"' );
 		let templ = `<form>
-                  <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}"/><br/>
+                  <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}" data-oninput="checkSavable"/><br/>
                   <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js" value="${libraries.state.library.link}"/><br/>
-                  <button type="button" data-onclick="saveLibrary">Save</button>
+                  <button type="button" data-onclick="saveLibrary" ${disabled}>Save</button>
+                  <button type="button" data-onclick="newLibrary">New</button>
                   `;
 
     libraries.state.libraries.forEach( function( library ){
@@ -36,13 +38,20 @@ export var Libraries = function Libraries(props) {
       if( libs ){
         libraries.state.activeLibraries.forEach( function( activeLib ){
           if( activeLib !== null ){
-            document.querySelector( libraries.props.selector + " input[type='checkbox'][value='" + activeLib + "']" ).checked = true;
+            document.querySelector( libraries.props.selector + " input[type='checkbox'][value='" + activeLib.libraryID + "']" ).checked = true;
           }
         });
       }
   });
 
 	libraries.eventHandlers = {
+    checkSavable: function( event ){
+     if( event.currentTarget.value.trim().length > 0  ){
+       libraries.element.querySelector( "button[name='save']" ).removeAttribute( "disabled" );
+     }else{
+       libraries.element.querySelector( "button[name='save']" ).setAttribute( 'disabled', 'disabled' );
+     }
+   },
     saveLibrary: function( event ){
       if( libraries.state.library.libraryID === 0 ){
         a7.events.publish( "library.create", {
@@ -59,7 +68,7 @@ export var Libraries = function Libraries(props) {
     },
     editLibrary: function( event ){
       let library = libraries.state.libraries.filter( lib => lib.libraryID == event.currentTarget.attributes['data-id'].value )[0];
-      libraries.setState( { libraries: libraries.state.libraries, library: library });
+      libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries });
     },
     deleteLibrary: function( event ){
       a7.events.publish( "library.delete", {
@@ -70,7 +79,9 @@ export var Libraries = function Libraries(props) {
       let activeLibs = a7.model.get( "activeLibraries" ) || [];
       if( event.currentTarget.checked ){
         let lib = libraries.state.libraries.find( function( library ){
-          return library.libraryID === parseInt( event.currentTarget.value, 10 );
+          if( library.libraryID === parseInt( event.currentTarget.value, 10 )){
+            return library;
+          }
         });
         activeLibs.push( lib );
       }else{
@@ -81,6 +92,10 @@ export var Libraries = function Libraries(props) {
         }
       }
       a7.model.set( "activeLibraries", activeLibs );
+      libraries.setState( { libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs });
+    },
+    newLibrary: function( event ){
+      a7.events.publish( "libraries.new", {} );
     }
 	};
 

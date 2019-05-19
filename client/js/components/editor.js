@@ -4,11 +4,14 @@ export var Editor = function Editor(props){
   const editor = a7.components.Constructor(a7.components.View, [props], true);
 
   editor.state = {
+    mode: props.mode,
+    indentWithTabs: true
   };
 
    editor.on( "rendered", function(){
     editor.props.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
-      lineNumbers: true
+      lineNumbers: true,
+      mode: editor.state.mode
     });
 
     editor.props.editor.refresh();

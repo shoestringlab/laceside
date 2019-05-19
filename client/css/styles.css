@@ -372,3 +372,16 @@ button:disabled{
 .buttonRow{
   padding-top: .25em;
 }
+
+.gadget-ui-collapsiblePane-header{
+ color: #444 !important;
+ background-color: #ccf !important;
+ border-radius: 5px 5px 0 0 !important;
+ border: 0;
+}
+
+.gadget-ui-collapsiblePane{
+  color: #ccf !important;
+  border-radius: 0 0 5px 5px !important;
+  border: 0 !important;
+}

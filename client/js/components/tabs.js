@@ -12,9 +12,9 @@ export var Tabs = function Tabs(props){
                   <div id="CSSEditor" class="editor"></div>
                   <div id="JSEditor" class="editor"></div>`;
 
-    Editor( { id: 'jseditor', selector: '#JSEditor', modelKey: 'jsCode' } );
-    Editor( { id: 'htmleditor', selector: '#HTMLEditor', modelKey: 'htmlCode' } );
-    Editor( { id: 'csseditor', selector: '#CSSEditor', modelKey: 'cssCode' } );
+    Editor( { id: 'jseditor', selector: '#JSEditor', modelKey: 'jsCode', mode: 'javascript' } );
+    Editor( { id: 'htmleditor', selector: '#HTMLEditor', modelKey: 'htmlCode', mode: 'htmlmixed' } );
+    Editor( { id: 'csseditor', selector: '#CSSEditor', modelKey: 'cssCode', mode: 'css' } );
 
     return templ;
   };
@@ -30,10 +30,7 @@ export var Tabs = function Tabs(props){
   tabs.eventHandlers = {
     selectTab: function( event ){
       let currentTab = event.currentTarget.attributes['data-tab'].value;
-      tabs.state.tabs.forEach( function( tab ){
-        document.querySelector( "#" + tab ).style.display = ( tab === currentTab ? 'block' : 'none' );
-        document.querySelector( tabs.props.selector + " div.tabs div[name='" + tab + "']" ).style.backgroundColor = ( tab === currentTab ? '#99f' : '' );
-      });
+      a7.events.publish( "tabs.setTab", { tab: currentTab } );
     }
   };
 

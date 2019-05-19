@@ -1,3 +1,16 @@
+0.9.3 Beta update
+===================
+
+Fixes in this release
+- properly set editor mode for each pane so code renders correctly
+- set editor to refresh on content load
+- prevent save for unnamed apps/libraries
+- resolve issues with saving/loading of libraries linked to apps
+- add new library function
+- fix issue with bit value as Buffer in remote/app.update
+-login now loads libraries and apps
+
+
 0.9.0 Beta Release
 ===================
 
