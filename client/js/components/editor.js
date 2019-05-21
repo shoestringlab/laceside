@@ -11,7 +11,8 @@ export var Editor = function Editor(props){
    editor.on( "rendered", function(){
     editor.props.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
       lineNumbers: true,
-      mode: editor.state.mode
+      mode: editor.state.mode,
+      lineWrapping: true
     });
 
     editor.props.editor.refresh();
@@ -26,7 +27,6 @@ export var Editor = function Editor(props){
 
   editor.template = function(){
     let templ = `<form>
-    <br>
     <textarea name="codeWindow"></textarea>
 
     </form>`;

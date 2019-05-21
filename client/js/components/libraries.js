@@ -15,7 +15,7 @@ export var Libraries = function Libraries(props) {
 		let templ = `<form>
                   <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}" data-oninput="checkSavable"/><br/>
                   <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js" value="${libraries.state.library.link}"/><br/>
-                  <button type="button" data-onclick="saveLibrary" ${disabled}>Save</button>
+                  <button name="save" type="button" data-onclick="saveLibrary" ${disabled}>Save</button>
                   <button type="button" data-onclick="newLibrary">New</button>
                   `;
 
@@ -95,7 +95,7 @@ export var Libraries = function Libraries(props) {
       libraries.setState( { libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs });
     },
     newLibrary: function( event ){
-      a7.events.publish( "libraries.new", {} );
+      a7.events.publish( "library.new", {} );
     }
 	};
 

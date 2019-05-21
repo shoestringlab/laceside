@@ -38,7 +38,7 @@ CREATE TABLE `appLibraries` (
 
 LOCK TABLES `appLibraries` WRITE;
 /*!40000 ALTER TABLE `appLibraries` DISABLE KEYS */;
-INSERT INTO `appLibraries` VALUES (7,6);
+INSERT INTO `appLibraries` VALUES (2,6),(7,6),(9,6),(9,10);
 /*!40000 ALTER TABLE `appLibraries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `apps` (
   PRIMARY KEY (`appID`),
   KEY `apps_FK` (`userID`),
   CONSTRAINT `apps_FK` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `apps` (
 
 LOCK TABLES `apps` WRITE;
 /*!40000 ALTER TABLE `apps` DISABLE KEYS */;
-INSERT INTO `apps` VALUES (2,5,'import {floatingpane,constructor} from \'/lib/gadget-ui/dist/gadget-ui.es6.js\';\n\nvar fp1 = constructor( floatingpane,\n  [ document.querySelector(\"#fp1\"),\n  {\n    top: 200,\n    left: 200,\n    width: 500,\n    height: 300,\n    title : \"Random Text\",\n    path : \"/dist/\",\n    enableShrink : false,\n    overflow: \"hidden\"\n  }] ) ;\n','	<div name=\"collapser\" id=\"fp1\" style=\"background-color: rgba( 255,255,255,.7);\">\n	The newest possible...\n\n	FloatingPane.prototype.config = function( options ){\n		options = ( options === undefined ? {} : options );\n		this.title = ( options.title === undefined ? \"\": options.title );\n		this.path = ( options.path === undefined ? \"/bower_components/gadget-ui/dist/\": options.path );\n		this.position = ( options.position === undefined ? { my: \"right top\", at: \"right top\", of: window } : options.position );\n		this.padding = ( options.padding === undefined ? \"15px\": options.padding );\n		this.paddingTop = ( options.paddingTop === undefined ? \".3em\": options.paddingTop );\n		this.width = ( options.width === undefined ? gadgetui.util.getStyle( this.selector, \"width\" ) : options.width );\n		this.minWidth = ( this.title.length > 0 ? Math.max( 100, this.title.length * 10 ) + 20 : 100 );\n\n		this.height = ( options.height === undefined ? gadgetui.util.getNumberValue( gadgetui.util.getStyle( this.selector, \"height\" ) ) + ( gadgetui.util.getNumberValue( this.padding ) * 2 ) : options.height );\n		this.interiorWidth = ( options.interiorWidth === undefined ? \"\": options.interiorWidth );\n		this.opacity = ( ( options.opacity === undefined ? 1 : options.opacity ) );\n		this.zIndex = ( ( options.zIndex === undefined ? 100000 : options.zIndex ) );\n		this.minimized = false;\n		this.relativeOffsetLeft = 0;\n		this.borderColor = ( options.borderColor === undefined ? \"silver\": options.borderColor );\n		this.headerColor = ( options.headerColor === undefined ? \"black\": options.headerColor );\n		this.headerBackgroundColor = ( options.headerBackgroundColor === undefined ? \"silver\": options.headerBackgroundColor );\n		this.borderRadius = ( options.borderRadius === undefined ? 6 : options.borderRadius );\n		this.enableShrink = false;\n	};\n\n	</div>','','','gadget-ui FloatingPane'),(7,5,'import {gadgetui} from \"/lib/gadget-ui/dist/gadget-ui.es6.js\";\n\nvar collapser = gadgetui.objects.Constructor( gadgetui.display.CollapsiblePane, [ document.getElementsByTagName( \"div\" )[0],\n		{\n			title : \"Random Text\",\n			path : \"/dist/\",\n			collapse: true,\n			width:\"300px\"\n		}]);\n','	<div style=\"width:900px\" name=\"collapser\">\n\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:17:2:Unnecessary \'use strict\'.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:48:3:Missing \'break\' after \'case\'.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:84:107:Expected \'!==\' and instead saw \'!=\'.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:266:11:Expected \'===\' and instead saw \'==\'.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:272:6:Combine this with the previous \'var\' statement.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:272:16:Use the object literal notation {} or Object.create(null).<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:277:6:Combine this with the previous \'var\' statement.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:280:2:\'exception\' was used before it was defined.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:281:2:Expected an identifier and instead saw \'if\' (a reserved word).<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:281:38:Expected an operator and instead saw \'{\'.<br/>\n		jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:282:4:Cannot read property \"line\" from undefined\n	</div>\n','','','gadget-ui CollapsiblePane');
+INSERT INTO `apps` VALUES (2,5,'import {floatingpane,constructor} from \'/lib/gadget-ui/dist/gadget-ui.es6.js\';\n\nvar fp1 = constructor( floatingpane,\n  [ document.querySelector(\"#fp1\"),\n  {\n    title : \"Random Text\",\n    enableShrink : false,\n    top:100,\n    left:100\n  }] ) ;\n','	<div name=\"collapser\" id=\"fp1\" style=\"background-color: rgba( 255,255,255,.7);\">\n	The newest possible...\n\n	FloatingPane.prototype.config = function( options ){\n		options = ( options === undefined ? {} : options );\n		this.title = ( options.title === undefined ? \"\": options.title );\n		this.path = ( options.path === undefined ? \"/bower_components/gadget-ui/dist/\": options.path );\n		this.position = ( options.position === undefined ? { my: \"right top\", at: \"right top\", of: window } : options.position );\n		this.padding = ( options.padding === undefined ? \"15px\": options.padding );\n		this.paddingTop = ( options.paddingTop === undefined ? \".3em\": options.paddingTop );\n		this.width = ( options.width === undefined ? gadgetui.util.getStyle( this.selector, \"width\" ) : options.width );\n		this.minWidth = ( this.title.length > 0 ? Math.max( 100, this.title.length * 10 ) + 20 : 100 );\n\n		this.height = ( options.height === undefined ? gadgetui.util.getNumberValue( gadgetui.util.getStyle( this.selector, \"height\" ) ) + ( gadgetui.util.getNumberValue( this.padding ) * 2 ) : options.height );\n		this.interiorWidth = ( options.interiorWidth === undefined ? \"\": options.interiorWidth );\n		this.opacity = ( ( options.opacity === undefined ? 1 : options.opacity ) );\n		this.zIndex = ( ( options.zIndex === undefined ? 100000 : options.zIndex ) );\n		this.minimized = false;\n		this.relativeOffsetLeft = 0;\n		this.borderColor = ( options.borderColor === undefined ? \"silver\": options.borderColor );\n		this.headerColor = ( options.headerColor === undefined ? \"black\": options.headerColor );\n		this.headerBackgroundColor = ( options.headerBackgroundColor === undefined ? \"silver\": options.headerBackgroundColor );\n		this.borderRadius = ( options.borderRadius === undefined ? 6 : options.borderRadius );\n		this.enableShrink = false;\n	};\n\n	</div>','#fp1{\n  width:500px;\n  height:300px;\n  overflow:hidden;\n}','','gadget-ui FloatingPane'),(7,5,'import {gadgetui} from \"/lib/gadget-ui/dist/gadget-ui.es6.js\";\n\nvar collapser = gadgetui.objects.Constructor( gadgetui.display.CollapsiblePane, \n        [ document.getElementsByTagName( \"div\" )[0],\n		{\n			title : \"Random Text\",\n			collapse: true,\n			class: \'myPane\',\n			headerClass: \'myHeader\'\n		}]);\n\nconsole.log( \"import {gadgetui} from /lib/gadget-ui/dist/gadget-ui.es6.js\");','<div name=\"collapser\">\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:17:2:Unnecessary \'use strict\'.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:48:3:Missing \'break\' after \'case\'.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:84:107:Expected \'!==\' and instead saw \'!=\'.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:266:11:Expected \'===\' and instead saw \'==\'.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:272:6:Combine this with the previous \'var\' statement.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:272:16:Use the object literal notation {} or Object.create(null).<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:277:6:Combine this with the previous \'var\' statement.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:280:2:\'exception\' was used before it was defined.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:281:2:Expected an identifier and instead saw \'if\' (a reserved word).<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:281:38:Expected an operator and instead saw \'{\'.<br/>\n  jslint:/Users/rmunn/git/gadgetui/dist/gadget-ui.js:282:4:Cannot read property \"line\" from undefined\n</div>\n','\n.myPane{\n  border: 1px dashed red;\n  border-radius: 5px;\n}\n\ndiv.myPane > div:nth-child(2){\n  padding: .5em;\n}\n\n.myHeader{\n  background-color: #ccf;\n}','','gadget-ui CollapsiblePane'),(9,5,'import {gadgetui} from \'/lib/gadget-ui/dist/gadget-ui.es6.js\';\n\ngadgetui.objects.Constructor( gadgetui.display.Bubble, [document.getElementsByTagName( \"select\" )[0],\n	\"This control is not working...\",\n	{\n		arrowPosition : \"left bottom\",\n		position : \"top right\",\n		arrowDirection : \"middle\",\n		font: \".7em \'Arial\'\",\n		borderWidth : 1,\n		height: 30,\n		padding: 5,\n		arrowSize: 0,\n		borderRadius: 5,\n		closable : true\n	}]);','		<p>Test the Bubble control.</p>\n\n		<p>Select your favorite breakfast food, or enter something new:</p>\n	<div style=\"margin-left: 50px;\">\n\n		<select name=\"food\">\n		\n		</select>\n	</div>','','','gadget-ui Bubble');
 /*!40000 ALTER TABLE `apps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +86,7 @@ CREATE TABLE `libraries` (
   `name` varchar(50) NOT NULL,
   `link` varchar(200) NOT NULL,
   PRIMARY KEY (`libraryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `libraries` (
 
 LOCK TABLES `libraries` WRITE;
 /*!40000 ALTER TABLE `libraries` DISABLE KEYS */;
-INSERT INTO `libraries` VALUES (1,5,'jQuery 3.4.0','https://code.jquery.com/jquery-3.4.0.min.js'),(3,5,'Bootstrap 4.3.1 CSS','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'),(6,5,'gadget-UI CSS','/lib/gadget-ui/dist/gadget-ui.css');
+INSERT INTO `libraries` VALUES (1,5,'jQuery 3.4.0','https://code.jquery.com/jquery-3.4.0.min.js'),(3,5,'Bootstrap 4.3.1 CSS','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'),(6,5,'gadget-UI CSS','/lib/gadget-ui/dist/gadget-ui.css'),(9,5,'Open-iconic fonts SVG 1.1.1','https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/fonts/open-iconic.svg'),(10,5,'Open-iconic fonts CSS 1.1.1','https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css'),(11,5,'ThreeJS 104 Module','https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.module.js');
 /*!40000 ALTER TABLE `libraries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,9 +168,8 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`livesandbox`@`localhost` PROCEDURE `getApps`( IN userID INT, IN rowcount INT, IN rowoffset INT )
 BEGIN
-	SELECT a.appID, a.userID, a.jsCode, a.htmlCode, a.cssCode, a.esModule, a.name, al.libraryID
+	SELECT a.appID, a.userID, a.jsCode, a.htmlCode, a.cssCode, a.esModule, a.name
     FROM  apps a 
-    LEFT JOIN 	appLibraries al on a.appID = al.appID
     WHERE userID = userID
     LIMIT rowcount OFFSET rowoffset;
    
@@ -219,4 +218,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-10 20:42:07
+-- Dump completed on 2019-05-21  1:14:45

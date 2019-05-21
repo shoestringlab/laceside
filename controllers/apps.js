@@ -7,24 +7,21 @@ module.exports = {
    getApps: function( request, response ){
     service.getApps( request.user.userID, 100, parseInt( request.query.offset, 10 ) )
       .then( function( results ){
-        let rows = [];
-        results[0].forEach( function( result ){
-          let row = {};
-          if( !row.appID || ( row.appID && row.appID !== result.appID ) ){
-            row.appID = result.appID;
-            row.name = result.name;
-            row.jsCode = result.jsCode;
-            row.htmlCode = result.htmlCode;
-            row.esModule = result.esModule;
-            row.cssCode = result.cssCode;
-            row.libraries = [result.libraryID];
-          }else{
-            row.libraries.push( result.libraryID );
-          }
-          rows.push( row );
-        });
-        response.setHeader( "Cache-Control", "no-cache" );
-        response.send( JSON.stringify( { records: rows, total: results[1][0].totalCount } ) );
+        appLibraryService.getByUserID( request.user.userID )
+          .then( function( alResults ){
+            let rows = [];
+            results[0].forEach( function( result ){
+              let libs = alResults.filter( lib => lib.appID === result.appID ).map( lib => lib.libraryID ).join(",");
+              result.libraries = libs;
+            });
+            response.setHeader( "Cache-Control", "no-cache" );
+            response.send( JSON.stringify( { records: results[0], total: results[1][0].totalCount } ) );
+          })
+          .catch( function( error ){
+            console.log( error );
+            response.send( JSON.stringify( error ) );
+          });
+
       })
       .catch( function( error ){
         console.log( error );
@@ -81,9 +78,16 @@ module.exports = {
   },
 
   delete: function( request, response){
-    service.delete( request.params.ID, request.user.userID )
+    appLibraryService.deleteByAppID( request.params.ID, request.user.userID )
       .then( function( success ){
-        response.send( JSON.stringify( success ) );
+        service.delete( request.params.ID, request.user.userID )
+          .then( function( results ){
+            response.send( JSON.stringify( results ) );
+          })
+          .catch( function( error ){
+            console.log( error );
+            response.send( JSON.stringify( error ) );
+          });
       })
       .catch( function( error ){
         console.log( error );

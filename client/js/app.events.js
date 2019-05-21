@@ -16,6 +16,7 @@ export var events = function init(){
   });
 
   a7.events.subscribe( "library.update", function( obj ){
+    console.log( "library.update- events" );
     a7.remote.invoke( "libraries.update", obj );
   });
 
@@ -54,7 +55,8 @@ export var events = function init(){
   a7.events.subscribe( "app.load", function( obj ){
     let app = a7.model.get( "apps" ).filter( application => application.appID === parseInt( obj.appID, 10 ) )[0];
     let libraries = a7.model.get( "libraries" );
-    let activeLibs = ( app.libraries ? libraries.filter( lib => app.libraries.indexOf( lib.libraryID ) >= 0 ) : [] );
+    let appLibs = app.libraries.split(",").map( libID => parseInt( libID,10 ));
+    let activeLibs = ( app.libraries ? libraries.filter( lib => appLibs.indexOf( lib.libraryID ) >= 0 ) : [] );
 
 
     a7.model.set( "activeLibraries", activeLibs );

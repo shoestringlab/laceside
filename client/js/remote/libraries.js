@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 
-export { getLibraries, create, read, deleteById };
+export { getLibraries, create, read, update, deleteById };
 
 var getLibraries = function( obj ){
     var params = { method: 'GET' };
@@ -77,7 +77,7 @@ var getLibraries = function( obj ){
   },
   update = function( obj ){
     var request;
-
+    console.log( "libraries.update" );
     var params = {  method: 'PUT',
                     headers: {
                       'Accept': 'application/json, application/xml, text/play, text/html, *.*',

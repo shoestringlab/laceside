@@ -6,7 +6,6 @@ import {Menu} from '/js/components/menu.js';
 import {Libraries} from '/js/components/libraries.js';
 import {Apps} from '/js/components/apps.js';
 import {Tabs} from '/js/components/tabs.js';
-import {ButtonBar} from '/js/components/buttonbar.js';
 import {ui} from '/js/app.ui.js';
 
 export var main = (function() {
@@ -35,7 +34,6 @@ export var main = (function() {
       Libraries( { id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } } );
       Apps( { id: 'apps', selector: "#apps" } );
       Tabs( { id: 'tabs', selector: "#editors" } );
-      ButtonBar( { id: 'buttonbar', selector: '#buttonBar' } );
 
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
 

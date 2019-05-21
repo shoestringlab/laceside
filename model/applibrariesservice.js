@@ -8,8 +8,11 @@ module.exports = {
   getByAppID: function( appID ){
     return( gateway.getByAppID( appID ) );
   },
-  deleteByAppID: function( appID ){
-    return gateway.deleteByAppID( appID );
+  getByUserID: function( userID ){
+    return gateway.getByUserID( userID );
+  },
+  deleteByAppID: function( appID, userID ){
+    return gateway.deleteByAppID( appID, userID );
   },
   createMany: function( appID, libraries ){
     return( dao.create( appID, libraries ) );

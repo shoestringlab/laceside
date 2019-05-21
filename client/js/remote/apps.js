@@ -107,7 +107,7 @@ var getApps = function( obj ){
       })
       .then( function( json ){
         var app = json;
-
+        app.esModule = app.esModule.data[0];
         var apps = a7.model.get( "apps" );
         for( var ix = 0; ix < apps.length; ix++ ){
           if (apps[ix].appID === app.appID) {

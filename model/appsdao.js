@@ -17,20 +17,21 @@ var dao = {
                             VALUES ( ?, ?, ?, ?, ?, ? )`, [ userID, name, jsCode, htmlCode, cssCode, esModule] )
             .then( ( results ) =>{
               try{
-                let libs = libraries.split(",");
-                for( var ix = 0; ix < libs.length; ix++ ){
-                  if( ix < libs.length - 1 ){
-                    connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                      VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ] );
-                  }else{
-                    connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                      VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ], (err) => {
-                      //must handle error if any
-                      connection.commit();
-                    });
+                if( libraries.length ){
+                  let libs = libraries.split(",");
+                  for( var ix = 0; ix < libs.length; ix++ ){
+                    if( ix < libs.length - 1 ){
+                      connection.query(`INSERT INTO appLibraries ( appID, libraryID )
+                                        VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ] );
+                    }else{
+                      connection.query(`INSERT INTO appLibraries ( appID, libraryID )
+                                        VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ], (err) => {
+                        //must handle error if any
+                        connection.commit();
+                      });
+                    }
                   }
                 }
-
               }catch (err) {
                 connection.rollback();
                 connection.end();
@@ -58,8 +59,18 @@ var dao = {
                             FROM apps
                             WHERE appID = ?`, [appID] )
             .then( ( results ) =>{
-              connection.end();
-              resolve( results[0] );
+              connection.query( `SELECT libraryID
+                                  FROM appLibraries
+                                  WHERE appID = ?`, [appID] )
+              .then( ( nextResults ) => {
+                results[0].libraries = nextResults.map( lib => lib.libraryID ).join( "," );
+                connection.end();
+                resolve( results[0] );
+              })
+              .catch( err =>{
+                connection.end();
+                reject( err );
+              });
             })
             .catch( err =>{
               connection.end();
@@ -88,17 +99,20 @@ var dao = {
                                   WHERE appID = ? `, [ appID ] )
                 .then( ( deletedResults ) =>{
                   try{
-                    let libs = libraries.split(",");
-                    for( var ix = 0; ix < libs.length; ix++ ){
-                      if( ix < libs.length - 1 ){
-                        connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                          VALUES ( ?, ? )`, [ appID, libs[ ix ] ] );
-                      }else{
-                        connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                          VALUES ( ?, ? )`, [ appID, libs[ ix ] ], (err) => {
-                          //must handle error if any
+                    if( libraries.length ){
+                      let libs = libraries.split(",");
+                      for( var ix = 0; ix < libs.length; ix++ ){
+                        if( ix < libs.length - 1 ){
+                          connection.query(`INSERT INTO appLibraries ( appID, libraryID )
+                                            VALUES ( ?, ? )`, [ appID, libs[ ix ] ] );
                           connection.commit();
-                        });
+                        }else{
+                          connection.query(`INSERT INTO appLibraries ( appID, libraryID )
+                                            VALUES ( ?, ? )`, [ appID, libs[ ix ] ], (err) => {
+                            //must handle error if any
+                            connection.commit();
+                          });
+                        }
                       }
                     }
                   }catch (err) {
