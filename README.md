@@ -1,7 +1,7 @@
 # livesandbox
 in-browser JavaScript IDE
 
-v 0.9.3
+v 0.9.4
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 

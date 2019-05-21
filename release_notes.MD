@@ -1,3 +1,20 @@
+0.9.4 Beta update
+===================
+
+Updates in this release.
+- fix update/read issues with saving apps
+- change editor layout
+- fix sometimes incorrect saving of esModule bit field
+- fix save/retrieval/loading of app libraries
+- add getApps and getLibraries stored procs to git
+- update db dump
+- set editor to wrap long lines so the editor width does not grow beyond 50% of sandbox width
+
+Upgrading from previous releases:
+
+In addition to pulling the latest master (or the 0.9.4 tag) from GitHub, you will need to update the getApps stored procedure in the database. A SQL script has been added to ./database/getApps.sql with the updated stored procedure code. You can, if you prefer, simply replace the previous database with the new backup in the ./database folder.
+
+
 0.9.3 Beta update
 ===================
 
