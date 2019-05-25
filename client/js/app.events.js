@@ -25,7 +25,8 @@ export var events = function init(){
   });
 
   a7.events.subscribe( "library.new", function( obj ){
-    a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get( "activeLibraries" ) } );
+    let libsState = a7.ui.getView('libraries').getState();
+    a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get( "activeLibraries" ), offset: libsState.offset } );
   });
 
   a7.events.subscribe( "app.getApps", function( obj ){
@@ -58,15 +59,23 @@ export var events = function init(){
     let appLibs = app.libraries.split(",").map( libID => parseInt( libID,10 ));
     let activeLibs = ( app.libraries ? libraries.filter( lib => appLibs.indexOf( lib.libraryID ) >= 0 ) : [] );
 
-
     a7.model.set( "activeLibraries", activeLibs );
     a7.ui.getView('jseditor').props.editor.setValue( app.jsCode );
     a7.ui.getView('htmleditor').props.editor.setValue( app.htmlCode );
     a7.ui.getView('csseditor').props.editor.setValue( app.cssCode );
 
+    let editorSize = a7.model.get( "editorSize" );
+    let height = editorSize.height;
+    let cmDivs = document.querySelectorAll( ".CodeMirror" );
+    cmDivs.forEach( function( div ){
+      div.setAttribute( "style", "height:" + ( height - 65 ) + "px !important");
+    });
+
+    let appsState = a7.ui.getView('apps').getState();
+    let libsState = a7.ui.getView('libraries').getState();
     a7.ui.getView('buttonbar').setState( { esModule: app.esModule } );
-    a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs } );
-    a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app } );
+    a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs, offset: libsState.offset } );
+    a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app, offset: appsState.offset } );
     a7.events.publish( "sandbox.execute", {} );
   });
 
@@ -78,12 +87,15 @@ export var events = function init(){
     a7.ui.getView('jseditor').props.editor.setValue( "" );
     a7.ui.getView('htmleditor').props.editor.setValue( "" );
     a7.ui.getView('csseditor').props.editor.setValue( "" );
-    a7.ui.getView('buttonbar').setState( { esModule: false } );
-    a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" } } );
+    a7.ui.getView('buttonbar').setState( { esModule: 0 } );
+    a7.model.set( "activeLibraries", [] );
+    a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get( "activeLibraries" ), offset: 0 } );
+    a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
     a7.events.publish( "sandbox.execute", {} );
   });
 
   a7.events.subscribe( "tabs.setTab", function( obj ){
+    a7.model.set( "activeTab", obj.tab );
     a7.ui.getView('tabs').state.tabs.forEach( function( tab ){
       document.querySelector( "#" + tab ).style.display = ( tab === obj.tab ? 'block' : 'none' );
       a7.ui.getView('tabs').element.querySelector( "div.tabs div[name='" + tab + "']" ).style.backgroundColor = ( tab === obj.tab ? '#99f' : '' );
@@ -103,6 +115,12 @@ export var events = function init(){
     if( libs !== null ){
       libs.forEach( function( lib ){
         doc.head.removeChild( lib );
+      });
+    }
+    let styles = doc.querySelectorAll( "style" );
+    if( styles !== null ){
+      styles.forEach( function( style ){
+        doc.head.removeChild( style );
       });
     }
     let activeLibraries = a7.model.get( "activeLibraries" );

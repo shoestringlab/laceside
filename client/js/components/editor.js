@@ -8,13 +8,22 @@ export var Editor = function Editor(props){
     indentWithTabs: true
   };
 
-   editor.on( "rendered", function(){
-    editor.props.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
-      lineNumbers: true,
-      mode: editor.state.mode,
-      lineWrapping: true
+  editor.on( "rendered", function(){
+
+   //editor.element.querySelector( "textarea" ).style.width = width;
+
+   editor.props.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
+    lineNumbers: true,
+    mode: editor.state.mode,
+    lineWrapping: true
     });
 
+/*     let editorSize = a7.model.get( "editorSize" );
+    let height = editorSize.height;
+    //let width = editorSize.width;
+    //console.log( editor.element.querySelector( ".CodeMirror-scroll" ) );
+    editor.element.querySelector( ".CodeMirror" ).setAttribute( "style", "height:" + ( height -60 ) + "px !important");
+ */
     editor.props.editor.refresh();
 
     editor.props.editor.on( "change", function(){
@@ -27,7 +36,7 @@ export var Editor = function Editor(props){
 
   editor.template = function(){
     let templ = `<form>
-    <textarea name="codeWindow"></textarea>
+    <textarea name="codeWindow" style="overflow:scroll !important;"></textarea>
 
     </form>`;
     return templ;

@@ -5,7 +5,7 @@ export { getApps, create, update, read, deleteById };
 
 var getApps = function( obj ){
     var params = { method: 'GET' };
-    var promise = a7.remote.fetch( "/apps?offset=" + obj.offset, params, true );
+    var promise = a7.remote.fetch( "/apps", params, true );
 
     promise
       .then( function( response ) {
@@ -13,15 +13,13 @@ var getApps = function( obj ){
         return response.json();
       })
       .then( function( json ){
-        let apps = ( obj.offset === 0 ? [] : a7.model.get( "apps" ) );
-        if( json.records ){
-          json.records.forEach( function( app, idx ){
+        if( json.length ){
+          json.forEach( function( app, idx ){
             app.esModule = app.esModule.data[0];
-            apps.push( app );
           });
         }
-        a7.model.set( "apps", apps );
-        a7.ui.getView('apps').setState( { apps: apps, app: { appID: 0, name: "" } } );
+        a7.model.set( "apps", json );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
       });
   },
   create = function( obj ){
@@ -57,7 +55,7 @@ var getApps = function( obj ){
         apps.push( app );
         a7.model.set( "apps", apps );
 
-        a7.ui.getView('apps').setState( { apps: apps, app: app } );
+        a7.ui.getView('apps').setState( { apps: apps, app: app, offset: 0 } );
       });
   },
   read = function( obj ){
@@ -116,7 +114,7 @@ var getApps = function( obj ){
           }
         }
         a7.model.set( "apps", apps );
-        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app } );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app, offset: 0 } );
       });
   },
   deleteById = function( obj ){
@@ -149,6 +147,6 @@ var getApps = function( obj ){
         }
 
         a7.model.set( "apps", apps );
-        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' } } );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
       });
   };

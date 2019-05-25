@@ -1,23 +1,24 @@
 <html>
-  <head>
-    <title>
-      JavaScript Sandbox
-    </title>
-    <link href="/css/styles.css" rel="stylesheet" type="text/css">
-  	<link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css">
-  	<link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css">
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/xml/xml.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
-    <script src="/lib/codemirror/mode/css/css.js"></script>
-    <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
+<head>
+  <title>
+    JavaScript Sandbox
+  </title>
+  <link href="/css/styles.css" rel="stylesheet" type="text/css">
+  <link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css">
+  <link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css">
 
-<!--    <script src="/lib/velocity/velocity.min.js"></script> -->
+  <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css">
+  <script src="/lib/codemirror/lib/codemirror.js"></script>
+  <script src="/lib/codemirror/mode/xml/xml.js"></script>
+  <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+  <script src="/lib/codemirror/mode/css/css.js"></script>
+  <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
 
-    <script type="module">
+  <!--    <script src="/lib/velocity/velocity.min.js"></script> -->
+
+  <script type="module">
     import {application} from '/js/app.js';
     import {collapsiblepane,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
@@ -36,57 +37,45 @@
     constructor( collapsiblepane, [ document.querySelector( "div.console" ),
     {
       title : "Console",
-      collapse: false
+      collapse: false,
+      class: "consolePane"
     }]);
 
     var app = application();
 
     </script>
+</head>
 
-  </head>
-
-  <body>
-
-
-
-    <div id="anon">
-
-    </div>
-    <div id="secure">
-      <div class="wrapper">
-        <div class="box header">
-          <div id="headerLeft" class="headerCol"></div>
-          <div id="headerRight" class="headerCol"></div>
+<body>
+  <div id="anon">
+  </div>
+  <div id="secure">
+    <div class="wrapper">
+      <div class="box header">
+        <div id="headerLeft" class="headerCol"></div>
+        <div id="headerRight" class="headerCol"></div>
+      </div>
+      <div id="sidebar" class="box sidebar">
+        <div id="libraries">
         </div>
-        <div id="sidebar" class="box sidebar">
-          <div id="libraries">
-          </div>
-          <br>
-          <div id="apps">
-          </div>
-          <br>
-          <div name="console" id="console" class="console">
-
-          </div>
-
+        <br>
+        <div id="apps">
         </div>
-        <div class="box app">
-          <div id="sandBox" class="sandBox">
-              <div id="editors">
-
-              </div>
-              <div name="htmlFrame" class="htmlFrame">
-                <!-- <label for="iframe">HTML document ...</label> -->
-                <iframe id="iframe">
-
-                </iframe>
-              </div>
+        <br>
+        <div name="console" id="console" class="console">
+        </div>
+      </div>
+      <div class="box app">
+        <div id="sandBox" class="sandBox">
+          <div id="editors">
+          </div>
+          <div name="htmlFrame" class="htmlFrame">
+            <iframe id="iframe">
+            </iframe>
           </div>
         </div>
-
       </div>
     </div>
-
-
-  </body>
+  </div>
+</body>
 </html>

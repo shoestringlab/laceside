@@ -81,5 +81,31 @@ gateway = {
           reject( err );
         });
     });
+  },
+  deleteByLibraryID : function( libraryID, userID ){
+    return new Promise( function( resolve, reject ){
+      pool.getConnection()
+        .then( connection => {
+          connection.query(`DELETE
+                            FROM    appLibraries
+                            WHERE   libraryID = ?
+                            AND libraryID IN ( SELECT libraryID
+                                            FROM  libraries
+                                            WHERE userID = ? )`, [ libraryID, userID ])
+            .then( ( results ) =>{
+              connection.end();
+              resolve( results );
+            })
+            .catch( err =>{
+              //not connected
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err => {
+          //not connected
+          reject( err );
+        });
+    });
   }
 }

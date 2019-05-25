@@ -1,5 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
+import {Paging} from '/js/components/paging.js';
 
 export var Libraries = function Libraries(props) {
   var libraries = a7.components.Constructor(a7.components.View, [props], true);
@@ -7,11 +8,13 @@ export var Libraries = function Libraries(props) {
   libraries.state = {
     libraries: [],
     library: props.library || { libraryID: 0, name: "", link: "" },
-    activeLibraries: []
+    activeLibraries: [],
+    offset: 0
   };
 
   libraries.template = function(){
     let disabled = ( libraries.state.library.name.length > 0 ? '' : 'disabled="disabled"' );
+    let offset = parseInt( libraries.state.offset, 10 );
 		let templ = `<form>
                   <input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}" data-oninput="checkSavable"/><br/>
                   <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js" value="${libraries.state.library.link}"/><br/>
@@ -19,7 +22,9 @@ export var Libraries = function Libraries(props) {
                   <button type="button" data-onclick="newLibrary">New</button>
                   `;
 
-    libraries.state.libraries.forEach( function( library ){
+  //  libraries.state.libraries.forEach( function( library ){
+    for( var ix = offset; ix < Math.min( libraries.state.libraries.length, libraries.state.offset + 5 ); ix++ ){
+      let library = libraries.state.libraries[ix];
       templ += `<div class="row"><div class="inline">
                 <input type="checkbox" name="libraryID" value="${library.libraryID}" data-link="${library.link}" data-onClick="setLibrary"/><a name="lib" data-onClick="editLibrary" data-id="${library.libraryID}">${library.name}</a>
                 </div>
@@ -28,20 +33,26 @@ export var Libraries = function Libraries(props) {
                   <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
                   </svg>
                 </a></div>`;
-    });
+    }
+    //});
     templ += `</form>`;
+    templ+=`<div class="paging"></div>`;
+    a7.log.trace( "libs offset: " + offset );
+    Paging( { id: 'libsPaging', parentID: libraries.props.id, selector: libraries.props.selector + ' div.paging', records: libraries.state.libraries, offset: offset } );
+
     return templ;
 	};
 
   libraries.on( "rendered", function(){
     let libs = libraries.state.activeLibraries;
-      if( libs ){
-        libraries.state.activeLibraries.forEach( function( activeLib ){
-          if( activeLib !== null ){
-            document.querySelector( libraries.props.selector + " input[type='checkbox'][value='" + activeLib.libraryID + "']" ).checked = true;
-          }
-        });
-      }
+    if( libs ){
+      libraries.state.activeLibraries.forEach( function( activeLib ){
+        let cbSelector = document.querySelector( libraries.props.selector + " input[type='checkbox'][value='" + activeLib.libraryID + "']" );
+        if( activeLib !== null && cbSelector !== null ){
+          cbSelector.checked = true;
+        }
+      });
+    }
   });
 
 	libraries.eventHandlers = {
@@ -68,7 +79,7 @@ export var Libraries = function Libraries(props) {
     },
     editLibrary: function( event ){
       let library = libraries.state.libraries.filter( lib => lib.libraryID == event.currentTarget.attributes['data-id'].value )[0];
-      libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries });
+      libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries, offset: libraries.state.offset  });
     },
     deleteLibrary: function( event ){
       a7.events.publish( "library.delete", {
@@ -92,7 +103,7 @@ export var Libraries = function Libraries(props) {
         }
       }
       a7.model.set( "activeLibraries", activeLibs );
-      libraries.setState( { libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs });
+      libraries.setState( { libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs, offset: libraries.state.offset });
     },
     newLibrary: function( event ){
       a7.events.publish( "library.new", {} );

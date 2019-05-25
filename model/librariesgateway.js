@@ -9,11 +9,14 @@ function init(){
 }
 
 gateway = {
-  getLibraries : function( userID, count, offset ){
+  getLibraries : function( userID ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query(`call getLibraries( ?, ?, ? )`, [userID, count, offset])
+          connection.query(`SELECT libraryID, userID, name, link
+                            FROM libraries
+                            WHERE userID = ?
+                            ORDER BY name`, [userID])
             .then( ( results ) =>{
               connection.end();
               resolve( results );

@@ -1,14 +1,14 @@
 
 const service = require( '../model/librariesservice' );
+const appLibraryService = require( '../model/applibrariesservice' );
 
 module.exports = {
 
    getLibraries: function( request, response ){
-    service.getLibraries( request.user.userID, 100, parseInt( request.query.offset, 10 ) )
+    service.getLibraries( request.user.userID )
       .then( function( results ){
-        //console.log( results );
         response.setHeader( "Cache-Control", "no-cache" );
-        response.send( JSON.stringify( { records: results[0], total: results[1][0].totalCount } ) );
+        response.send( JSON.stringify( results) );
       })
       .catch( function( error ){
         console.log( error );
@@ -66,10 +66,17 @@ module.exports = {
   },
 
   delete: function( request, response){
-    service.delete( request.params.ID, request.user.userID )
+    appLibraryService.deleteByLibraryID( request.params.ID, request.user.userID )
       .then( function( success ){
-        response.send( JSON.stringify( success ) );
-      })
+        service.delete( request.params.ID, request.user.userID )
+          .then( function( success ){
+            response.send( JSON.stringify( success ) );
+          })
+          .catch( function( error ){
+            console.log( error );
+            response.send( JSON.stringify( error ) );
+          });
+        })
       .catch( function( error ){
         console.log( error );
         response.send( JSON.stringify( error ) );

@@ -5,8 +5,8 @@ const dao = appsdao();
 const gateway = appsgateway();
 
 module.exports = {
-   getApps: function( userID, count, offset ){
-    return( gateway.getApps( userID, count, offset ) );
+   getApps: function( userID ){
+    return( gateway.getApps( userID ) );
   },
   create: function( userID, name, jsCode, htmlCode, cssCode, esModule, libraries ){
     return( dao.create( userID, name, jsCode, htmlCode, cssCode, esModule, libraries ) );

@@ -51,6 +51,30 @@ var dao = {
         });
     });
   },
+  update: function ( libraryID, userID, link, name ){
+    return new Promise( function( resolve, reject ){
+      pool.getConnection()
+        .then( connection => {
+          connection.query(`UPDATE libraries
+                            SET link = ?,
+                                name = ?
+                            WHERE libraryID = ?
+                            AND   userID = ?`, [ link, name, libraryID, userID ] )
+            .then( ( results ) =>{
+              connection.end();
+              resolve( true );
+            })
+            .catch( err =>{
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err =>{
+          reject( err );
+        });
+    });
+  },
+
   delete: function( libraryID, userID ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()

@@ -28,7 +28,7 @@ events();
 export var application = function init(){
 	var
 		options = {
-		/* 	console: {
+		 	/* console: {
 				enabled: true,
 				container: floatingpane,
         //wsServer: 'ws://127.0.0.1:8000',

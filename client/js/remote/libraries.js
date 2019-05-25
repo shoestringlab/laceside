@@ -5,7 +5,7 @@ export { getLibraries, create, read, update, deleteById };
 
 var getLibraries = function( obj ){
     var params = { method: 'GET' };
-    var promise = a7.remote.fetch( "/libraries?offset=" + obj.offset, params, true );
+    var promise = a7.remote.fetch( "/libraries", params, true );
 
     promise
       .then( function( response ) {
@@ -13,14 +13,8 @@ var getLibraries = function( obj ){
         return response.json();
       })
       .then( function( json ){
-        let libraries = ( obj.offset === 0 ? [] : a7.model.get( "libraries" ) );
-        if( json.records ){
-          json.records.forEach( function( library, idx ){
-            libraries.push( library );
-          });
-        }
-        a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: libraries, library: { libraryID: 0, name: "", link: "" } } );
+        a7.model.set( "libraries", json );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, offset: 0 } );
       });
   },
   create = function( obj ){
@@ -51,7 +45,7 @@ var getLibraries = function( obj ){
         libraries.push( library );
         a7.model.set( "libraries", libraries );
 
-        a7.ui.getView('libraries').setState( { libraries: libraries, library: library } );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library, offset: 0 } );
       });
   },
   read = function( obj ){
@@ -77,13 +71,12 @@ var getLibraries = function( obj ){
   },
   update = function( obj ){
     var request;
-    console.log( "libraries.update" );
     var params = {  method: 'PUT',
                     headers: {
                       'Accept': 'application/json, application/xml, text/play, text/html, *.*',
                       'Content-Type': 'application/json; charset=utf-8'
                     },
-                    body: JSON.stringify( { libraryID: obj.libraryID,
+                    body: JSON.stringify( {
                     name: obj.name,
                     link: obj.link } )
                   };
@@ -106,7 +99,7 @@ var getLibraries = function( obj ){
           }
         }
         a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library } );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library, offset: 0 } );
       });
   },
   deleteById = function( obj ){
@@ -139,6 +132,6 @@ var getLibraries = function( obj ){
         }
 
         a7.model.set( "libraries", libraries );
-        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" } } );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, offset: 0 } );
       });
   };

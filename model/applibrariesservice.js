@@ -14,6 +14,9 @@ module.exports = {
   deleteByAppID: function( appID, userID ){
     return gateway.deleteByAppID( appID, userID );
   },
+  deleteByLibraryID: function( libraryID, userID ){
+    return gateway.deleteByLibraryID( libraryID, userID );
+  },
   createMany: function( appID, libraries ){
     return( dao.create( appID, libraries ) );
   },

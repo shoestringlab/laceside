@@ -1,3 +1,17 @@
+0.9.5 Beta update
+===================
+
+Updates in this release.
+
+- update editor size when viewport size changes
+  ( not finished )
+- add paging to apps and libraries display
+- remove old style blocks on sandbox execute
+- return all apps and libraries from remote and page on client-side
+- fix delete libraries server-side code bug
+- add update to librariesdao
+- remove getApps and getLibraries stored procs from use
+
 0.9.4 Beta update
 ===================
 

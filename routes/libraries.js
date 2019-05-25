@@ -15,7 +15,7 @@ module.exports = function(app) {
   app.get( "/library/:ID", librarycontroller.read );
 
   // update a library
-  app.put( "/library/:ID", jsonParser, librarycontroller.create );
+  app.put( "/library/:ID", jsonParser, librarycontroller.update );
 
   //delete a library
   app.delete( "/library/:ID", librarycontroller.delete );

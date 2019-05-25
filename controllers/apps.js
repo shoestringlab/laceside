@@ -5,17 +5,17 @@ const appLibraryService = require( '../model/applibrariesservice' );
 module.exports = {
 
    getApps: function( request, response ){
-    service.getApps( request.user.userID, 100, parseInt( request.query.offset, 10 ) )
+    service.getApps( request.user.userID )
       .then( function( results ){
         appLibraryService.getByUserID( request.user.userID )
           .then( function( alResults ){
-            let rows = [];
-            results[0].forEach( function( result ){
+              results.forEach( function( result ){
+              // find the libraries used for each app
               let libs = alResults.filter( lib => lib.appID === result.appID ).map( lib => lib.libraryID ).join(",");
               result.libraries = libs;
             });
             response.setHeader( "Cache-Control", "no-cache" );
-            response.send( JSON.stringify( { records: results[0], total: results[1][0].totalCount } ) );
+            response.send( JSON.stringify( results ) );
           })
           .catch( function( error ){
             console.log( error );
