@@ -1,4 +1,4 @@
-0.9.5 Beta update
+0.10.0 Beta update
 ===================
 
 Updates in this release.
