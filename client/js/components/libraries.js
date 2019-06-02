@@ -1,6 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
 import {Paging} from '/js/components/paging.js';
+import * as utils from '/js/app.utils.js';
 
 export var Libraries = function Libraries(props) {
   var libraries = a7.components.Constructor(a7.components.View, [props], true);
@@ -11,6 +12,17 @@ export var Libraries = function Libraries(props) {
     activeLibraries: [],
     offset: 0
   };
+
+  libraries.isDirty = function(){
+    let isDirty = false;
+    let library = libraries.state.library;
+    let currentName = libraries.element.querySelector( "input[name='name']" ).value;
+    let currentLink = libraries.element.querySelector( "input[name='link']" ).value;
+    if( ( library.libraryID === 0 && ( currentName.length || currentLink.length ) ) || ( library.libraryID > 0 && ( currentName !== library.name || currentLink !== library.link ) ) ){
+      isDirty = true;
+    }
+    return isDirty;
+  },
 
   libraries.template = function(){
     let disabled = ( libraries.state.library.name.length > 0 ? '' : 'disabled="disabled"' );
@@ -78,8 +90,23 @@ export var Libraries = function Libraries(props) {
       }
     },
     editLibrary: function( event ){
-      let library = libraries.state.libraries.filter( lib => lib.libraryID == event.currentTarget.attributes['data-id'].value )[0];
-      libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries, offset: libraries.state.offset  });
+      let dataId = event.currentTarget.attributes['data-id'].value;
+       if( libraries.isDirty() ){
+         let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
+         [{ label: 'Yes', click: function(){
+            dlg.close();
+            let library = libraries.state.libraries.filter( lib => lib.libraryID == dataId )[0];
+            libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries, offset: libraries.state.offset  });
+           }},
+           { label: "No", click: function(){
+             dlg.close();
+           }}
+         ]);
+       }else{
+         let library = libraries.state.libraries.filter( lib => lib.libraryID == dataId )[0];
+         libraries.setState( { libraries: libraries.state.libraries, library: library, activeLibraries: libraries.state.activeLibraries, offset: libraries.state.offset  });
+       }
+
     },
     deleteLibrary: function( event ){
       a7.events.publish( "library.delete", {
@@ -106,7 +133,19 @@ export var Libraries = function Libraries(props) {
       libraries.setState( { libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs, offset: libraries.state.offset });
     },
     newLibrary: function( event ){
-      a7.events.publish( "library.new", {} );
+      if( libraries.isDirty() ){
+        let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
+        [{ label: 'Yes', click: function(){
+           dlg.close();
+           a7.events.publish( "library.new", {} );
+          }},
+          { label: "No", click: function(){
+            dlg.close();
+          }}
+        ]);
+      }else{
+        a7.events.publish( "library.new", {} );
+      }
     }
 	};
 

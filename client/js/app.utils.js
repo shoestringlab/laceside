@@ -1,6 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
+import {bubble, constructor, dialog} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
-export { formatDate, addModLazy, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
+export { formatDate, addModLazy, showNotice, showDialog, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
 
 var formatDate = function( dateString, format ){
   let date = new Date( dateString );
@@ -19,6 +20,38 @@ var formatDate = function( dateString, format ){
       break;
   }
   return dateStr;
+},
+
+showNotice = function( message ){
+  constructor( bubble, [document.querySelector( "#headerMiddle" ),
+    message,
+    {
+      position: "middle center",
+      class: "bubbleClass",
+      closable : true,
+      autoClose: true,
+      autoCloseDelay: 3000,
+      featherPath: '/lib/feather-icons'
+    }]);
+},
+
+showDialog = function( title, message, buttons ){
+  if( document.querySelector( "#dialog" ) === null ){
+    let div = document.createElement( "div" );
+    div.setAttribute( "id", "dialog" );
+    document.body.appendChild( div );
+  }
+  return constructor( dialog,
+    	[ document.querySelector( "#dialog" ),
+    		{
+          class: "sysDialog",
+          width: 400,
+    			title : title,
+          message: message,
+    			enableShrink : false,
+    			overflow: "hidden",
+    			buttons: buttons
+    		}] );
 },
 
 addModLazy = function( doc ){

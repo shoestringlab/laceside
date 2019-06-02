@@ -12,6 +12,21 @@ export var Apps = function Apps(props) {
     offset: 0
   };
 
+  apps.isDirty = function(){
+    let isDirty = false;
+    let app = apps.state.app;
+    let jsCode = a7.model.get( 'jsCode' ) || '';
+    let htmlCode = a7.model.get( 'htmlCode' ) || '';
+    let cssCode = a7.model.get( 'cssCode' ) || '';
+    if( ( app.appID === 0 && ( jsCode.length > 0 || htmlCode.length > 0 || cssCode.length > 0 ) )
+          ||
+        ( app.appID > 0 && ( app.jsCode !== jsCode || app.htmlCode !== htmlCode || app.cssCode !== cssCode ) )
+      ){
+        isDirty = true;
+    }
+    return isDirty;
+  };
+
   apps.template = function(){
     let disabled = ( apps.state.app.name.length > 0 ? '' : 'disabled="disabled"' );
     let offset = parseInt( apps.state.offset, 10 );
@@ -64,12 +79,39 @@ export var Apps = function Apps(props) {
       });
     },
     loadApp: function( event ){
-      a7.events.publish( "app.load", {
-        appID: event.currentTarget.attributes['data-id'].value
-      });
+      let target = event.currentTarget;
+      if( apps.isDirty() ){
+        let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
+        [{ label: 'Yes', click: function(){
+           dlg.close();
+           a7.events.publish( "app.load", {
+             appID: target.attributes['data-id'].value
+           });
+          }},
+          { label: "No", click: function(){
+            dlg.close();
+          }}
+        ]);
+      }else{
+        a7.events.publish( "app.load", {
+          appID: event.currentTarget.attributes['data-id'].value
+        });
+      }
     },
     newApp: function( event ){
-      a7.events.publish( "app.new", {} );
+      if( apps.isDirty() ){
+        let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
+        [{ label: 'Yes', click: function(){
+           dlg.close();
+           a7.events.publish( "app.new", {} );
+          }},
+          { label: "No", click: function(){
+            dlg.close();
+          }}
+        ]);
+      }else{
+        a7.events.publish( "app.new", {} );
+      }
     }
 	};
 

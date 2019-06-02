@@ -3,25 +3,85 @@ import * as utils from '/js/app.utils.js';
 
 export var events = function init(){
   a7.events.subscribe( "menu.jsSandbox", function( obj ){
-    a7.log.info( 'jsSandbox menu' );
     a7.ui.getNode( a7.ui.selectors['sandBox'] ).style.display='grid';
   });
 
   a7.events.subscribe( "library.getLibraries", function( obj ){
-    a7.remote.invoke( "libraries.getLibraries", obj );
+    a7.remote.invoke( "libraries.getLibraries", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        a7.model.set( "libraries", json );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, offset: 0 } );
+      });
   });
 
   a7.events.subscribe( "library.create", function( obj ){
-    a7.remote.invoke( "libraries.create", obj );
+    a7.remote.invoke( "libraries.create", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        var library = json;
+        var libraries = a7.model.get( "libraries" );
+        libraries.push( library );
+        a7.model.set( "libraries", libraries );
+
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library, offset: 0 } );
+
+        utils.showNotice( "New library saved." );
+
+      });
   });
 
   a7.events.subscribe( "library.update", function( obj ){
-    console.log( "library.update- events" );
-    a7.remote.invoke( "libraries.update", obj );
+    a7.remote.invoke( "libraries.update", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        var library = json;
+
+        var libraries = a7.model.get( "libraries" );
+        for( var ix = 0; ix < libraries.length; ix++ ){
+          if (libraries[ix].libraryID === library.libraryID) {
+            libraries[ix] = library;
+            break;
+          }
+        }
+        a7.model.set( "libraries", libraries );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: library, offset: 0 } );
+        utils.showNotice( "Library saved." );
+      });
   });
 
   a7.events.subscribe( "library.delete", function( obj ){
-    a7.remote.invoke( "libraries.deleteById", obj );
+    a7.remote.invoke( "libraries.deleteById", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        if( json ){
+          var libraries = a7.model.get( "libraries" );
+
+          var deleted = libraries.find( function( library, idx ){
+              if (library.libraryID === parseInt( obj.libraryID, 10 ) ) {
+                libraries.splice( idx, 1 );
+                  return true;
+              }
+          });
+        }
+
+        a7.model.set( "libraries", libraries );
+        a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, offset: 0 } );
+
+        utils.showNotice( "Library deleted." );
+      });
   });
 
   a7.events.subscribe( "library.new", function( obj ){
@@ -30,7 +90,20 @@ export var events = function init(){
   });
 
   a7.events.subscribe( "app.getApps", function( obj ){
-    a7.remote.invoke( "apps.getApps", obj );
+    a7.remote.invoke( "apps.getApps", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        if( json.length ){
+          json.forEach( function( app, idx ){
+            app.esModule = app.esModule.data[0];
+          });
+        }
+        a7.model.set( "apps", json );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
+      });
   });
 
   a7.events.subscribe( "app.create", function( obj ){
@@ -40,7 +113,21 @@ export var events = function init(){
     args.cssCode = a7.model.get( "cssCode" ) || "";
     args.esModule = a7.model.get( 'esModule' );
     args.libraries = ( a7.model.get( "activeLibraries" ) ? a7.model.get( "activeLibraries" ).map( library => library.libraryID ).join( "," ) : "" );
-    a7.remote.invoke( "apps.create", args );
+    a7.remote.invoke( "apps.create", args )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        var app = json;
+        app.esModule = app.esModule.data[0];
+        var apps = a7.model.get( "apps" ) || [];
+        apps.push( app );
+        a7.model.set( "apps", apps );
+
+        a7.ui.getView('apps').setState( { apps: apps, app: app, offset: 0 } );
+        utils.showNotice( "The application was saved." );
+      });
   });
 
   a7.events.subscribe( "app.update", function( obj ){
@@ -50,7 +137,25 @@ export var events = function init(){
     args.cssCode = a7.model.get( "cssCode" ) || "";
     args.esModule = a7.model.get( 'esModule' );
     args.libraries = ( a7.model.get( "activeLibraries" ) ? a7.model.get( "activeLibraries" ).map( library => library.libraryID ).join( "," ) : "" );
-    a7.remote.invoke( "apps.update", args );
+    a7.remote.invoke( "apps.update", args )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        var app = json;
+        app.esModule = app.esModule.data[0];
+        var apps = a7.model.get( "apps" );
+        for( var ix = 0; ix < apps.length; ix++ ){
+          if (apps[ix].appID === app.appID) {
+            apps[ix] = app;
+            break;
+          }
+        }
+        a7.model.set( "apps", apps );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app, offset: 0 } );
+        utils.showNotice( "The application was saved." );
+      });
   });
 
   a7.events.subscribe( "app.load", function( obj ){
@@ -80,7 +185,27 @@ export var events = function init(){
   });
 
   a7.events.subscribe( "app.delete", function( obj ){
-    a7.remote.invoke( "apps.deleteById", obj );
+    a7.remote.invoke( "apps.deleteById", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+        if( json ){
+          var apps = a7.model.get( "apps" );
+
+          var deleted = apps.find( function( app, idx ){
+              if (app.appID === parseInt( obj.appID, 10 ) ) {
+                apps.splice( idx, 1 );
+                  return true;
+              }
+          });
+        }
+
+        a7.model.set( "apps", apps );
+        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
+        utils.showNotice( "The application was deleted." );
+      });
   });
 
   a7.events.subscribe( "app.new", function( obj ){

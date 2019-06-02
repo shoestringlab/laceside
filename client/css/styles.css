@@ -1,6 +1,6 @@
 html, body{
  margin:0;
- padding:1em;
+ padding:.5em;
  font-family: Geneva, Arial, Helevtica, sans;
  position:relative;
 
@@ -62,11 +62,12 @@ a{
   background-color: #ccf;
   color: #444;
   font-weight: bold;
+  border-radius:5px;
 }
 
 .profileHeader{
   padding-top:1em;
-  right:2em;
+  padding-right:2em;
 }
 
 .topleft {
@@ -416,4 +417,33 @@ button:disabled{
 
 .paging{
   text-align: center;
+}
+
+.bubbleClass{
+  border: 1px solid #77f;
+  padding: 5px;
+  border-radius: 5px;
+  width:220px;
+  font: 14px Arial;
+  background: #fff;
+  opacity: .7;
+  color: #444;
+}
+
+#dialog{
+  width: 500px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.sysDialog{
+  top: 200px;
+  left:200px;
+  position:absolute;
+  width: 500px;
+  background: #fff;
+}
+
+.sysDialog .gadget-ui-floatingPane-header{
+  background: #ccf;
 }

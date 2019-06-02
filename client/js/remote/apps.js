@@ -1,26 +1,10 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import * as utils from '/js/app.utils.js';
 
 export { getApps, create, update, read, deleteById };
 
 var getApps = function( obj ){
-    var params = { method: 'GET' };
-    var promise = a7.remote.fetch( "/apps", params, true );
-
-    promise
-      .then( function( response ) {
-        // get json response and pass to handler to resolve
-        return response.json();
-      })
-      .then( function( json ){
-        if( json.length ){
-          json.forEach( function( app, idx ){
-            app.esModule = app.esModule.data[0];
-          });
-        }
-        a7.model.set( "apps", json );
-        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
-      });
+    let params = { method: 'GET' };
+    return a7.remote.fetch( "/apps", params, true );
   },
   create = function( obj ){
     var request;
@@ -41,22 +25,8 @@ var getApps = function( obj ){
                     })
                   };
 
-    var promise = a7.remote.fetch( "/app", params, true );
+    return a7.remote.fetch( "/app", params, true );
 
-    promise
-      .then( function( response ) {
-        // get json response and pass to handler to resolve
-        return response.json();
-      })
-      .then( function( json ){
-        var app = json;
-        app.esModule = app.esModule.data[0];
-        var apps = a7.model.get( "apps" ) || [];
-        apps.push( app );
-        a7.model.set( "apps", apps );
-
-        a7.ui.getView('apps').setState( { apps: apps, app: app, offset: 0 } );
-      });
   },
   read = function( obj ){
     var request;
@@ -68,16 +38,7 @@ var getApps = function( obj ){
                     }
                   };
 
-    var promise = a7.remote.fetch( "/app/" + obj.app.appID, params, true );
-
-    promise
-      .then( function( response ) {
-        // get json response and pass to handler to resolve
-        return response.json();
-      })
-      .then( function( json ){
-
-      });
+    return a7.remote.fetch( "/app/" + obj.app.appID, params, true );
   },
   update = function( obj ){
     var request;
@@ -96,26 +57,7 @@ var getApps = function( obj ){
                       esModule: obj.esModule } )
                   };
 
-    var promise = a7.remote.fetch( "/app/" + obj.appID, params, true );
-
-    promise
-      .then( function( response ) {
-        // get json response and pass to handler to resolve
-        return response.json();
-      })
-      .then( function( json ){
-        var app = json;
-        app.esModule = app.esModule.data[0];
-        var apps = a7.model.get( "apps" );
-        for( var ix = 0; ix < apps.length; ix++ ){
-          if (apps[ix].appID === app.appID) {
-            apps[ix] = app;
-            break;
-          }
-        }
-        a7.model.set( "apps", apps );
-        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app, offset: 0 } );
-      });
+    return a7.remote.fetch( "/app/" + obj.appID, params, true );
   },
   deleteById = function( obj ){
     var request;
@@ -127,26 +69,5 @@ var getApps = function( obj ){
                     }
                   };
 
-    var promise = a7.remote.fetch( "/app/" + obj.appID, params, true );
-
-    promise
-      .then( function( response ) {
-        // get json response and pass to handler to resolve
-        return response.json();
-      })
-      .then( function( json ){
-        if( json ){
-          var apps = a7.model.get( "apps" );
-
-          var deleted = apps.find( function( app, idx ){
-              if (app.appID === parseInt( obj.appID, 10 ) ) {
-                apps.splice( idx, 1 );
-                  return true;
-              }
-          });
-        }
-
-        a7.model.set( "apps", apps );
-        a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
-      });
+    return a7.remote.fetch( "/app/" + obj.appID, params, true );
   };
