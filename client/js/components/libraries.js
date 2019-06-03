@@ -109,9 +109,17 @@ export var Libraries = function Libraries(props) {
 
     },
     deleteLibrary: function( event ){
-      a7.events.publish( "library.delete", {
-        libraryID: event.currentTarget.attributes['data-id'].value
-      });
+      let dlg = utils.showDialog( " &nbsp; ", "You are about to delete this library, proceed?",
+      [{ label: 'Yes', click: function(){
+         dlg.close();
+         a7.events.publish( "library.delete", {
+           libraryID: event.currentTarget.attributes['data-id'].value
+         });
+        }},
+        { label: "No", click: function(){
+          dlg.close();
+        }}
+      ]);
     },
     setLibrary: function( event ){
       let activeLibs = a7.model.get( "activeLibraries" ) || [];

@@ -1,6 +1,6 @@
 {
   "name": "livesandbox",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "In-browser JavaScript IDE with live execution",
   "main": "index.htm",
   "directories": {

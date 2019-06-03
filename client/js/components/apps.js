@@ -74,9 +74,17 @@ export var Apps = function Apps(props) {
       }
     },
     deleteApp: function( event ){
-      a7.events.publish( "app.delete", {
-        appID: event.currentTarget.attributes['data-id'].value
-      });
+      let dlg = utils.showDialog( " &nbsp; ", "You are about to delete this app, proceed?",
+      [{ label: 'Yes', click: function(){
+         dlg.close();
+         a7.events.publish( "app.delete", {
+           appID: event.currentTarget.attributes['data-id'].value
+         });
+        }},
+        { label: "No", click: function(){
+          dlg.close();
+        }}
+      ]);
     },
     loadApp: function( event ){
       let target = event.currentTarget;

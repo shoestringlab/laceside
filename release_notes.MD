@@ -1,3 +1,13 @@
+0.11.0 Beta update
+===================
+
+Updates in this release:
+
+- add notifications on save and delete of apps and libraries
+- add confirmation dialogs when abandoning changes in apps and libraries
+- update database to change JS, CSS, and HTML fields to text from varchar to accommodate larger projects
+- update to altseven remote module to return promises from invoked remote methods so promises can be handled from calling code
+
 0.10.0 Beta update
 ===================
 
