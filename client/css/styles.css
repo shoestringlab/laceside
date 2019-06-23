@@ -66,7 +66,7 @@ a{
 }
 
 .profileHeader{
-  padding-top:1em;
+  padding-top:.5em;
   padding-right:2em;
 }
 
@@ -446,4 +446,52 @@ button:disabled{
 
 .sysDialog .gadget-ui-floatingPane-header{
   background: #ccf;
+}
+
+#profileModal{
+  visibility: hidden;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 80%;
+  border: 1px solid #ccf;
+  padding: 1em;
+  border-radius: 5px;
+  top: 10%;
+  position: absolute;
+  z-index: 10;
+  background: #fff;
+}
+
+#profileModal a{
+  color:#77f;
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible !important;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.right-align{
+  float:right;
+}
+
+.centered{
+  text-align: center;
+}
+
+span.title{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+div.titlebar{
+  border-bottom: 1px solid #ccf;
+  text-align: center;
+}
+
+#profileBody{
+  display:grid;
 }

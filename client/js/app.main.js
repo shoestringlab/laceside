@@ -5,6 +5,7 @@ import {LoginForm} from '/js/components/loginform.js';
 import {Menu} from '/js/components/menu.js';
 import {Libraries} from '/js/components/libraries.js';
 import {Apps} from '/js/components/apps.js';
+import {Profile} from '/js/components/profile.js';
 import {Tabs} from '/js/components/tabs.js';
 import {ui} from '/js/app.ui.js';
 
@@ -34,7 +35,7 @@ export var main = (function() {
       Libraries( { id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } } );
       Apps( { id: 'apps', selector: "#apps" } );
       Tabs( { id: 'tabs', selector: "#editors" } );
-
+      Profile( { id: 'profile', selector: "#profileModal", user: user } );
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
 
       if( secure ){

@@ -219,6 +219,12 @@ export var events = function init(){
     a7.events.publish( "sandbox.execute", {} );
   });
 
+  a7.events.subscribe( "profile.show", function( obj ){
+    let state = a7.ui.getView( 'profile' ).getState();
+    state.visible = true;
+    a7.ui.getView( 'profile' ).setState( state );
+  });
+
   a7.events.subscribe( "tabs.setTab", function( obj ){
     a7.model.set( "activeTab", obj.tab );
     a7.ui.getView('tabs').state.tabs.forEach( function( tab ){

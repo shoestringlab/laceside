@@ -13,11 +13,18 @@ export var Header = function Header(props) {
 			a7.events.publish( 'auth.logout', { callback: function(){
         auth.authenticate();
       }}) ;
-		}
+		},
+    showProfile: function(){
+      a7.events.publish( 'profile.show' );
+    }
 	};
 
   header.template = function(){
-		return `<div class="profileHeader">Welcome, ${header.state.user.firstName} <a name="signout" data-onclick="logout">[ Sign out ]</a></div>`;
+    let profilePic = '/img/profilePics/anon.png';
+    if( header.state.user.profilePic !== null ){
+      profilePic = '/img/profilePics/' + header.state.user.profilePic;
+    }
+		return `<div class="profileHeader"><a name="profileLink"  data-onmouseover="showMenu"><img class="profilePic_small" src="${profilePic}"></a> <a name="signout" data-onclick="logout">[ Sign out ]</a></div>`;
 	};
   return header;
 }
