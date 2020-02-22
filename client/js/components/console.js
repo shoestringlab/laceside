@@ -18,4 +18,4 @@ export var Console = function Console(props){
   };
 
   return console;
-}
+};

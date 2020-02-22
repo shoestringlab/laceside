@@ -52,4 +52,4 @@ export var Paging = function Paging(props) {
     return templ;
 	};
   return paging;
-}
+};

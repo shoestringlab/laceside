@@ -13,7 +13,6 @@ export var auth = (function() {
 
     promise.then(function(secure) {
       a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
-
       ui.setLayout(secure);
     });
   };
@@ -26,7 +25,6 @@ export var auth = (function() {
       if( json.success ){
         a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
       }
-      //ui.setLayout(json.success);
       main.run( json.success );
     }
   };

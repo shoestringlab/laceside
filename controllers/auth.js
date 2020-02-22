@@ -47,4 +47,4 @@ module.exports = {
     //let token = request.header( "X-Token" );
     response.send( { success: true } );
   }
-}
+};

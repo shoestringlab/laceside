@@ -1,5 +1,4 @@
 const dbConfig = require( "../config/dbconfig.js" );
-const bcrypt = require('bcryptjs');
 
 module.exports = init;
 
@@ -10,18 +9,16 @@ function init(){
 }
 
 var dao = {
-  create: function ( username, password, firstName, lastName, nickName ){
-    var salt = bcrypt.genSaltSync( 10 );
-    var hash = bcrypt.hashSync( password, salt );
+  create: function ( userID, profilePic ){
 
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('INSERT INTO users ( username, hash, firstName, lastName, nickName, dateCreated ) VALUES ( ?, ?, ?, ?, ?, curdate() )',
-            [username, hash, firstName, lastName, nickName] )
+          connection.query('INSERT INTO userprofile ( userID, profilePic ) VALUES ( ?, ? )',
+            [userID, profilePic] )
             .then( ( results ) => {
               connection.end();
-              resolve( results.insertId );
+              resolve( userID );
             })
             .catch( err => {
               connection.end();
@@ -39,10 +36,9 @@ var dao = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query(`SELECT u.userID, u.username, u.hash, u.firstName, u.lastName, u.dateCreated, u.nickName, up.profilePic
-                            FROM users u
-                            JOIN userProfile up on u.userID = up.userID
-                            WHERE u.userID = ?`,
+          connection.query(`SELECT userID, profilePic
+                            FROM userProfile
+                            WHERE userID = ?`,
             [userID] )
           .then( ( results ) => {
             connection.end();
@@ -59,12 +55,12 @@ var dao = {
     });
   },
 
-  update: function( userID, firstName, lastName, nickName ){
+  update: function( userID, profilePic ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('UPDATE users SET firstName = ?, lastName = ?, nickName = ? WHERE userID = ?',
-            [ firstName, lastName, nickName, userID ] )
+          connection.query('UPDATE userProfile SET profilePic = ? WHERE userID = ?',
+            [ profilePic, userID ] )
             .then( ( results ) => {
               connection.end();
               resolve( true );
@@ -85,7 +81,7 @@ var dao = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('DELETE FROM users WHERE userID = ?', [userID] )
+          connection.query('DELETE FROM userprofile WHERE userID = ?', [userID] )
             .then( ( results ) => {
               connection.end();
               resolve( true ); // successful delete

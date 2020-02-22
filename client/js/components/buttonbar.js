@@ -28,4 +28,4 @@ export var ButtonBar = function ButtonBar(props) {
 		return str;
 	};
   return buttonBar;
-}
+};

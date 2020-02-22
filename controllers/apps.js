@@ -94,4 +94,4 @@ module.exports = {
         response.send( JSON.stringify( error ) );
       });
   }
-}
+};

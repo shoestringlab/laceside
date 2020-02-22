@@ -124,4 +124,4 @@ export var Apps = function Apps(props) {
 	};
 
   return apps;
-}
+};

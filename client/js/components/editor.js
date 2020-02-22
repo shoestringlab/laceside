@@ -43,4 +43,4 @@ export var Editor = function Editor(props){
   };
 
   return editor;
-}
+};

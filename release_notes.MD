@@ -1,3 +1,13 @@
+0.12.0 Beta Release
+===================
+
+Updates in this release:
+
+- Add profile picture, menu in header right to access profile
+- Profile page to update profile pic and personal info
+- Logout
+
+
 0.11.0 Beta update
 ===================
 

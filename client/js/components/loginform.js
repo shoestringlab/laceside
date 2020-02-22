@@ -52,4 +52,4 @@ export var LoginForm = function LoginForm(props) {
     };
 
     return loginform;
-  }
+  };

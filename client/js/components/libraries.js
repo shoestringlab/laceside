@@ -158,4 +158,4 @@ export var Libraries = function Libraries(props) {
 	};
 
   return libraries;
-}
+};

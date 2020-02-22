@@ -225,6 +225,48 @@ export var events = function init(){
     a7.ui.getView( 'profile' ).setState( state );
   });
 
+  a7.events.subscribe( "profile.update", function( obj ){
+    a7.remote.invoke( "profile.update", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( success ){
+        if( success ){
+          a7.events.publish( "profile.refreshProfile");
+        }
+      });
+  });
+
+  a7.events.subscribe( "profile.refreshProfile", function( obj ){
+    a7.remote.invoke( "user.getCurrentUser", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( user ){
+        sessionStorage.user = JSON.stringify( user );
+        a7.model.set( "user", user );
+        let currentState = a7.ui.getView('profile').getState();
+        a7.ui.getView('profile').setState( { user: user, visible: currentState.visible, activeTab: currentState.activeTab } );
+        a7.ui.getView('header').setState( { user: user } );
+      });
+  });
+
+
+  a7.events.subscribe( "user.update", function( obj ){
+    a7.remote.invoke( "user.update", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( user ){
+        if( user.userID ){
+          a7.events.publish( "profile.refreshProfile" );
+        }
+      });
+  });
+
   a7.events.subscribe( "tabs.setTab", function( obj ){
     a7.model.set( "activeTab", obj.tab );
     a7.ui.getView('tabs').state.tabs.forEach( function( tab ){

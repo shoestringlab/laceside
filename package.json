@@ -1,6 +1,6 @@
 {
   "name": "livesandbox",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "In-browser JavaScript IDE with live execution",
   "main": "index.htm",
   "directories": {
@@ -28,9 +28,11 @@
     "altseven": "^5.2.0",
     "bcryptjs": "^2.4.3",
     "codemirror": "^5.43.0",
+    "concat-files": "^0.1.1",
+    "cuid": "^2.1.8",
     "express": "^4.16.4",
     "feather-icons": "^4.21.0",
-    "gadget-ui": "^6.5.0",
+    "gadget-ui": "^7.0.2",
     "js-base64": "^2.5.1",
     "mariadb": "^2.0.3",
     "modlazy": "^1.0.0",

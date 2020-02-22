@@ -20,4 +20,4 @@ export var Menu = function Menu(props) {
 		return str;
 	};
   return menu;
-}
+};

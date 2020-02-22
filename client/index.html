@@ -21,7 +21,7 @@
 
   <script type="module">
     import {application} from '/js/app.js';
-    import {collapsiblepane, constructor, sidebar} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+    import {collapsiblepane, constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
     constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
 		{
@@ -38,6 +38,10 @@
       title : "Console",
       class: "consolePane"
     }]);
+
+    let md = constructor( modal,
+      [ document.querySelector("#profileModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
 /*     constructor( sidebar,
 				[ document.querySelector("#sidebar"),
@@ -80,7 +84,9 @@
       </div>
     </div>
   </div>
-  <div id="profileModal"></div>
+  <div id="profileModal">
+    <div id="profile"></div>
+  </div>
   <div id="dialog"></div>
 </body>
 </html>

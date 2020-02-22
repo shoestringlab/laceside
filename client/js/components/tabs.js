@@ -65,4 +65,4 @@ export var Tabs = function Tabs(props){
   };
 
   return tabs;
-}
+};

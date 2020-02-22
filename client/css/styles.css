@@ -448,36 +448,6 @@ button:disabled{
   background: #ccf;
 }
 
-#profileModal{
-  visibility: hidden;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: 80%;
-  border: 1px solid #ccf;
-  padding: 1em;
-  border-radius: 5px;
-  top: 10%;
-  position: absolute;
-  z-index: 10;
-  background: #fff;
-}
-
-#profileModal a{
-  color:#77f;
-}
-
-.show-modal {
-  opacity: 1;
-  visibility: visible !important;
-  transform: scale(1.0);
-  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-}
-
-.right-align{
-  float:right;
-}
-
 .centered{
   text-align: center;
 }
@@ -492,6 +462,110 @@ div.titlebar{
   text-align: center;
 }
 
-#profileBody{
-  display:grid;
+#profileModal{
+  z-index:6;
+  width:80%;
+  min-width: 800px;
+  text-align:center;
+}
+
+#profileContainer{
+  display: grid;
+  grid-template-columns: 10em auto;
+  text-align: left;
+  height: 70%;
+}
+
+#profileTabs{
+  display:inline-block;
+  background: #fff;
+}
+
+#profileTabs div{
+  background: #77f;
+}
+
+#profileTabs div:hover{
+  background: #ccf;
+}
+
+.gadget-ui-tabs-v div.gadget-ui-tab-v-active{
+	background-color: #ccf !important;
+}
+
+.gadget-ui-tabs-v div.gadget-ui-tab-v{
+  margin: .0 0 .5em .5em !important;
+}
+
+
+.vtabContent{
+	display:inline-grid;
+  grid-template-columns: 50% auto;
+  width:99%;
+}
+
+.vcontentContainer{
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 1em;
+	padding-top: 1em;
+  border: 1px solid #ccf;
+}
+
+.gadgetui-modal{
+  z-index: 6;
+}
+
+div.form{
+  padding: 1em 3em;
+  display:inline-grid;
+  grid-template-columns: 10em auto !important;
+}
+
+div.form div{
+  padding-bottom: 1em;
+}
+
+div.form input{
+  width: 10em;
+}
+
+#profilePicUploadDiv {
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.gadgetui-fileuploader-wrapper{
+  height:300px;
+}
+
+.gadgetui-fileuploader-dropzone{
+  width: 300px;
+  height: 300px;
+  margin-top: 45%;
+}
+
+div[name='dropzone']{
+  height: 300px;
+  width: 300px;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid black;
+}
+
+.gadgetui-fileuploader-wrapper{
+  height:300px;
+}
+
+#fileUploadDiv, #display,	#fileUploadDiv{
+  display:inline-block;
+}
+
+div.label{
+  padding-right: 1em;
+  padding-top: .5em;
 }

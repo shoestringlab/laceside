@@ -35,7 +35,7 @@ export var main = (function() {
       Libraries( { id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } } );
       Apps( { id: 'apps', selector: "#apps" } );
       Tabs( { id: 'tabs', selector: "#editors" } );
-      Profile( { id: 'profile', selector: "#profileModal", user: user } );
+      Profile( { id: 'profile', selector: "#profile", user: user } );
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
 
       if( secure ){

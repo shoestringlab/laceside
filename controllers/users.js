@@ -26,7 +26,7 @@ module.exports = {
   },
 
   create: function( request, response){
-    userservice.create( request.body.username, request.body.password, request.body.firstName, request.body.lastName )
+    userservice.create( request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName )
       .then( function( results ){
         //we are reading back the inserted row
         userservice.read( results )
@@ -56,10 +56,10 @@ module.exports = {
   },
 
   update: function( request, response){
-     userservice.update( request.params.ID, request.body.username, request.body.firstName, request.body.lastName )
+     userservice.update( request.params.ID, request.body.firstName, request.body.lastName, request.body.nickName )
       .then( function( user ){
         //we are reading back the updated row
-        userservice.read( request.body.userID )
+        userservice.read( request.params.ID )
           .then( function( user ){
             response.send( JSON.stringify( user ) );
           })
@@ -84,4 +84,4 @@ module.exports = {
         response.send( JSON.stringify( error ) );
       });
   }
-}
+};
