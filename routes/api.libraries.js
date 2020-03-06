@@ -6,18 +6,18 @@ module.exports = function(app) {
   var jsonParser = bodyParser.json();
 
   // get libraries for a user
-  app.get( "/libraries", librarycontroller.getLibraries );
+  app.get( "/api/libraries", librarycontroller.getLibraries );
 
   // create a new library
-  app.post( "/library", jsonParser, librarycontroller.create );
+  app.post( "/api/library", jsonParser, librarycontroller.create );
 
   // get a library by ID
-  app.get( "/library/:ID", librarycontroller.read );
+  app.get( "/api/library/:ID", librarycontroller.read );
 
   // update a library
-  app.put( "/library/:ID", jsonParser, librarycontroller.update );
+  app.put( "/api/library/:ID", jsonParser, librarycontroller.update );
 
   //delete a library
-  app.delete( "/library/:ID", librarycontroller.delete );
+  app.delete( "/api/library/:ID", librarycontroller.delete );
 
 };

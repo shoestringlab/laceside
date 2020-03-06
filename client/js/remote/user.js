@@ -4,8 +4,12 @@ export { getCurrentUser, update };
 
 var getCurrentUser = function( obj ){
     var params = { method: 'GET' };
-    return a7.remote.fetch( "/user/" + a7.model.get( "user" ).userID, params, true );
+    return a7.remote.fetch( "/api/user", params, true );
   },
+  getByUsername = function( obj ){
+      var params = { method: 'GET' };
+      return a7.remote.fetch( "/api/user/username/" + obj.username, params, true );
+    },
   update = function( obj ){
 
       var request;
@@ -22,5 +26,5 @@ var getCurrentUser = function( obj ){
                       })
                     };
 
-      return a7.remote.fetch( "/user/" + obj.userID, params, true );
+      return a7.remote.fetch( "/user", params, true );
     };

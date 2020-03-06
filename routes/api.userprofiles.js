@@ -7,6 +7,6 @@ module.exports = function(app) {
   var jsonParser = bodyParser.json();
 
   //update a user profile
-  app.put( "/userprofile/:ID", jsonParser, userprofilecontroller.update );
+  app.put( "/api/userprofile/:ID", jsonParser, userprofilecontroller.update );
 
 };

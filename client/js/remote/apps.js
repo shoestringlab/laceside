@@ -4,8 +4,12 @@ export { getApps, create, update, read, deleteById };
 
 var getApps = function( obj ){
     let params = { method: 'GET' };
-    return a7.remote.fetch( "/apps", params, true );
+    return a7.remote.fetch( "/api/apps", params, true );
   },
+  getAppsByUserID = function( obj ){
+      let params = { method: 'GET' };
+      return a7.remote.fetch( "/api/apps/" + obj.userID, params, true );
+    },
   create = function( obj ){
     var request;
 
@@ -25,7 +29,7 @@ var getApps = function( obj ){
                     })
                   };
 
-    return a7.remote.fetch( "/app", params, true );
+    return a7.remote.fetch( "/api/app", params, true );
 
   },
   read = function( obj ){
@@ -38,7 +42,7 @@ var getApps = function( obj ){
                     }
                   };
 
-    return a7.remote.fetch( "/app/" + obj.app.appID, params, true );
+    return a7.remote.fetch( "/api/app/" + obj.app.appID, params, true );
   },
   update = function( obj ){
     var request;
@@ -57,7 +61,7 @@ var getApps = function( obj ){
                       esModule: obj.esModule } )
                   };
 
-    return a7.remote.fetch( "/app/" + obj.appID, params, true );
+    return a7.remote.fetch( "/api/app/" + obj.appID, params, true );
   },
   deleteById = function( obj ){
     var request;
@@ -69,5 +73,5 @@ var getApps = function( obj ){
                     }
                   };
 
-    return a7.remote.fetch( "/app/" + obj.appID, params, true );
+    return a7.remote.fetch( "/api/app/" + obj.appID, params, true );
   };

@@ -45,6 +45,7 @@ module.exports = {
         response.send( JSON.stringify( error ) );
       });
   },
+
    update: function( request, response){
     //response.send( JSON.stringify( request.body ) );
      service.update( request.params.ID, request.user.userID, request.body.link, request.body.name  )

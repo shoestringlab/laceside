@@ -4,7 +4,7 @@ export { getLibraries, create, read, update, deleteById };
 
 var getLibraries = function( obj ){
     var params = { method: 'GET' };
-    return a7.remote.fetch( "/libraries", params, true );
+    return a7.remote.fetch( "/api/libraries", params, true );
   },
   create = function( obj ){
     var request;
@@ -21,7 +21,7 @@ var getLibraries = function( obj ){
                     })
                   };
 
-    return a7.remote.fetch( "/library", params, true );
+    return a7.remote.fetch( "/api/library", params, true );
   },
   read = function( obj ){
     var request;
@@ -33,7 +33,7 @@ var getLibraries = function( obj ){
                     }
                   };
 
-    return a7.remote.fetch( "/library/" + obj.library.libraryID, params, true );
+    return a7.remote.fetch( "/api/library/" + obj.library.libraryID, params, true );
 
 /*     promise
       .then( function( response ) {
@@ -56,7 +56,7 @@ var getLibraries = function( obj ){
                     link: obj.link } )
                   };
 
-    return a7.remote.fetch( "/library/" + obj.libraryID, params, true );
+    return a7.remote.fetch( "/api/library/" + obj.libraryID, params, true );
   },
   deleteById = function( obj ){
     var request;
@@ -68,5 +68,5 @@ var getLibraries = function( obj ){
                     }
                   };
 
-    return a7.remote.fetch( "/library/" + obj.libraryID, params, true );
+    return a7.remote.fetch( "/api/library/" + obj.libraryID, params, true );
   };

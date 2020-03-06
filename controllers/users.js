@@ -15,9 +15,12 @@ module.exports = {
   },
 
   getByUsername: function( request, response ){
-    userservice.getByUsername( request.body.username )
+    userservice.getByUsername( request.params.username )
       .then( function( results ){
-        response.send( JSON.stringify( results ) );
+        let user = results[0];
+        // remove the hash from the token so we don't send it outside the system
+        delete user.hash;
+        response.send( JSON.stringify( user ) );
       })
       .catch( function( error ){
         console.log( error );

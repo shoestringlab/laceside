@@ -1,7 +1,7 @@
 {
   "name": "livesandbox",
   "version": "0.12.0",
-  "description": "In-browser JavaScript IDE with live execution",
+  "description": "In-browser JavaScript IDE and execution environment",
   "main": "index.htm",
   "directories": {
     "doc": "doc",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/robertdmunn/livesandbox#readme",
   "dependencies": {
-    "altseven": "^5.2.0",
+    "altseven": "^6.0.0-beta",
     "bcryptjs": "^2.4.3",
     "codemirror": "^5.43.0",
     "concat-files": "^0.1.1",
@@ -37,6 +37,7 @@
     "mariadb": "^2.0.3",
     "modlazy": "^1.0.0",
     "sha.js": "^2.4.11",
+    "url-router": "^11.0.2",
     "velocity-animate": "^1.5.2"
   }
 }

@@ -29,6 +29,31 @@ module.exports = {
       });
   },
 
+  getByUserID: function( request, response ){
+   service.getApps( request.params.ID )
+     .then( function( results ){
+       appLibraryService.getByUserID( request.params.ID )
+         .then( function( alResults ){
+             results.forEach( function( result ){
+             // find the libraries used for each app
+             let libs = alResults.filter( lib => lib.appID === result.appID ).map( lib => lib.libraryID ).join(",");
+             result.libraries = libs;
+           });
+           response.setHeader( "Cache-Control", "no-cache" );
+           response.send( JSON.stringify( results ) );
+         })
+         .catch( function( error ){
+           console.log( error );
+           response.send( JSON.stringify( error ) );
+         });
+
+     })
+     .catch( function( error ){
+       console.log( error );
+       response.send( JSON.stringify( error ) );
+     });
+ },
+
   create: function( request, response){
     service.create( request.user.userID, request.body.name, request.body.jsCode, request.body.htmlCode, request.body.cssCode, request.body.esModule, request.body.libraries )
       .then( function( results ){

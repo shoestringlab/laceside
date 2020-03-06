@@ -253,6 +253,16 @@ export var events = function init(){
       });
   });
 
+  a7.events.subscribe( "user.show", function( obj ){
+    a7.remote.invoke( "user.getByUsername", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( json ){
+
+      });
+  });
 
   a7.events.subscribe( "user.update", function( obj ){
     a7.remote.invoke( "user.update", obj )

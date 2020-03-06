@@ -19,12 +19,9 @@ module.exports = {
     userservice.getByUsername( username )
       .then( function( results ){
         let valid = false;
-        console.log(  "user: " );
-        console.log( results[0] );
         if( results.length ){
           valid = bcrypt.compareSync( password, results[0].hash );
         }
-        console.log( "valid: " + valid );
         if( valid ){
           let user = results[0];
           // remove the hash from the token so we don't send it outside the system

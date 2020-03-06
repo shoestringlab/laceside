@@ -5,10 +5,10 @@ module.exports = function(app) {
   var jsonParser = bodyParser.json();
 
   // get a auth by ID
-  app.post( "/auth/login", authcontroller.login );
+  app.post( "/api/auth/login", authcontroller.login );
 
-  app.post( "/auth/logout", authcontroller.logout );
+  app.post( "/api/auth/logout", authcontroller.logout );
 
-  app.get( "/auth/refresh", authcontroller.refresh );
+  app.get( "/api/auth/refresh", authcontroller.refresh );
 
 };

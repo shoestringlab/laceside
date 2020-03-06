@@ -12,6 +12,6 @@ module.exports = function(app) {
   let rawParser = bodyParser.raw(options);
 
   // upload a file
-  app.post( "/files", rawParser, filecontroller.upload );
+  app.post( "/api/files", rawParser, filecontroller.upload );
 
 };

@@ -9,6 +9,7 @@ import * as libraries from '/js/remote/libraries.js';
 import * as apps from '/js/remote/apps.js';
 import * as profile from '/js/remote/profile.js';
 import * as user from '/js/remote/user.js';
+import {routes} from '/js/app.routes.js';
 
 // you only need to import the floatingpane if you use it as the container for the console
 //import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
@@ -44,11 +45,15 @@ export var application = function init(){
 			},
 			remote: {
 				modules: app.remote,
-			  loginURL: "/auth/login",
-				logoutURL: "/auth/logout",
-			  refreshURL: "/auth/refresh",
+			  loginURL: "/api/auth/login",
+				logoutURL: "/api/auth/logout",
+			  refreshURL: "/api/auth/refresh",
 				useTokens: true // defaults to true for the auth system
-			}
+			},
+      router: {
+        options: { useEvents: true },
+        routes: routes
+      }
 		};
 	var p = new Promise(function(resolve,
 		reject) {
