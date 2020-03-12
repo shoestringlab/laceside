@@ -61,12 +61,12 @@ export var Apps = function Apps(props) {
       let appName = apps.element.querySelector( "input[name='name']" ).value.trim();
       if( appName.length > 0 ){
         if( apps.state.app.appID === 0 ){
-          a7.events.publish( "app.create", {
+          a7.events.publish( "apps.create", {
             name: appName
           });
         }
         else{
-          a7.events.publish( "app.update", {
+          a7.events.publish( "apps.update", {
             name: appName,
             appID: apps.state.app.appID
           });
@@ -77,7 +77,7 @@ export var Apps = function Apps(props) {
       let dlg = utils.showDialog( " &nbsp; ", "You are about to delete this app, proceed?",
       [{ label: 'Yes', click: function(){
          dlg.close();
-         a7.events.publish( "app.delete", {
+         a7.events.publish( "apps.delete", {
            appID: event.currentTarget.attributes['data-id'].value
          });
         }},
@@ -92,7 +92,7 @@ export var Apps = function Apps(props) {
         let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
         [{ label: 'Yes', click: function(){
            dlg.close();
-           a7.events.publish( "app.load", {
+           a7.events.publish( "apps.load", {
              appID: target.attributes['data-id'].value
            });
           }},
@@ -101,7 +101,7 @@ export var Apps = function Apps(props) {
           }}
         ]);
       }else{
-        a7.events.publish( "app.load", {
+        a7.events.publish( "apps.load", {
           appID: event.currentTarget.attributes['data-id'].value
         });
       }
@@ -111,14 +111,14 @@ export var Apps = function Apps(props) {
         let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
         [{ label: 'Yes', click: function(){
            dlg.close();
-           a7.events.publish( "app.new", {} );
+           a7.events.publish( "apps.new", {} );
           }},
           { label: "No", click: function(){
             dlg.close();
           }}
         ]);
       }else{
-        a7.events.publish( "app.new", {} );
+        a7.events.publish( "apps.new", {} );
       }
     }
 	};

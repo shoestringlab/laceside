@@ -1,10 +1,25 @@
 import {a7} from '/lib/altseven/dist/a7.js';
+import {ui} from '/js/app.ui.js';
+import {main} from '/js/app.main.js';
 import * as utils from '/js/app.utils.js';
 
 export var events = function init(){
+
+  a7.events.subscribe( "auth.showLogin", function( obj ){
+    ui.setLayout( "auth" );
+  });
+
   a7.events.subscribe( "menu.jsSandbox", function( obj ){
     a7.ui.getNode( a7.ui.selectors['sandBox'] ).style.display='grid';
   });
+
+  a7.events.subscribe( "ide.show", function( obj ){
+    ui.setLayout( "ide" );
+    if( obj.appID ){
+      a7.events.publish( "apps.load", obj );
+    }
+  });
+
 
   a7.events.subscribe( "library.getLibraries", function( obj ){
     a7.remote.invoke( "libraries.getLibraries", obj )
@@ -89,7 +104,7 @@ export var events = function init(){
     a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get( "activeLibraries" ), offset: libsState.offset } );
   });
 
-  a7.events.subscribe( "app.getApps", function( obj ){
+  a7.events.subscribe( "apps.getApps", function( obj ){
     a7.remote.invoke( "apps.getApps", obj )
       .then( function( response ) {
         // get json response and pass to handler to resolve
@@ -103,10 +118,11 @@ export var events = function init(){
         }
         a7.model.set( "apps", json );
         a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
+        a7.ui.getView('userHome').setState( { user: a7.model.get( "user" ), apps: a7.model.get( "apps" ), offset: 0 } );
       });
   });
 
-  a7.events.subscribe( "app.create", function( obj ){
+  a7.events.subscribe( "apps.create", function( obj ){
     let args = Object.assign( {}, obj );
     args.jsCode = a7.model.get( "jsCode" ) || "";
     args.htmlCode = a7.model.get( "htmlCode" ) || "";
@@ -130,7 +146,7 @@ export var events = function init(){
       });
   });
 
-  a7.events.subscribe( "app.update", function( obj ){
+  a7.events.subscribe( "apps.update", function( obj ){
     let args = Object.assign( {}, obj );
     args.jsCode = a7.model.get( "jsCode" ) || "";
     args.htmlCode = a7.model.get( "htmlCode" ) || "";
@@ -158,7 +174,7 @@ export var events = function init(){
       });
   });
 
-  a7.events.subscribe( "app.load", function( obj ){
+  a7.events.subscribe( "apps.load", function( obj ){
     let app = a7.model.get( "apps" ).filter( application => application.appID === parseInt( obj.appID, 10 ) )[0];
     let libraries = a7.model.get( "libraries" );
     let appLibs = app.libraries.split(",").map( libID => parseInt( libID,10 ));
@@ -184,7 +200,7 @@ export var events = function init(){
     a7.events.publish( "sandbox.execute", {} );
   });
 
-  a7.events.subscribe( "app.delete", function( obj ){
+  a7.events.subscribe( "apps.delete", function( obj ){
     a7.remote.invoke( "apps.deleteById", obj )
       .then( function( response ) {
         // get json response and pass to handler to resolve
@@ -208,7 +224,7 @@ export var events = function init(){
       });
   });
 
-  a7.events.subscribe( "app.new", function( obj ){
+  a7.events.subscribe( "apps.new", function( obj ){
     a7.ui.getView('jseditor').props.editor.setValue( "" );
     a7.ui.getView('htmleditor').props.editor.setValue( "" );
     a7.ui.getView('csseditor').props.editor.setValue( "" );
@@ -275,6 +291,10 @@ export var events = function init(){
           a7.events.publish( "profile.refreshProfile" );
         }
       });
+  });
+
+  a7.events.subscribe( "main.home", function( obj ){
+    main.run();
   });
 
   a7.events.subscribe( "tabs.setTab", function( obj ){

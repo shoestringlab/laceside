@@ -60,7 +60,7 @@ export var application = function init(){
 		a7.init(options, resolve, reject);
 	});
 	p.then(function(state) {
-		app.main.init(state);
+		app.main.init();
 	});
 	p['catch'](function(message) {
 		console.log(

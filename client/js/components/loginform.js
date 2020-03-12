@@ -8,7 +8,7 @@ export var LoginForm = function LoginForm(props) {
       password: ""
     };
 
-    loginform.template = `<div name="loginDiv" class="pane" style="width:370px;">
+    loginform.template = `<form><div id="loginForm" name="loginDiv" class="pane">
 					<div class="right-align">
 						<div class="col md right-align"><label for="username">Username</label></div>
 						<div class="col md"><input name="username" type="text" data-onchange="handleUsername"/></div>
@@ -22,6 +22,7 @@ export var LoginForm = function LoginForm(props) {
 						<div class="col md"><input name="login" type="button" value="Login" data-onclick="handleClick"/></div>
 					</div>
 				</div>
+        </form>
 				<p>
 					<h3>Instructions</h3>
 				</p>
@@ -40,7 +41,9 @@ export var LoginForm = function LoginForm(props) {
         a7.events.publish('auth.login', {
           username: loginform.state.username,
           password: loginform.state.password,
-          callback: auth.loginHandler
+          success: "/",
+          failure: "/auth/failed"
+          //callback: auth.loginHandler
         });
       },
       handleUsername: function(event) {

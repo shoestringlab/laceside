@@ -4,12 +4,11 @@
   <title>
     JavaScript Sandbox
   </title>
-  <link href="/css/styles.css" rel="stylesheet" type="text/css">
-  <link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css">
-  <link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css">
-  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css" rel="stylesheet" type="text/css">
-   -->
-  <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css">
+  <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css"/>
+  <link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css"/>
+
+  <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css"/>
   <script src="/lib/codemirror/lib/codemirror.js"></script>
   <script src="/lib/codemirror/mode/xml/xml.js"></script>
   <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
@@ -17,21 +16,23 @@
   <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
   <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
 
-  <!--    <script src="/lib/velocity/velocity.min.js"></script> -->
-
   <script type="module">
     import {application} from '/js/app.js';
     import {collapsiblepane, constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
-    constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
-		{
-			title : "Libraries"
-		}]);
+    //constructor( collapsiblepane, [ document.querySelector( "#libraries" ), { title : "Libraries" } ] );
+
 
     constructor( collapsiblepane, [ document.querySelector( "#apps" ),
 		{
 			title : "Apps"
 		}]);
+
+
+    constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
+    {
+      title : "Libraries"
+    }]);
 
     constructor( collapsiblepane, [ document.querySelector( "div.console" ),
     {
@@ -43,6 +44,11 @@
       [ document.querySelector("#profileModal"),
         {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
+    let authmd = constructor( modal,
+      [ document.querySelector("#authModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
+
+
 /*     constructor( sidebar,
 				[ document.querySelector("#sidebar"),
 					{ featherPath: '/lib/feather-icons'}] ) ; */
@@ -53,15 +59,21 @@
 </head>
 
 <body>
-  <div id="anon">
-  </div>
-  <div id="secure">
-    <div class="wrapper">
-      <div class="header">
-        <div id="headerLeft" class="headerCol"></div>
-        <div id="headerMiddle" class="headerCol">&nbsp;</div>
-        <div id="headerRight" class="headerCol"></div>
+  <div class="wrapper">
+    <div class="header">
+      <div id="headerLeft" class="headerCol"></div>
+      <div id="headerMiddle" class="headerCol">&nbsp;</div>
+      <div id="headerRight" class="headerCol"></div>
+    </div>
+    <div id="base" class="hidden">
+      <div id="home">
+
       </div>
+      <div id="userHome">
+
+      </div>
+    </div>
+    <div id="ide" class="hidden">
       <div id="sidebar" class="box sidebar">
         <div id="libraries">
         </div>
@@ -84,8 +96,12 @@
       </div>
     </div>
   </div>
+
   <div id="profileModal">
     <div id="profile"></div>
+  </div>
+  <div id="authModal">
+    <div id="auth"></div>
   </div>
   <div id="dialog"></div>
 </body>

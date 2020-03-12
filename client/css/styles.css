@@ -38,16 +38,23 @@ a{
 .wrapper {
   display: grid;
   height:100%;
-  grid-gap: .5em;
-  grid-template-columns: 25em auto;
   grid-template-rows: 3em auto;
+  grid-gap: .5em;
   grid-template-areas:
-    "header  header"
-    "sidebar app";
+    "header"
+    "ide"
+}
+
+#ide{
+  display: grid;
+  grid-template-columns: 25em auto;
+  grid-template-areas:
+  "sidebar app";
   background-color: #fff;
   color: #444;
-    }
+  grid-gap: .5em;
 
+}
 
 .box {
   background-color: #444;
@@ -63,6 +70,10 @@ a{
   color: #444;
   font-weight: bold;
   border-radius:5px;
+}
+
+#headerRight{
+  margin-right: 5em;
 }
 
 .profileHeader{
@@ -92,6 +103,10 @@ a{
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+#userHome, #home{
+  padding: .5em;
 }
 
 div.row{
@@ -184,10 +199,6 @@ button{
 
 textarea[name='codeWindow']{
   width:100%;
-}
-
-#anon, #secure, #sandBox{
-  display:none;
 }
 
 #sandBox div.row{
@@ -462,7 +473,7 @@ div.titlebar{
   text-align: center;
 }
 
-#profileModal{
+#profileModal, #authModal{
   z-index:6;
   width:80%;
   min-width: 800px;
@@ -568,4 +579,14 @@ div[name='dropzone']{
 div.label{
   padding-right: 1em;
   padding-top: .5em;
+}
+
+.hidden{
+  display:none !important;
+}
+
+#loginForm{
+  width: 370px;
+  margin-left: auto;
+  margin-right: auto;
 }

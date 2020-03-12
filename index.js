@@ -25,7 +25,7 @@ require( './routes/api.libraries.js' )(app);
 require( './routes/api.userprofiles.js' )(app);
 require( './routes/api.users.js' )(app);
 
-app.use( "*", express.static( '/index.html' ) );
+//app.use( "*", express.static( '/index.html' ) );
 
 /*
 // default route

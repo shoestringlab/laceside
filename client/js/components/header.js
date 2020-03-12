@@ -19,23 +19,43 @@ export var Header = function Header(props) {
       //a7.events.publish( 'profile.show' );
       var currentState = a7.ui.getView('profile').getState();
       a7.ui.getView('profile').setState( { user: currentState.user, visible: true, activeTab: currentState.activeTab } );
+    },
+    signIn: function( event ){
+      a7.events.publish( 'auth.showLogin', {} ) ;
+    },
+    createAccount: function( event ){
+
     }
 	};
 
   header.on( "rendered", function(){
-    let profilePic = header.getState().user.profilePic || '/img/profilePics/anon.png';
+    let state = header.getState();
+    let profilePic = state.user.profilePic || '/img/profilePics/anon.png';
     /* if( header.state.user.profilePic !== null ){
       profilePic = '/img/profilePics/' + header.state.user.profilePic;
     } */
+    let items = [];
+    if( state.user.userID ){
+      items = [
+        { label: "Profile",
+          link: header.eventHandlers.showProfile },
+        { label: "Sign out",
+          link: header.eventHandlers.logout }
+      ];
+    }else{
+      items = [
+        { label: "Create Account",
+          link: header.eventHandlers.createAccount },
+        { label: "Sign In",
+          link: header.eventHandlers.signIn }
+      ];
+    }
+
+
     let menuData = [
       { image: profilePic,
 					menuItem:{
-						items:[
-							{ label: "Profile",
-								link: header.eventHandlers.showProfile },
-							{ label: "Sign out",
-								link: header.eventHandlers.logout }
-						]
+						items: items
 					}}
     ];
 
