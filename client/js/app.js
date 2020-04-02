@@ -2,6 +2,14 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 import {events} from '/js/app.events.js';
+import {appEvents} from '/js/events/apps.js';
+import {authEvents} from '/js/events/auth.js';
+import {libraryEvents} from '/js/events/libraries.js';
+import {mainEvents} from '/js/events/main.js';
+import {menuEvents} from '/js/events/menu.js';
+import {profileEvents} from '/js/events/profile.js';
+import {sandboxEvents} from '/js/events/sandbox.js';
+import {userEvents} from '/js/events/user.js';
 import {auth} from '/js/app.auth.js';
 import {main} from '/js/app.main.js';
 import {ui} from '/js/app.ui.js';
@@ -29,6 +37,13 @@ var app = {
 
 //initialize pub/sub events
 events();
+appEvents();
+authEvents();
+libraryEvents();
+profileEvents();
+sandboxEvents();
+userEvents();
+
 
 export var application = function init(){
 	var

@@ -11,6 +11,7 @@ export var ui = (function() {
       // remove any open modals
       a7.ui.getNode( a7.ui.getSelector("authModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
       a7.ui.getNode( a7.ui.getSelector("profileModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
+      a7.ui.getNode( a7.ui.getSelector("signupModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
 
       switch( mode ){
         case "ide":
@@ -22,14 +23,29 @@ export var ui = (function() {
         case "auth":
           a7.ui.getNode( a7.ui.getSelector("authModal") ).parentElement.classList.add( 'gadgetui-showModal' );
           break;
+        case "signup":
+          a7.ui.getNode( a7.ui.getSelector("signupModal") ).parentElement.classList.add( 'gadgetui-showModal' );
+          break;
+        case "profile":
+          a7.ui.getNode( a7.ui.getSelector("profileModal") ).parentElement.classList.add( 'gadgetui-showModal' );
+          break;
         case "home":
-        default:
+          a7.ui.getNode( a7.ui.getSelector("home") ).classList.remove( "hidden" );
+          a7.ui.getNode( a7.ui.getSelector("userHome") ).classList.add( "hidden" );
           a7.ui.getNode( a7.ui.selectors["ide"] ).classList.add( "hidden" );
           a7.ui.getNode( a7.ui.getSelector("base") ).classList.remove( "hidden" );
-          let homeSelector = ( secure ? "userHome" : "home" );
-          let hiddenSelector = ( secure ? "home" : "userHome" );
-          a7.ui.getNode( a7.ui.getSelector(homeSelector) ).classList.remove( "hidden" );
-          a7.ui.getNode( a7.ui.getSelector(hiddenSelector) ).classList.add( "hidden" );
+          break;
+        case "userhome":
+          a7.ui.getNode( a7.ui.getSelector("home") ).classList.add( "hidden" );
+          a7.ui.getNode( a7.ui.getSelector("userHome") ).classList.remove( "hidden" );
+          a7.ui.getNode( a7.ui.selectors["ide"] ).classList.add( "hidden" );
+          a7.ui.getNode( a7.ui.getSelector("base") ).classList.remove( "hidden" );
+          break;
+        default:
+
+          /* let homeSelector = ( secure ? "userHome" : "home" );
+          let hiddenSelector = ( secure ? "home" : "userHome" ); */
+
           break;
       }
     }

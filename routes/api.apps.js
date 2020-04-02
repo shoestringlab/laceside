@@ -5,9 +5,6 @@ module.exports = function(app) {
   const bodyParser = require('body-parser');
   var jsonParser = bodyParser.json();
 
-  // get apps for the current user
-  app.get( "/api/apps", appcontroller.getApps );
-
   // create a new app
   app.post( "/api/app", jsonParser, appcontroller.create );
 

@@ -2,6 +2,7 @@ const interceptor = require( '../interceptors/httpinterceptor.js' );
 
 module.exports = function(app) {
   const appcontroller = require( "../controllers/apps.js" );
+  const librarycontroller = require( "../controllers/libraries.js" );
   const usercontroller = require( "../controllers/users.js" );
   const bodyParser = require('body-parser');
   var jsonParser = bodyParser.json();
@@ -10,13 +11,16 @@ module.exports = function(app) {
   app.get( "/api/users", usercontroller.getAll );
 
   // get a user by ID
-  app.get( "/api/user/username/:username", usercontroller.getByUsername );
+  app.get( "/api/u/username/:username", usercontroller.getByUsername );
 
   // create a new user
   app.post( "/api/user", jsonParser, usercontroller.create );
 
   // get apps by userID
   app.get( "/api/user/:ID/apps", appcontroller.getByUserID );
+
+  // get libraries for a user
+  app.get( "/api/user/:ID/libraries", librarycontroller.getByUserID );
 
   // get a user by ID
   app.get( "/api/user/:ID", usercontroller.read );

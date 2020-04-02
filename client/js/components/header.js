@@ -17,14 +17,15 @@ export var Header = function Header(props) {
 		},
     showProfile: function(){
       //a7.events.publish( 'profile.show' );
-      var currentState = a7.ui.getView('profile').getState();
-      a7.ui.getView('profile').setState( { user: currentState.user, visible: true, activeTab: currentState.activeTab } );
+      a7.router.open( '/u/' + header.getState().user.username + '/profile', { userID: header.getState().user.userID } );
+      /* var currentState = a7.ui.getView('profile').getState();
+      a7.ui.getView('profile').setState( { user: currentState.user, visible: true, activeTab: currentState.activeTab } ); */
     },
     signIn: function( event ){
       a7.events.publish( 'auth.showLogin', {} ) ;
     },
     createAccount: function( event ){
-
+      a7.events.publish( 'auth.showSignup', {} ) ;
     }
 	};
 
@@ -50,7 +51,6 @@ export var Header = function Header(props) {
           link: header.eventHandlers.signIn }
       ];
     }
-
 
     let menuData = [
       { image: profilePic,

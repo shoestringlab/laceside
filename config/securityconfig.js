@@ -1,4 +1,4 @@
-const secured = [
+/* const secured = [
   /\/app\/[0-9]+/,
   /\/apps/,
   /\/app/,
@@ -9,11 +9,26 @@ const secured = [
   /\/users/,
   /\/user/,
   /\/auth\/refresh/,
+]; */
+
+const secured = [
+  /\/api\/app\/[0-9]+/,
+  /\/api\/apps/,
+  /\/api\/app/,
+  /\/api\/library\/[0-9]+/,
+  /\/api\/libraries/,
+  /\/api\/library/,
+  /\/api\/auth\/refresh/
 ];
 
 const open = [
-  /\/auth\/login/,
-  /\/auth\/logout/
+  /\/api\/u\/username\/[\w]+/,
+  /\/api\/user\/[0-9]+\/libraries/,
+  /\/api\/user\/[0-9]+\/apps/,
+  /\/api\/auth\/login/,
+  /\/api\/auth\/logout/,
+  /\/u\/[\w]+/,
+  /\/u\/username\/[\w]+/
 ];
 
 module.exports = {

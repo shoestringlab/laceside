@@ -7,7 +7,12 @@ html, body{
 }
 
 a{
-  cursor: default;
+  cursor: pointer;
+  color:blue;
+}
+
+nav ul li{
+  cursor: pointer;
 }
 
 .sidebar {
@@ -27,6 +32,10 @@ a{
 .app {
   grid-area: app;
   height: 100%;
+}
+
+.link{
+  cursor: pointer;
 }
 
 .header {
@@ -53,7 +62,10 @@ a{
   background-color: #fff;
   color: #444;
   grid-gap: .5em;
+}
 
+.expanded{
+  grid-template-columns: 2em auto !important;
 }
 
 .box {
@@ -107,6 +119,45 @@ a{
 
 #userHome, #home{
   padding: .5em;
+}
+
+#userHome{
+  display: grid;
+  grid-template-columns: auto 10em;
+  grid-template-rows: 10em auto;
+  grid-template-areas:
+  "userPanel userInfo"
+  "userApps userInfo";
+  background-color: #fff;
+  grid-gap: .5em;
+}
+
+#userPanel{
+  grid-area: userPanel;
+}
+
+#userApps{
+  grid-area: userApps;
+}
+
+#userInfo{
+  grid-area: userInfo;
+}
+
+div.panel{
+  max-width:1160px;
+}
+
+div.block{
+  padding: 2em !important;
+  margin: 3em;
+  border: 1px solid silver;
+  width: 400px;
+}
+
+div.col{
+  display:inline-block;
+  vertical-align: top;
 }
 
 div.row{
@@ -291,10 +342,25 @@ textarea[name='codeWindow']{
   grid-area: htmlFrame;
   padding:.25em;
 }
+4nav ul {
+  list-style: none;
+}
 
 nav ul li {
   display:inline-block;
-  padding-right: 2em;
+  padding-right: 1em;
+}
+
+li.menuItem:before {
+    position: absolute;
+    top: 1em;
+    margin: 8px 0 0 -12px;
+    vertical-align: middle;
+    display: inline-block;
+    width: .5em;
+    height: .5em;
+    background: #ccc;
+    content: '\BB';
 }
 
 .CodeMirror {
@@ -405,6 +471,10 @@ button:disabled{
   height: 2em;
 }
 
+.feather_white{
+  color:white;
+}
+
 .filled{
   fill: currentColor;
 }
@@ -465,7 +535,7 @@ button:disabled{
 
 span.title{
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.7em;
 }
 
 div.titlebar{
@@ -473,7 +543,7 @@ div.titlebar{
   text-align: center;
 }
 
-#profileModal, #authModal{
+#profileModal, #authModal, #signupModal{
   z-index:6;
   width:80%;
   min-width: 800px;

@@ -7,14 +7,20 @@ export var Menu = function Menu(props) {
 
 	menu.eventHandlers = {
     handleClick: function( event ){
-      a7.events.publish( event.target.attributes['data-action'].value );
+      a7.router.open( event.target.attributes['data-path'].value );
     }
 	};
 
   menu.template = function(){
-    var str = `<nav><ul>`
+    let str = `<nav><ul>`
+    let idx = 1;
     menu.state.menuItems.forEach( function( item ){
-      str += `<li data-onclick="handleClick" data-action="${item.action}">${item.label}</li>`;
+      if( idx === 1 ){
+        str += `<li data-onclick="handleClick" data-path="${item.path}">${item.label}</li>`;
+      }else{
+        str += `<li class="menuItem" data-onclick="handleClick" data-path="${item.path}">${item.label}</li>`;
+      }
+      idx++;
     });
     str += `</ul></nav>`;
 		return str;

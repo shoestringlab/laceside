@@ -28,19 +28,30 @@ export var Apps = function Apps(props) {
   };
 
   apps.template = function(){
+    let appUser =  a7.model.get( "appUser" );
+    let user = a7.model.get( "user" );
+
     let disabled = ( apps.state.app.name.length > 0 ? '' : 'disabled="disabled"' );
     let offset = parseInt( apps.state.offset, 10 );
-		let templ = `<form>
+    let templ = ``;
+
+    if( user.userID === appUser.userID ){
+		    templ += `<form>
                   <input type="text" name="name" placeholder="Application Name" value="${apps.state.app.name}" data-oninput="checkSavable"/><br/>
                   <button name="save" type="button" data-onclick="saveApp" ${disabled}>Save</button>
                   <button type="button" data-onclick="newApp">New</button>
                   </form>`;
+    }
 
     for( var ix = offset; ix < Math.min( apps.state.apps.length, apps.state.offset + 5 ); ix++ ){
       let app = apps.state.apps[ix];
-      templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a> <a name="trash" data-id="${app.appID}" data-onclick="deleteApp"><svg class="feather">
+      if( user.userID === appUser.userID ){
+        templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a> <a name="trash" data-id="${app.appID}" data-onclick="deleteApp"><svg class="feather">
                   <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
                 </svg></a></div>`;
+      }else{
+        templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a></div>`;
+      }
     }
     templ+=`<div class="paging"></div>`;
     a7.log.trace( "apps offset: " + offset );
@@ -74,11 +85,12 @@ export var Apps = function Apps(props) {
       }
     },
     deleteApp: function( event ){
+      let appID = event.currentTarget.attributes['data-id'].value;
       let dlg = utils.showDialog( " &nbsp; ", "You are about to delete this app, proceed?",
       [{ label: 'Yes', click: function(){
          dlg.close();
          a7.events.publish( "apps.delete", {
-           appID: event.currentTarget.attributes['data-id'].value
+           appID: appID
          });
         }},
         { label: "No", click: function(){
@@ -87,23 +99,27 @@ export var Apps = function Apps(props) {
       ]);
     },
     loadApp: function( event ){
+      let state = apps.getState();
+      let user = a7.model.get("appUser");
       let target = event.currentTarget;
       if( apps.isDirty() ){
         let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",
         [{ label: 'Yes', click: function(){
            dlg.close();
-           a7.events.publish( "apps.load", {
+           /* a7.events.publish( "apps.load", {
              appID: target.attributes['data-id'].value
-           });
+           }); */
+           a7.router.open( '/u/' + user.username + '/' + event.currentTarget.attributes['data-id'].value );
           }},
           { label: "No", click: function(){
             dlg.close();
           }}
         ]);
       }else{
-        a7.events.publish( "apps.load", {
+        /* a7.events.publish( "apps.load", {
           appID: event.currentTarget.attributes['data-id'].value
-        });
+        }); */
+        a7.router.open( '/u/' + user.username + '/' + event.currentTarget.attributes['data-id'].value );
       }
     },
     newApp: function( event ){

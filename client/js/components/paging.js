@@ -5,7 +5,8 @@ export var Paging = function Paging(props) {
 
   paging.state = {
     offset: props.offset || 0,
-    records: props.records || []
+    records: props.records || [],
+    pageSize: props.pageSize || 5
   };
 
 	paging.eventHandlers = {
@@ -26,22 +27,23 @@ export var Paging = function Paging(props) {
   });
 
   paging.template = function(){
+    let state = paging.getState();
     let templ = ``;
-    let offset = parseInt( paging.state.offset, 10 );
+    let offset = parseInt( state.offset, 10 );
     a7.log.trace( "paging offset: " + offset );
-    if( paging.state.records.length > 5 ){
+    if( state.records.length > state.pageSize ){
       templ=`<div class="paging">`;
       if( offset > 0 ){
-        templ += `<span><a name="previousPage" data-onclick="page" data-offset="${Math.max( 0, paging.state.offset - 5 )}">
+        templ += `<span><a name="previousPage" data-onclick="page" data-offset="${Math.max( 0, state.offset - state.pageSize )}">
                   <svg class="feather">
                     <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#chevron-left"/>
                   </svg>
                   </a></span>`;
       }
 
-      templ+=`<span>${offset+1}-${Math.min(offset+5, paging.state.records.length)} of ${paging.state.records.length}</span>`;
-      if( paging.state.offset + 5 < paging.state.records.length ){
-        templ += `<span><a name="nextPage" data-onclick="page" data-offset="${Math.min( paging.state.records.length - 5, offset + 5 )}">
+      templ+=`<span>${offset+1}-${Math.min(offset+state.pageSize, state.records.length)} of ${state.records.length}</span>`;
+      if( state.offset + state.pageSize < state.records.length ){
+        templ += `<span><a name="nextPage" data-onclick="page" data-offset="${Math.min( state.records.length, offset + state.pageSize )}">
                   <svg class="feather">
                     <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#chevron-right"/>
                   </svg>

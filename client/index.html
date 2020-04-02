@@ -18,16 +18,12 @@
 
   <script type="module">
     import {application} from '/js/app.js';
-    import {collapsiblepane, constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
-
-    //constructor( collapsiblepane, [ document.querySelector( "#libraries" ), { title : "Libraries" } ] );
-
+    import {collapsiblepane, constructor, modal, sidebar} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
     constructor( collapsiblepane, [ document.querySelector( "#apps" ),
 		{
 			title : "Apps"
 		}]);
-
 
     constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
     {
@@ -48,10 +44,25 @@
       [ document.querySelector("#authModal"),
         {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
+    let signupmd = constructor( modal,
+      [ document.querySelector("#signupModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
-/*     constructor( sidebar,
+    let sb = constructor( sidebar,
 				[ document.querySelector("#sidebar"),
-					{ featherPath: '/lib/feather-icons'}] ) ; */
+					{ featherPath: '/lib/feather-icons'}], true );
+
+    sb.on("minimized", function( obj ){
+      document.querySelector( "#ide" ).classList.add( "expanded" );
+      sb.wrapper.querySelector("svg[name='chevron']").classList.remove( "feather_white" );
+    });
+
+    sb.on("maximized", function( obj ){
+      document.querySelector( "#ide" ).classList.remove( "expanded" );
+      sb.wrapper.querySelector("svg[name='chevron']").classList.add( "feather_white" );
+    });
+
+    sb.wrapper.querySelector("svg[name='chevron']").classList.add( "feather_white" );
 
     var app = application();
 
@@ -75,10 +86,10 @@
     </div>
     <div id="ide" class="hidden">
       <div id="sidebar" class="box sidebar">
-        <div id="libraries">
+        <div id="apps">
         </div>
         <br>
-        <div id="apps">
+        <div id="libraries">
         </div>
         <br>
         <div name="console" id="console" class="console">
@@ -102,6 +113,9 @@
   </div>
   <div id="authModal">
     <div id="auth"></div>
+  </div>
+  <div id="signupModal">
+    <div id="signup"></div>
   </div>
   <div id="dialog"></div>
 </body>

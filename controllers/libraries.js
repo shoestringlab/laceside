@@ -16,6 +16,18 @@ module.exports = {
       });
   },
 
+  getByUserID: function( request, response ){
+   service.getLibraries( request.params.ID )
+     .then( function( results ){
+       response.setHeader( "Cache-Control", "no-cache" );
+       response.send( JSON.stringify( results) );
+     })
+     .catch( function( error ){
+       console.log( error );
+       response.send( JSON.stringify( error ) );
+     });
+ },
+
   create: function( request, response){
     service.create( request.user.userID, request.body.link, request.body.name )
       .then( function( results ){

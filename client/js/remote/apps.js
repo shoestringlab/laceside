@@ -1,16 +1,8 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 
-export { getApps, create, update, read, deleteById };
+export { create, update, read, deleteById };
 
-var getApps = function( obj ){
-    let params = { method: 'GET' };
-    return a7.remote.fetch( "/api/apps", params, true );
-  },
-  getAppsByUserID = function( obj ){
-      let params = { method: 'GET' };
-      return a7.remote.fetch( "/api/apps/" + obj.userID, params, true );
-    },
-  create = function( obj ){
+var create = function( obj ){
     var request;
 
     var params = {  method: 'POST',

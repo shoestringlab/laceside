@@ -5,9 +5,6 @@ module.exports = function(app) {
   const bodyParser = require('body-parser');
   var jsonParser = bodyParser.json();
 
-  // get libraries for a user
-  app.get( "/api/libraries", librarycontroller.getLibraries );
-
   // create a new library
   app.post( "/api/library", jsonParser, librarycontroller.create );
 

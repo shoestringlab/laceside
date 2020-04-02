@@ -11,7 +11,9 @@ export var Home = function Home(props) {
   };
 
 	home.eventHandlers = {
-    
+    signIn: function( event ){
+      a7.events.publish( 'auth.showLogin', {} ) ;
+    }
 	};
 
   home.on( "rendered", function(){
@@ -21,7 +23,10 @@ export var Home = function Home(props) {
   home.template = function(){
     let state = home.getState();
 
-    let templ = `<h3>JS Sandbox Home</h3>`;
+    let templ = `<h3>JS Sandbox Home</h3>
+                  <a name="signin" data-onclick="signIn">[Sign In]</a>
+
+                `;
 
     return templ;
 	};

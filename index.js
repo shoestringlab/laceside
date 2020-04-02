@@ -25,13 +25,20 @@ require( './routes/api.libraries.js' )(app);
 require( './routes/api.userprofiles.js' )(app);
 require( './routes/api.users.js' )(app);
 
-//app.use( "*", express.static( '/index.html' ) );
+/* app.use( "*", express.static( '/index.html' ) );
+ */
 
-/*
+// default route
+app.get('/u/:username',function (req, res) {
+    res.sendFile('index.html', {root: 'client'});
+});
+
 // default route
 app.get('*',function (req, res) {
-    res.redirect('/index.html');
-}); */
+    res.sendFile('index.html', {root: 'client'});
+});
+
+//app.use( "/(*)?", express.static( '/index.html' ) );
 
 // set our listener
 var server = app.listen( 4100, function(){

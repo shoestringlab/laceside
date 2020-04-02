@@ -37,42 +37,42 @@ export var Profile = function Profile(props) {
 
   profile.template = function(){
 		return `
-              <h2>Profile</h2>
-              <form>
-              <div id="profileContainer">
-            		<div id="profileTabs">
-            			<div data-tab="pTab1">Basic Info</div>
-            			<div data-tab="pTab2">Profile Picture</div>
-            		</div><div class="vcontentContainer">
-            			<div id="pTab1">
-                    <div class="vtabContent form">
-                      <div class="right-align label">First Name</div>
-                      <div><input name="firstname" type="text" placeholder="First Name" value="${profile.state.user.firstName}"></div>
+      <h2>Profile</h2>
+      <form>
+      <div id="profileContainer">
+    		<div id="profileTabs">
+    			<div data-tab="pTab1">Basic Info</div>
+    			<div data-tab="pTab2">Profile Picture</div>
+    		</div><div class="vcontentContainer">
+    			<div id="pTab1">
+            <div class="vtabContent form">
+              <div class="right-align label">First Name</div>
+              <div><input name="firstname" type="text" placeholder="First Name" value="${profile.state.user.firstName}"></div>
 
-                      <div class="right-align label">Last Name</div>
-                      <div><input name="lastname" type="text" placeholder="Last Name" value="${profile.state.user.lastName}"></div>
+              <div class="right-align label">Last Name</div>
+              <div><input name="lastname" type="text" placeholder="Last Name" value="${profile.state.user.lastName}"></div>
 
-                      <div class="right-align label">Nickname</div>
-                      <div><input name="nickname" type="text" placeholder="Nickname" value="${profile.state.user.nickName}"></div>
+              <div class="right-align label">Nickname</div>
+              <div><input name="nickname" type="text" placeholder="Nickname" value="${profile.state.user.nickName}"></div>
 
-                      <div class="right-align label">Username</div>
-                      <div><input name="username" type="text" placeholder="username"  value="${profile.state.user.username}" readonly></div>
+              <div class="right-align label">Username</div>
+              <div><input name="username" type="text" placeholder="username"  value="${profile.state.user.username}" readonly></div>
 
-                      <div></div>
-                      <div><button name="save" type="button" data-onclick="updateUser">Save Changes</button>
-                      <button name="discard" type="button" data-onclick="discardChanges">Discard</button></div>
-                    </div>
-                  </div>
-            			<div id="pTab2">
-                    <div class="vtabContent">
-                      <div id="profilePicUploadDiv"></div>
-                      <div class="right-align"><img style="max-width:300px;" src="${profile.state.user.profilePic}"/></div>
-                    </div>
-                  </div>
-            		</div>
-            	</div>
-              </form>
-            `;
+              <div></div>
+              <div><button name="save" type="button" data-onclick="updateUser">Save Changes</button>
+              <button name="discard" type="button" data-onclick="discardChanges">Discard</button></div>
+            </div>
+          </div>
+    			<div id="pTab2">
+            <div class="vtabContent">
+              <div id="profilePicUploadDiv"></div>
+              <div class="right-align"><img style="max-width:300px;" src="${profile.state.user.profilePic}"/></div>
+            </div>
+          </div>
+    		</div>
+    	</div>
+      </form>
+    `;
 	};
 
   profile.on( "rendered", function(){
@@ -100,9 +100,9 @@ export var Profile = function Profile(props) {
     };
 
     let fd = constructor( fileuploader, [ profileContainer.querySelector("#profilePicUploadDiv"), options ]);
-    if( profile.getState().visible ){
+/*     if( profile.getState().visible ){
       document.querySelector( "#profileModal" ).parentElement.classList.add( 'gadgetui-showModal' );
-    }
+    } */
   });
 
   return profile;

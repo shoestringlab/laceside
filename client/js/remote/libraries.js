@@ -1,12 +1,8 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 
-export { getLibraries, create, read, update, deleteById };
+export { create, read, update, deleteById };
 
-var getLibraries = function( obj ){
-    var params = { method: 'GET' };
-    return a7.remote.fetch( "/api/libraries", params, true );
-  },
-  create = function( obj ){
+var create = function( obj ){
     var request;
 
     var params = {  method: 'POST',
