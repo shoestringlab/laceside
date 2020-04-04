@@ -10,18 +10,18 @@ function init(){
 }
 
 var dao = {
-  create: function ( username, password, firstName, lastName, nickName ){
+  create: function ( userID, username, password, firstName, lastName, nickName ){
     var salt = bcrypt.genSaltSync( 10 );
     var hash = bcrypt.hashSync( password, salt );
 
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('INSERT INTO users ( username, hash, firstName, lastName, nickName, dateCreated ) VALUES ( ?, ?, ?, ?, ?, curdate() )',
-            [username, hash, firstName, lastName, nickName] )
+          connection.query('INSERT INTO users ( userID, username, hash, firstName, lastName, nickName, dateCreated ) VALUES ( ?, ?, ?, ?, ?, ?, curdate() )',
+            [userID, username, hash, firstName, lastName, nickName] )
             .then( ( results ) => {
               connection.end();
-              resolve( results.insertId );
+              resolve( userID );
             })
             .catch( err => {
               connection.end();

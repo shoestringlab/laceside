@@ -9,15 +9,15 @@ function init(){
 }
 
 var dao = {
-  create: function ( userID, link, name ){
+  create: function ( libraryID, userID, link, name ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query(`INSERT INTO libraries ( userID, link, name )
-                            VALUES ( ?, ?, ? )`, [ userID, link, name] )
+          connection.query(`INSERT INTO libraries ( libraryID, userID, link, name )
+                            VALUES ( ?, ?, ?, ? )`, [ libraryID, userID, link, name] )
             .then( ( results ) =>{
               connection.end();
-              resolve( results.insertId );
+              resolve( libraryID );
             })
             .catch( err =>{
               connection.end();

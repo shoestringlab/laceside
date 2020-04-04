@@ -40,6 +40,8 @@ events();
 appEvents();
 authEvents();
 libraryEvents();
+mainEvents();
+menuEvents();
 profileEvents();
 sandboxEvents();
 userEvents();

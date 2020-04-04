@@ -8,8 +8,8 @@ module.exports = {
    getLibraries: function( userID ){
     return( gateway.getLibraries( userID ) );
   },
-  create: function( userID, link, name ){
-    return( dao.create( userID, link, name ) );
+  create: function( libraryID, userID, link, name ){
+    return( dao.create( libraryID, userID, link, name ) );
   },
   read: function( libraryID ){
     return( dao.read( libraryID ) );

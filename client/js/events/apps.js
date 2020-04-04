@@ -60,10 +60,10 @@ export var appEvents = function init(){
   });
 
   a7.events.subscribe( "apps.load", function( obj ){
-    let app = a7.model.get( "apps" ).filter( application => application.appID === parseInt( obj.appID, 10 ) )[0];
+    let app = a7.model.get( "apps" ).filter( application => application.appID === obj.appID )[0];
     app = app || { appID: 0, name: "", libraries: "", jsCode: "", htmlCode: "", cssCode: "" };
     let libraries = a7.model.get( "libraries" );
-    let appLibs = app.libraries.split(",").map( libID => parseInt( libID,10 ));
+    let appLibs = app.libraries.split(",").map( libID => libID );
     let activeLibs = ( app.libraries ? libraries.filter( lib => appLibs.indexOf( lib.libraryID ) >= 0 ) : [] );
 
     a7.model.set( "esModule", app.esModule );
@@ -99,7 +99,7 @@ export var appEvents = function init(){
           var apps = a7.model.get( "apps" );
 
           var deleted = apps.find( function( app, idx ){
-              if (app.appID === parseInt( obj.appID, 10 ) ) {
+              if (app.appID === obj.appID ) {
                 apps.splice( idx, 1 );
                   return true;
               }
@@ -116,7 +116,7 @@ export var appEvents = function init(){
   });
 
   a7.events.subscribe( "apps.new", function( obj ){
-    if( a7.ui.getView('jseditor').props.editor ){
+    if( a7.ui.getView('jseditor') !== undefined && a7.ui.getView('jseditor').props.editor ){
         a7.ui.getView('jseditor').props.editor.setValue( "" );
         a7.ui.getView('htmleditor').props.editor.setValue( "" );
         a7.ui.getView('csseditor').props.editor.setValue( "" );

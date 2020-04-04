@@ -29,7 +29,7 @@ module.exports = {
   },
 
   create: function( request, response){
-    userservice.create( request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName )
+    userservice.create( request.body.userID, request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName )
       .then( function( results ){
         //we are reading back the inserted row
         userservice.read( results )

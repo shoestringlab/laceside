@@ -19,14 +19,4 @@ export var events = function init(){
       }
     }
   });
-
-  a7.events.subscribe( "tabs.setTab", function( obj ){
-    a7.model.set( "activeTab", obj.tab );
-    a7.ui.getView('tabs').state.tabs.forEach( function( tab ){
-      document.querySelector( "#" + tab ).style.display = ( tab === obj.tab ? 'block' : 'none' );
-      a7.ui.getView('tabs').element.querySelector( "div.tabs div[name='" + tab + "']" ).style.backgroundColor = ( tab === obj.tab ? '#99f' : '' );
-    });
-    a7.ui.getView( obj.tab.toLowerCase() ).props.editor.refresh();
-  });
-
 }

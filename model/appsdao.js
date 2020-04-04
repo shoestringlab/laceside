@@ -9,12 +9,12 @@ function init(){
 }
 
 var dao = {
-  create: function ( userID, name, jsCode, htmlCode, cssCode, esModule, libraries ){
+  create: function ( appID, userID, name, jsCode, htmlCode, cssCode, esModule, libraries ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query(`INSERT INTO apps ( userID, name, jsCode, htmlCode, cssCode, esModule )
-                            VALUES ( ?, ?, ?, ?, ?, ? )`, [ userID, name, jsCode, htmlCode, cssCode, esModule] )
+          connection.query(`INSERT INTO apps ( appID, userID, name, jsCode, htmlCode, cssCode, esModule )
+                            VALUES ( ?, ?, ?, ?, ?, ?, ? )`, [ appID, userID, name, jsCode, htmlCode, cssCode, esModule] )
             .then( ( results ) =>{
               try{
                 if( libraries.length ){
@@ -22,10 +22,10 @@ var dao = {
                   for( var ix = 0; ix < libs.length; ix++ ){
                     if( ix < libs.length - 1 ){
                       connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                        VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ] );
+                                        VALUES ( ?, ? )`, [ appID, libs[ ix ] ] );
                     }else{
                       connection.query(`INSERT INTO appLibraries ( appID, libraryID )
-                                        VALUES ( ?, ? )`, [ results.insertId, libs[ ix ] ], (err) => {
+                                        VALUES ( ?, ? )`, [ appID, libs[ ix ] ], (err) => {
                         //must handle error if any
                         connection.commit();
                       });

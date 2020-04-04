@@ -29,7 +29,7 @@ module.exports = {
  },
 
   create: function( request, response){
-    service.create( request.user.userID, request.body.link, request.body.name )
+    service.create( request.body.libraryID, request.user.userID, request.body.link, request.body.name )
       .then( function( results ){
         //we are reading back the inserted row
         service.read( results )

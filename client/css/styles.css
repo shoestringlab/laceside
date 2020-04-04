@@ -660,3 +660,19 @@ div.label{
   margin-left: auto;
   margin-right: auto;
 }
+
+.gadget-ui-tabs-h{
+  background-color: #ccf !important;
+}
+
+.gadget-ui-tabs-h div.gadget-ui-tab-h{
+  background-color: #77f !important;
+}
+
+.gadget-ui-tabs-h div.gadget-ui-tab-h:hover{
+  background-color: #99f !important;
+}
+
+.gadget-ui-tabs-h div.gadget-ui-tab-h-active{
+	background-color: #99f !important;
+}

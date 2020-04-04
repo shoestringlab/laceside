@@ -11,8 +11,8 @@ module.exports = {
   getByUsername: function( username ){
     return( gateway.getByUsername( username ) );
   },
-  create: function( username, password, firstName, lastName ){
-    return( dao.create( username, password, firstName, lastName ) );
+  create: function( userID, username, password, firstName, lastName ){
+    return( dao.create( userID, username, password, firstName, lastName ) );
   },
   read: function( userID ){
     return( dao.read( userID ) );

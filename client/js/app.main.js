@@ -49,35 +49,8 @@ export var main = (function() {
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
       Home( { id: 'home', selector: "#home" } );
 
-      //this.run( user );
+          //this.run( user );
       a7.router.match( document.location.pathname + document.location.search );
     }
-    /* ,
-
-    run: function( appUser ) {
-      // get the current logged in user
-      let user = a7.model.get( "user" );
-      Header( { id: 'header', user: user, selector: "#headerRight" } );
-      Profile( { id: 'profile', selector: "#profile", user: user } );
-
-      // default appUser to the current user, which may be the anon user
-      appUser = appUser || user;
-
-      if( appUser.userID ){
-        // initial actions after login
-        a7.events.publish( "user.getUserLibraries", { offset: 0, user: appUser } );
-        a7.events.publish( "user.getUserApps",  {offset: 0, user: appUser } );
-        if( appUser.userID !== user.userID ){
-          let menuItems = [
-            { label: 'JS Sandbox', path: '/'},
-            { label: appUser.username + ' Home', path: '/u/' + appUser.username }
-          ];
-          let state = a7.ui.getView( 'menu' ).getState();
-          state.menuItems = menuItems;
-          a7.ui.getView( 'menu' ).setState( state );
-        }
-      }
-      ui.setLayout();
-    } */
   };
 })();
