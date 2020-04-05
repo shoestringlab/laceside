@@ -12,28 +12,32 @@ var getCurrentUser = function( obj ){
     return a7.remote.fetch( "/api/u/username/" + obj.username, params, true );
   },
   getUserLibraries = function( obj ){
-      var params = { method: 'GET' };
-      return a7.remote.fetch( "/api/user/" + obj.user.userID + "/libraries", params, true );
+    var params = { method: 'GET' };
+    return a7.remote.fetch( "/api/user/" + obj.user.userID + "/libraries", params, true );
   },
   getUserApps = function( obj ){
-      let params = { method: 'GET' };
-      return a7.remote.fetch( "/api/user/" + obj.user.userID + "/apps", params, true );
+    let params = { method: 'GET' };
+    return a7.remote.fetch( "/api/user/" + obj.user.userID + "/apps", params, true );
+  },
+  getUserData = function( obj ){
+    let params = { method: 'GET' };
+    return a7.remote.fetch( "/api/user/" + obj.user.userID + "/data", params, true );
   },
   update = function( obj ){
 
-      var request;
+    var request;
 
-      var params = {  method: 'PUT',
-                      headers: {
-                        'Accept': 'application/json, application/xml, text/play, text/html, *.*',
-                        'Content-Type': 'application/json; charset=utf-8'
-                      },
-                      body: JSON.stringify( {
-                        firstName: obj.firstName,
-                        lastName: obj.lastName,
-                        nickName: obj.nickName
-                      })
-                    };
+    var params = {  method: 'PUT',
+                    headers: {
+                      'Accept': 'application/json, application/xml, text/play, text/html, *.*',
+                      'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    body: JSON.stringify( {
+                      firstName: obj.firstName,
+                      lastName: obj.lastName,
+                      nickName: obj.nickName
+                    })
+                  };
 
-      return a7.remote.fetch( "/user", params, true );
+    return a7.remote.fetch( "/user", params, true );
     };

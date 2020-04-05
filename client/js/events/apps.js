@@ -10,7 +10,7 @@ export var appEvents = function init(){
     args.jsCode = a7.model.get( "jsCode" ) || "";
     args.htmlCode = a7.model.get( "htmlCode" ) || "";
     args.cssCode = a7.model.get( "cssCode" ) || "";
-    args.esModule = a7.model.get( 'esModule' );
+    args.esModule = a7.model.get( 'esModule' ) || 0;
     args.libraries = ( a7.model.get( "activeLibraries" ) ? a7.model.get( "activeLibraries" ).map( library => library.libraryID ).join( "," ) : "" );
     a7.remote.invoke( "apps.create", args )
       .then( function( response ) {

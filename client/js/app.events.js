@@ -11,12 +11,29 @@ export var events = function init(){
   a7.events.subscribe( "ide.show", function( obj ){
     ui.setLayout( "ide" );
 
-    if( obj.appID ){
+/*     if( obj.appID ){
       if( a7.model.get( "apps" ) === undefined ){
-
+        a7.events.publish( "user.getUserApps", obj );
+        a7.events.publish( "user.getUserLibraries", obj );
       }else{
         a7.events.publish( "apps.load", obj );
       }
-    }
+    } */
+    a7.remote.invoke( "user.getByUsername", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( user ){
+        a7.model.set( "appUser", user );
+        obj.user = user;
+        if( a7.model.get( "apps" ) === undefined ){
+          /* a7.events.publish( "user.getUserLibraries", obj );
+          a7.events.publish( "user.getUserApps", obj ); */
+          a7.events.publish( "main.run", obj );
+        }else{
+          a7.events.publish( "apps.load", obj );
+        }
+      });
   });
 }

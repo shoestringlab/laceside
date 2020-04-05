@@ -27,9 +27,12 @@ export var mainEvents = function init(){
     //obj.appUser = obj.appUser || user;
 
     if( a7.model.get( "appUser" ).userID  ){
+      obj.offset = 0;
+      obj.user = a7.model.get( "appUser" );
+
       // initial actions after login
-      a7.events.publish( "user.getUserLibraries", { offset: 0, user: a7.model.get( "appUser" ) } );
-      a7.events.publish( "user.getUserApps",  {offset: 0, user: a7.model.get( "appUser" ) } );
+      a7.events.publish( "user.getUserLibraries", obj );
+      a7.events.publish( "user.getUserApps",  obj );
     }
     a7.events.publish( "menu.update", { user: a7.model.get( "appUser" ) } );
     ui.setLayout( obj.view );
