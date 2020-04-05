@@ -1,3 +1,14 @@
+0.13.0 Beta Release
+===================
+
+Updates in this release:
+
+- client-side routing via new altseven module
+- bookmarking of user sites and apps
+- multi-user support
+
+- Note that this release is a work in progress. New account creation in the IDE is not yet complete, and there are other functional issues.
+
 0.12.0 Beta Release
 ===================
 
@@ -6,7 +17,6 @@ Updates in this release:
 - Add profile picture, menu in header right to access profile
 - Profile page to update profile pic and personal info
 - Logout
-
 
 0.11.0 Beta update
 ===================

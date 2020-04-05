@@ -1,7 +1,7 @@
 # livesandbox
 in-browser JavaScript IDE
 
-v 0.12.0
+v 0.13.0
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
@@ -22,9 +22,7 @@ Requirements:
 
 4. The database login information is located in config/db.config.js. Either copy these credentials or create db credentials of your own and copy them into this file.
 
-5. You may be required to update the stored procedures getApps and getLibraries and provide your own definer credentials if you change the login user for the datbase.
-
-6. In the console from the root folder of the project, type:
+5. In the console from the root folder of the project, type:
 
     $ node index.js
 
@@ -36,7 +34,9 @@ Since there is as yet no admin console, if you want to change the password for t
 
 Copy the resulting hash and use a SQL editor to update the hash field in the users table:
 
-    UPDATE users set hash = '<hash>' WHERE userID = 5;
+    UPDATE users set hash = '<hash>' WHERE userID = 6;
+
+*** There are now two users in the database, "user" and "rmunn". Both use a password of "password". ***
 
 
 Notes
