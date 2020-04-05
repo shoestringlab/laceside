@@ -7,7 +7,7 @@ const httpinterceptor = require( './interceptors/httpinterceptor.js' );
 app.use( express.static( 'client' ) );
 app.use( "/lib/altseven", express.static( 'node_modules/altseven' ) );
 app.use( "/lib/codemirror", express.static( 'node_modules/codemirror' ) );
-app.use( "/lib/cuid", express.static( 'node_modules/cuid' ) );
+app.use( "/lib/cuid", express.static( 'libs/cuid' ) );
 app.use( "/lib/feather-icons", express.static( 'node_modules/feather-icons' ) );
 app.use( "/lib/gadget-ui", express.static( 'node_modules/gadget-ui' ) );
 app.use( "/lib/modlazy", express.static( 'node_modules/modlazy' ) );
