@@ -1,3 +1,9 @@
+0.14.0 Beta Release
+===================
+
+This release migrates the repository to Shoestring Lab and renames the repository to laceside.
+
+
 0.13.0 Beta Release
 ===================
 

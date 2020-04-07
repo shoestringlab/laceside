@@ -1,7 +1,7 @@
-# livesandbox
+# Laces IDE
 in-browser JavaScript IDE
 
-v 0.13.0
+v 0.14.0
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 

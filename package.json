@@ -1,29 +1,25 @@
 {
-  "name": "livesandbox",
-  "version": "0.13.2",
+  "name": "laceside",
+  "version": "0.14.0",
   "description": "In-browser JavaScript IDE and execution environment",
-  "main": "index.htm",
-  "directories": {
-    "doc": "doc",
-    "lib": "lib"
-  },
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robertdmunn/livesandbox.git"
+    "url": "git+https://github.com/shoestringlab/laceside.git"
   },
   "keywords": [
     "JavaScript",
     "IDE"
   ],
   "author": "Robert Munn <robertdmunn@gmail.com>",
-  "license": "(Mozilla Public License v 2.0)",
+  "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/robertdmunn/livesandbox/issues"
+    "url": "https://github.com/shoestringlab/laceside/issues"
   },
-  "homepage": "https://github.com/robertdmunn/livesandbox#readme",
+  "homepage": "https://github.com/shoestringlab/laceside#readme",
   "dependencies": {
     "altseven": "^6.0.0-beta-3",
     "bcryptjs": "^2.4.3",
