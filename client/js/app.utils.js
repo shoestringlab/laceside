@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {bubble, constructor, dialog} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
-export { formatDate, addModLazy, showNotice, showDialog, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce };
+export { formatDate, addModLazy, showNotice, showDialog, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce, checkPasswordStrength };
 
 var formatDate = function( dateString, format ){
   let date = new Date( dateString );
@@ -451,4 +451,42 @@ var isObject = function isObject(value) {
  */
 var now = function() {
   return Date.now();
+};
+
+// https://github.com/deanilvincent/check-password-strength
+// Copyright (c) 2020 Mark Deanil Vicente
+// Licensed under the MIT License
+var checkPasswordStrength = function(password){
+  if (!password) {
+    console.error("check-password-strength package - requires a password value.");
+    return undefined;
+  }
+
+  let strength = {}; // Default
+
+  const strongRegex = new RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+  );
+  const mediumRegex = new RegExp(
+    "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
+  );
+
+  if (strongRegex.test(password)) {
+    strength = {
+      id: 2,
+      value: 'Strong'
+    };
+  } else if (mediumRegex.test(password)) {
+    strength = {
+      id: 1,
+      value: 'Medium'
+    };
+  } else {
+    strength = {
+      id: 0,
+      value: 'Weak'
+    };
+  }
+
+  return strength;
 };

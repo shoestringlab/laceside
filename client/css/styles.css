@@ -232,7 +232,7 @@ div.centered{
   height: 500px;
 }
 
-input[type='text']{
+input[type='text'], input[type='password'], input[type='email']{
   width:100%;
 }
 
@@ -648,7 +648,7 @@ div[name='dropzone']{
 
 div.label{
   padding-right: 1em;
-  padding-top: .5em;
+  margin-top: .5em;
 }
 
 .hidden{
@@ -675,4 +675,33 @@ div.label{
 
 .gadget-ui-tabs-h div.gadget-ui-tab-h-active{
 	background-color: #99f !important;
+}
+
+#passwordValidator{
+  margin-top: .5em;
+}
+
+#passwordValidator span{
+  /* border: 3px solid black; */
+  border-radius: 5px;
+  padding: .2em;
+}
+
+#passwordValidator span.Strong{
+  border: 5px solid green;
+  font-weight: bold;
+}
+
+#passwordValidator span.Medium{
+  border: 5px solid yellow;
+  font-weight: bold;
+}
+
+#passwordValidator span.Weak{
+  border: 5px solid red;
+  font-weight: bold;
+}
+
+#passwordMatched, #emailValidator{
+  margin-top:.5em;
 }

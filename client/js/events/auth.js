@@ -8,6 +8,14 @@ export var authEvents = function init(){
   });
 
   a7.events.subscribe( "auth.showSignup", function( obj ){
+    let signup = a7.ui.getView( "signupForm" );
+    let state = signup.getState();
+    state.firstName = '';
+    state.lastName = '';
+    state.email = '';
+    state.username = '';
+    state.password = '';
+    signup.setState( state );
     ui.setLayout( "signup" );
   });
 

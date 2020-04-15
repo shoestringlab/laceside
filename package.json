@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/shoestringlab/laceside#readme",
   "dependencies": {
-    "altseven": "^6.0.0-beta-3",
+    "altseven": "^6.0.0-beta-6",
     "bcryptjs": "^2.4.3",
     "codemirror": "^5.43.0",
     "concat-files": "^0.1.1",
@@ -32,6 +32,7 @@
     "js-base64": "^2.5.1",
     "mariadb": "^2.0.3",
     "modlazy": "^1.0.0",
+    "password-strength-score": "^1.1.2",
     "sha.js": "^2.4.11",
     "url-router": "^11.0.2",
     "velocity-animate": "^1.5.2"

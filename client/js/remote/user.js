@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {cuid} from '/lib/cuid/index.mjs';
 
-export { getCurrentUser, getByUsername, getUserLibraries, getUserApps, update };
+export { getCurrentUser, getByUsername, getUserLibraries, getUserApps, checkEmail, checkUsername, update };
 
 var getCurrentUser = function( obj ){
     var params = { method: 'GET' };
@@ -22,6 +22,14 @@ var getCurrentUser = function( obj ){
   getUserData = function( obj ){
     let params = { method: 'GET' };
     return a7.remote.fetch( "/api/user/" + obj.user.userID + "/data", params, true );
+  },
+  checkEmail = function( obj ){
+    let params = { method: 'GET' };
+    return a7.remote.fetch( "/api/email/" + obj.emailAddress, params, true );
+  },
+  checkUsername = function( obj ){
+    let params = { method: 'GET' };
+    return a7.remote.fetch( "/api/u/username/" + obj.username + "?returnType=boolean", params, true );
   },
   update = function( obj ){
 

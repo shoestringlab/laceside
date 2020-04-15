@@ -11,6 +11,9 @@ module.exports = {
   getByUsername: function( username ){
     return( gateway.getByUsername( username ) );
   },
+  getEmailAddress: function( emailAddress ){
+    return( gateway.getEmailAddress( emailAddress) );
+  },
   create: function( userID, username, password, firstName, lastName ){
     return( dao.create( userID, username, password, firstName, lastName ) );
   },

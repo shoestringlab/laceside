@@ -28,6 +28,10 @@ module.exports = function(app) {
   //update a user
   app.put( "/api/user", jsonParser, usercontroller.update );
 
+  // check if an email address is in the system
+  app.get( "/api/email/:emailAddress", usercontroller.getEmailAddress );
+
+
   //delete a user
 //  app.delete( "/api/user/:ID", usercontroller.delete );
 

@@ -49,5 +49,26 @@ gateway = {
           reject( err );
         });
     });
+  },
+  getEmailAddress : function( emailAddress ){
+    return new Promise( function( resolve, reject ){
+      pool.getConnection()
+        .then( connection => {
+          connection.query(`SELECT userID
+                            FROM users
+                            WHERE emailAddress = ?`, [ emailAddress ] )
+            .then( ( results ) =>{
+              connection.end();
+              resolve( results );
+            })
+            .catch( err =>{
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err =>{
+          reject( err );
+        });
+    });
   }
 }

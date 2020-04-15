@@ -17,15 +17,32 @@ module.exports = {
   getByUsername: function( request, response ){
     userservice.getByUsername( request.params.username )
       .then( function( results ){
-        let user = results[0];
-        // remove the hash from the token so we don't send it outside the system
-        delete user.hash;
-        response.send( JSON.stringify( user ) );
+
+        if( request.query.returnType !== undefined && request.query.returnType === 'boolean' ){
+          response.send( JSON.stringify( results.length ) );
+        }else{
+          let user = results[0];
+          // remove the hash from the token so we don't send it outside the system
+          delete user.hash;
+          response.send( JSON.stringify( user ) );
+        }
       })
       .catch( function( error ){
         console.log( error );
         response.send( JSON.stringify( error ) );
+      });
+  },
+
+  getEmailAddress: function( request, response ){
+    userservice.getEmailAddress( request.params.emailAddress )
+      .then( function( results ){
+        let exists = results.length;
+        response.send( JSON.stringify( exists ) );
       })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      });
   },
 
   create: function( request, response){
