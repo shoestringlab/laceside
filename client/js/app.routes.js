@@ -4,6 +4,7 @@ export var routes = [
   [ '/auth/failed', 'auth.failed' ],
   [ '/u/:username/profile', 'profile.show' ],
   [ '/u/:username/:appID', 'ide.show' ],
+  [ '/u/userconfirmation/:userConfirmationID', 'user.confirm' ],
   [ '/u/:username', 'user.show' ],
   [ '/', 'main.home' ],
   [ '', 'main.home' ]

@@ -1,3 +1,5 @@
+"use strict";
+const emailConfig = require( "../config/emailconfig.js" );
 const Base64 = require('js-base64').Base64;
 const shajs = require('sha.js');
 const securityconfig = require('../config/securityconfig.js');
@@ -25,5 +27,20 @@ module.exports = {
       auth = JSON.parse( Base64.decode( token ) );
     }
     return auth;
+  },
+
+  // async..await is not allowed in global scope, must use a wrapper
+  sendEmail: async function( to, from, subject, message ) {
+
+    // send mail with defined transport object
+    let info = await emailConfig.transporter.sendMail({
+      from: from, // sender address
+      to: to,
+      subject: subject,
+      text: message.plainText,
+      html: message.htmlText,
+    });
+
+    console.log("Message sent: %s", info.messageId);
   }
 }

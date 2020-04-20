@@ -15,8 +15,11 @@ export var authEvents = function init(){
     state.email = '';
     state.username = '';
     state.password = '';
+    state.passwordIsValid = false;
+    state.emailIsValid = false;
+    state.usernameIsValid = false;
     signup.setState( state );
-    ui.setLayout( "signup" );
+    signup.components.modal.open();
+    //ui.setLayout( "signup" );
   });
-
 };

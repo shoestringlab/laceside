@@ -550,6 +550,13 @@ div.titlebar{
   text-align:center;
 }
 
+#messageModal{
+  z-index:6;
+  width:50%;
+  min-width: 500px;
+  text-align:center;
+}
+
 #profileContainer{
   display: grid;
   grid-template-columns: 10em auto;

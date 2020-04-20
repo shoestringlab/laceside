@@ -1,5 +1,5 @@
 
-var mysql = require( 'mariadb' );
+const mysql = require( 'mariadb' );
 
 const pool = mysql.createPool({
   connectionLimit : 50,

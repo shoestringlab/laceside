@@ -1,19 +1,25 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {checkPasswordStrength} from '/js/app.utils.js';
+import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+
 export var SignupForm = function signupform(props) {
     var signupform = a7.components.Constructor(a7.components.View, [props], true);
     signupform.state = {
       firstName: props.firstName || "",
       lastName: props.lastName || "",
+      nickName: props.nickName || "",
       email: props.email || "",
       username: props.username || "",
       password: props.password || "",
       emailIsValid: props.emailIsValid || false,
       usernameIsValid: props.usernameIsValid || false,
       passwordIsValid: props.passwordIsValid || false,
-      passwordMatches:  props.passwordMatches || false,
-      skipRender: false
+      passwordMatches:  props.passwordMatches || false
     };
+    
+    signupform.components.modal = constructor( modal,
+      [ document.querySelector("#signupModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
     signupform.template = function(){
 
@@ -29,6 +35,11 @@ export var SignupForm = function signupform(props) {
           <div>
             <div class="col w10 right-align label"><label for="lastName">Last Name</label></div>
             <div class="col w20"><input name="lastName" type="text" value="${signupform.state.lastName}" data-onchange="handleLastName"/></div>
+            <div class="col w5"></div>
+          </div>
+          <div>
+            <div class="col w10 right-align label"><label for="nickName">Nick Name</label></div>
+            <div class="col w20"><input name="nickName" type="text" value="${signupform.state.nickName}" data-onchange="handleNickName"/></div>
             <div class="col w5"></div>
           </div>
           <div>
@@ -53,7 +64,7 @@ export var SignupForm = function signupform(props) {
           </div>
           <div>
             <div class="col w10"></div>
-            <div class="col w20 right-align"><input name="signupButton" type="button" value="Create Account" data-onclick="handleSubmit"/></div>
+            <div class="col w20 right-align"><button name="cancel" type="button" data-onclick="cancelSignup">Cancel</button> <button name="signupButton" type="button" data-onclick="handleSubmit">Create Account</button></div>
             <div class="col w5"></div>
           </div>
         </div>
@@ -70,6 +81,10 @@ export var SignupForm = function signupform(props) {
       handleLastName: function( event ){
         signupform.skipRender = true;
         signupform.setState( Object.assign( signupform.getState(), { lastName: signupform.element.querySelector( "input[name='lastName']" ).value } ) );
+      },
+      handleNickName: function( event ){
+        signupform.skipRender = true;
+        signupform.setState( Object.assign( signupform.getState(), { nickName: signupform.element.querySelector( "input[name='nickName']" ).value } ) );
       },
       checkUsername: function( event ){
         signupform.skipRender = true;
@@ -155,16 +170,20 @@ export var SignupForm = function signupform(props) {
       },
       handleSubmit: function( event ){
         let state = signupform.getState();
-        if( signupform.emailIsValid && signupform.usernameIsValid && signupform.passwordMatches ){
+        if( state.emailIsValid && state.usernameIsValid && state.passwordMatches ){
           let obj = {
             firstName: state.firstName,
             lastName: state.lastName,
+            nickName: state.nickName,
             email: state.email,
             username: state.username,
             password: state.password
           };
           a7.events.publish( "user.create", obj );
         }
+      },
+      cancelSignup: function(){
+        signupform.components.modal.close();
       }
     };
 

@@ -14,16 +14,19 @@ module.exports = {
   getEmailAddress: function( emailAddress ){
     return( gateway.getEmailAddress( emailAddress) );
   },
-  create: function( userID, username, password, firstName, lastName ){
-    return( dao.create( userID, username, password, firstName, lastName ) );
+  create: function( userID, username, password, firstName, lastName, nickName, emailAddress ){
+    return( dao.create( userID, username, password, firstName, lastName, nickName, emailAddress ) );
   },
   read: function( userID ){
     return( dao.read( userID ) );
   },
-  update: function( userID, firstName, lastName, nickName ){
-    return( dao.update( userID, firstName, lastName, nickName ) );
+  update: function( userID, firstName, lastName, nickName, emailAddress ){
+    return( dao.update( userID, firstName, lastName, nickName, emailAddress ) );
   },
   delete: function( userID ){
     return( dao.delete( userID ) );
+  },
+  confirmUser: function( userConfirmationID ){
+    return( dao.confirmUser( userConfirmationID ) );
   }
 };

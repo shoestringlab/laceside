@@ -1,9 +1,13 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
-import {fileuploader,modal,tabs,textinput,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+import {fileuploader,modal,tabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
 export var Profile = function Profile(props) {
   var profile = a7.components.Constructor(a7.components.View, [props], true);
+
+  profile.components.modal = constructor( modal,
+          [ document.querySelector("#authModal"),
+            {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
   profile.state = {
     user: props.user,
@@ -22,6 +26,7 @@ export var Profile = function Profile(props) {
       user.firstName = profile.element.querySelector( "input[name='firstname']" ).value;
       user.lastName = profile.element.querySelector( "input[name='lastname']" ).value;
       user.nickName = profile.element.querySelector( "input[name='nickname']" ).value;
+      user.emailAddress = profile.element.querySelector( "input[name='emailAddress']" ).value;
       a7.events.publish( "user.update", user );
     },
     discardChanges: function( event ){
@@ -29,6 +34,7 @@ export var Profile = function Profile(props) {
       profile.element.querySelector( "input[name='firstname']" ).value = user.firstName;
       profile.element.querySelector( "input[name='lastname']" ).value = user.lastName;
       profile.element.querySelector( "input[name='nickname']" ).value = user.nickName;
+      profile.element.querySelector( "input[name='emailAddress']" ).value = user.emailAddress;
     },
     refresh: function( event ){
       a7.events.publish( "profile.refreshProfile" );
@@ -55,6 +61,9 @@ export var Profile = function Profile(props) {
               <div class="right-align label">Nickname</div>
               <div><input name="nickname" type="text" placeholder="Nickname" value="${profile.state.user.nickName}"></div>
 
+              <div class="right-align label">Email</div>
+              <div><input name="emailAddress" type="text" placeholder="Email" value="${profile.state.user.emailAddress}"></div>
+
               <div class="right-align label">Username</div>
               <div><input name="username" type="text" placeholder="username"  value="${profile.state.user.username}" readonly></div>
 
@@ -78,11 +87,11 @@ export var Profile = function Profile(props) {
   profile.on( "rendered", function(){
 
     // make sure to add true as 3rd argument to add bindings so we can listen for tabSelected event to get the current tab
-    let ptabs = constructor( tabs, [ document.querySelector("#profileTabs"), { direction: 'vertical' } ], true );
+    profile.props.ptabs = constructor( tabs, [ document.querySelector("#profileTabs"), { direction: 'vertical' } ], true );
 
-    ptabs.setActiveTab( profile.getState().activeTab );
+    profile.props.ptabs.setActiveTab( profile.getState().activeTab );
 
-    ptabs.on( "tabSelected", function( obj ){
+    profile.props.ptabs.on( "tabSelected", function( obj ){
       profile.state.activeTab = obj.activeTab;
       //console.log( obj.activeTab );
     });
@@ -99,7 +108,7 @@ export var Profile = function Profile(props) {
       onUploadComplete: profile.eventHandlers.updatePic
     };
 
-    let fd = constructor( fileuploader, [ profileContainer.querySelector("#profilePicUploadDiv"), options ]);
+    profile.props.fileuploader = constructor( fileuploader, [ profileContainer.querySelector("#profilePicUploadDiv"), options ]);
 /*     if( profile.getState().visible ){
       document.querySelector( "#profileModal" ).parentElement.classList.add( 'gadgetui-showModal' );
     } */

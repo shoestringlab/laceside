@@ -1,5 +1,5 @@
 const FilePartDAO = require( './filepartdao' );
-const cuid = require( 'cuid' );
+const cuid = require( '../libs/cuid' );
 const concat = require('concat-files');
 const uploadPath = './upload/';
 const fs = require('fs');

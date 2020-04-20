@@ -18,7 +18,7 @@
 
   <script type="module">
     import {application} from '/js/app.js';
-    import {collapsiblepane, constructor, modal, sidebar} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+    import {collapsiblepane, constructor, sidebar} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
     constructor( collapsiblepane, [ document.querySelector( "#apps" ),
 		{
@@ -35,18 +35,6 @@
       title : "Console",
       class: "consolePane"
     }]);
-
-    let md = constructor( modal,
-      [ document.querySelector("#profileModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
-
-    let authmd = constructor( modal,
-      [ document.querySelector("#authModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
-
-    let signupmd = constructor( modal,
-      [ document.querySelector("#signupModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
     let sb = constructor( sidebar,
 				[ document.querySelector("#sidebar"),
@@ -117,6 +105,10 @@
   <div id="signupModal">
     <div id="signup"></div>
   </div>
+  <div id="messageModal">
+    <div id="message"></div>
+  </div>
+
   <div id="dialog"></div>
 </body>
 </html>

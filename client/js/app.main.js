@@ -4,6 +4,7 @@ import {Header} from '/js/components/header.js';
 import {LoginForm} from '/js/components/loginform.js';
 import {SignupForm} from '/js/components/signupform.js';
 import {Menu} from '/js/components/menu.js';
+import {Message} from '/js/components/message.js';
 import {Libraries} from '/js/components/libraries.js';
 import {Apps} from '/js/components/apps.js';
 import {Profile} from '/js/components/profile.js';
@@ -29,11 +30,13 @@ export var main = (function() {
       a7.ui.setSelector( 'base', "#base");
       a7.ui.setSelector( 'userHome', "#userHome");
       a7.ui.setSelector( 'home', "#home");
+      a7.ui.setSelector( 'message', "#message");
 
       let user = a7.model.get("user");
 
       // set the default appUser
       a7.model.set( "appUser", user );
+      Message( { id: 'message', selector: a7.ui.selectors['message'] } );
       // render the initial views of the application
       LoginForm( { id: 'loginForm', selector: a7.ui.selectors['auth'] } );
       SignupForm( { id: 'signupForm', selector: a7.ui.selectors['signup'] } );

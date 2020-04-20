@@ -2,6 +2,35 @@ import {a7} from '/lib/altseven/dist/a7.js';
 
 export var userEvents = function init(){
 
+  a7.events.subscribe( "user.create", function( obj ){
+    a7.remote.invoke( "user.create", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( user ){
+        a7.ui.getView("signupForm").components.modal.close();
+        let mState = a7.ui.getView( "message" ).getState();
+        mState.message = "Your account has been created. Please confirm your email address to start using the site.";
+        a7.ui.getView( "message" ).setState(mState);
+        a7.ui.getView( "message" ).components.modal.open();
+      });
+  });
+
+  a7.events.subscribe( "user.confirm", function( obj ){
+    a7.remote.invoke( "user.confirm", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( user ){
+        let mState = a7.ui.getView( "message" ).getState();
+        mState.message = "Your account has been confirmed, you may login to continue.";
+        a7.ui.getView( "message" ).setState(mState);
+        a7.ui.getView( "message" ).components.modal.open();
+      });
+  });
+
   a7.events.subscribe( "user.show", function( obj ){
     a7.remote.invoke( "user.getByUsername", obj )
       .then( function( response ) {

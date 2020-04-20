@@ -1,5 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
+import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
 export var LoginForm = function LoginForm(props) {
     var loginform = a7.components.Constructor(a7.components.View, [props], true);
@@ -7,6 +8,10 @@ export var LoginForm = function LoginForm(props) {
       username: "",
       password: ""
     };
+
+    loginform.components.modal = constructor( modal,
+      [ document.querySelector("#profileModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
     loginform.template = `<form><div id="loginForm" name="loginDiv" class="pane">
 					<div class="right-align">
