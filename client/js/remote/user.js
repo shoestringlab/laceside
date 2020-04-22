@@ -5,7 +5,7 @@ export { getCurrentUser, getByUsername, getUserLibraries, getUserApps, checkEmai
 
 var getCurrentUser = function( obj ){
     var params = { method: 'GET' };
-    return a7.remote.fetch( "/api/user", params, true );
+    return a7.remote.fetch( "/api/u/user", params, true );
   },
   getByUsername = function( obj ){
     var params = { method: 'GET' };
@@ -67,7 +67,7 @@ var getCurrentUser = function( obj ){
                     })
                   };
 
-    return a7.remote.fetch( "/user/" + obj.userID, params, true );
+    return a7.remote.fetch( "/api/user/" + obj.userID, params, true );
   },
   confirm = function( obj ){
     var request;

@@ -47,8 +47,7 @@ export var profileEvents = function init(){
         a7.model.set( "user", user );
         let currentState = a7.ui.getView('profile').getState();
         a7.ui.getView('profile').setState( { user: user, visible: currentState.visible, activeTab: currentState.activeTab } );
-        a7.ui.getView('header').setState( { user: user } );
+        a7.events.publish( "main.refreshHeader" );
       });
   });
-
 };

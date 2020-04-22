@@ -78,26 +78,31 @@ module.exports = {
   },
 
   create: function( request, response){
-    userservice.create( request.params.ID, request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress )
-      .then( function( results ){
-        // email the user
+    if( request.params.ID === request.user.userID ){
+      userservice.create( request.params.ID, request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress )
+        .then( function( results ){
+          // email the user
 
-        //we are reading back the inserted row
-        userservice.read( results.userID )
-          .then( function( user ){
-            sendConfirmationMail( user, results.userConfirmationID );
+          //we are reading back the inserted row
+          userservice.read( results.userID )
+            .then( function( user ){
+              sendConfirmationMail( user, results.userConfirmationID );
 
-            response.send( JSON.stringify( user ) );
-          })
-          .catch( function( error ){
-            console.log( error );
-            response.send( JSON.stringify( error ) );
-          });
-      })
-      .catch( function( error ){
-        console.log( error );
-        response.send( JSON.stringify( error ) );
-      });
+              response.send( JSON.stringify( user ) );
+            })
+            .catch( function( error ){
+              console.log( error );
+              response.send( JSON.stringify( error ) );
+            });
+        })
+        .catch( function( error ){
+          console.log( error );
+          response.send( JSON.stringify( error ) );
+        });
+    }else{
+      response.setHeader( "Status", "401" );
+      response.send("Not authorized" );
+    }
   },
 
   read: function( request, response){
@@ -112,6 +117,7 @@ module.exports = {
   },
 
   update: function( request, response){
+    if( request.params.ID === request.user.userID ){
      userservice.update( request.params.ID, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress )
       .then( function( user ){
         //we are reading back the updated row
@@ -128,17 +134,26 @@ module.exports = {
         console.log( error );
         response.send( JSON.stringify( error ) );
       });
+    }else{
+      response.setHeader( "Status", "401" );
+      response.send("Not authorized" );
+    }
   },
 
   delete: function( request, response){
-    userservice.delete( request.params.ID )
-      .then( function( success ){
-        response.send( JSON.stringify( success ) );
-      })
-      .catch( function( error ){
-        console.log( error );
-        response.send( JSON.stringify( error ) );
-      });
+    if( request.params.ID === request.user.userID ){
+      userservice.delete( request.params.ID )
+        .then( function( success ){
+          response.send( JSON.stringify( success ) );
+        })
+        .catch( function( error ){
+          console.log( error );
+          response.send( JSON.stringify( error ) );
+        });
+    }else{
+      response.setHeader( "Status", "401" );
+      response.send("Not authorized" );
+    }
   },
   confirmUser: function( request, response ){
     userservice.confirmUser( request.params.ID )
@@ -149,5 +164,15 @@ module.exports = {
         console.log( error );
         response.send( JSON.stringify( error ) );
       });
-  }
+  },
+  getCurrentUser: function( request, response){
+      userservice.read( request.user.userID )
+        .then( function( results ){
+          response.send( JSON.stringify( results ) );
+        })
+        .catch( function( error ){
+          console.log( error );
+          response.send( JSON.stringify( error ) );
+        });
+    }
 };

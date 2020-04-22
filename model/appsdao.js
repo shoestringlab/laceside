@@ -38,7 +38,7 @@ var dao = {
                 reject( err );
               }
               connection.end();
-              resolve( results.insertId );
+              resolve( appID );
             })
             .catch( err =>{
               connection.end();

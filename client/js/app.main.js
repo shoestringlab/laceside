@@ -54,7 +54,7 @@ export var main = (function() {
       Tabs( { id: 'tabs', selector: "#editors" } );
       Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
       Home( { id: 'home', selector: "#home" } );
-
+      Header( { id: 'header', user: user, selector: "#headerRight" } );
           //this.run( user );
       a7.router.match( document.location.pathname + document.location.search );
     }

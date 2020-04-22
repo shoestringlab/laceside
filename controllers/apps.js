@@ -57,7 +57,7 @@ module.exports = {
   create: function( request, response){
     service.create( request.body.appID, request.user.userID, request.body.name, request.body.jsCode, request.body.htmlCode, request.body.cssCode, request.body.esModule, request.body.libraries )
       .then( function( results ){
-        service.read( results )
+        service.read( request.body.appID )
           .then( function( app ){
             response.send( JSON.stringify( app ) );
           })

@@ -3,14 +3,14 @@
 const nodemailer = require("nodemailer");
 
 const smtpServer = {
-  host: 'mail.shoestringlab.com'
+  host: 'mail.shoestringlab.com' // email server host
 };
 
 const emailUser = {
   name: "LacesIDE Admin",
-  emailaddress: "lacesadmin@shoestringlab.com",
-  user: "lacesadmin",
-  pass: "pwd123"
+  emailaddress: "lacesadmin@shoestringlab.com", // your admin email address
+  user: "lacesadmin", // your admin email username
+  pass: "pwd123" // your admin email password
 };
 
 // create reusable transporter object using the default SMTP transport

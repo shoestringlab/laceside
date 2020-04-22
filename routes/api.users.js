@@ -25,9 +25,6 @@ module.exports = function(app) {
   // get all users
   app.get( "/api/users", usercontroller.getAll );
 
-  // get a user by ID
-  app.get( "/api/u/username/:username", usercontroller.getByUsername );
-
   // get apps by userID
   app.get( "/api/user/:ID/apps", appcontroller.getByUserID );
 
@@ -36,6 +33,12 @@ module.exports = function(app) {
 
   // check if an email address is in the system
   app.get( "/api/email/:emailAddress", usercontroller.getEmailAddress );
+
+  // get current user
+  app.get( "/api/u/user", usercontroller.getCurrentUser );
+
+  // get a user by ID
+  app.get( "/api/u/username/:username", usercontroller.getByUsername );
 
 
 };

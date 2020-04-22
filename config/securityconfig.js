@@ -18,6 +18,7 @@ const secured = [
   /\/api\/library\/c[\w]+/,
   /\/api\/libraries/,
   /\/api\/library/,
+  /\/api\/u\/user/,
   /\/api\/auth\/refresh/
 ];
 
@@ -26,9 +27,10 @@ const open = [
   /\/api\/user\/c[\w]+\/libraries/,
   /\/api\/user\/c[\w]+\/apps/,
   /\/api\/auth\/login/,
+  /\/api\/userconfirmation\/c[\w]+/,
   /\/api\/auth\/logout/,
-  /\/u\/[\w]+/,
-  /\/u\/username\/[\w]+/
+  /\/u\/c[\w]+/,
+  /\/u\/username\/c[\w]+/
 ];
 
 module.exports = {
