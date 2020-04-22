@@ -125,9 +125,9 @@ var dao = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('UPDATE users, userConfirmation SET users.disabled = 0, userConfirmation.confirmed = 1, userConfirmation.confirmedDate = curdate()
+          connection.query(`UPDATE users, userConfirmation SET users.disabled = 0, userConfirmation.confirmed = 1, userConfirmation.confirmedDate = curdate()
                             WHERE   users.userID = userConfirmation.userID
-                            AND userConfirmation.userConfirmationID = ?', [userConfirmationID] )
+                            AND userConfirmation.userConfirmationID = ?`, [userConfirmationID] )
             .then( ( results ) => {
               connection.end();
               resolve( true ); // successful delete

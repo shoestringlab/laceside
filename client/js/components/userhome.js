@@ -53,6 +53,7 @@ export var UserHome = function UserHome(props) {
                   <h3>Applications</h3>`;
 
     if( user.userID === appUser.userID ){
+      console.log('foo');
       if( state.showNewAppForm ){
         templ +=`<div class="block row link"><input name="name" placeholder="Application Name">
                   <button type="button" data-onclick="saveNewApp">Save</button>
@@ -69,7 +70,6 @@ export var UserHome = function UserHome(props) {
     let offset = parseInt( state.offset, 10 );
 
     if( state.apps.length ){
-
       for( var ix = offset; ix < Math.min( state.apps.length, state.offset + 10 ); ix++ ){
         let app = state.apps[ix];
         templ += `<div class="block row link" data-id="${app.appID}" data-onClick="editApp">${app.name}</div>`;
@@ -82,7 +82,7 @@ export var UserHome = function UserHome(props) {
     templ+=`</div><div class="paging"></div></div>
             <div id="userInfo">
               <div class="right-align">
-              <img style="max-width:100px;" src="${state.user.profilePic}"/>
+              <img style="max-width:100px;" src="${state.user.profilePic || '/img/profilePics/anon.png'}"/>
               <br><br>
               <span class="title">${state.user.nickName}</span>
               </div>

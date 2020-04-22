@@ -36,10 +36,13 @@ export var main = (function() {
 
       // set the default appUser
       a7.model.set( "appUser", user );
-      Message( { id: 'message', selector: a7.ui.selectors['message'] } );
       // render the initial views of the application
+      // this is a good place to initialize views that should not be re-initialized
+      Message( { id: 'message', selector: a7.ui.selectors['message'] } );
       LoginForm( { id: 'loginForm', selector: a7.ui.selectors['auth'] } );
       SignupForm( { id: 'signupForm', selector: a7.ui.selectors['signup'] } );
+      Profile( { id: 'profile', selector: "#profile", user: user } );
+
       let menuItems = [
         { label: 'Home', path: '/'}
       ];

@@ -12,19 +12,19 @@
 ]; */
 
 const secured = [
-  /\/api\/app\/[0-9]+/,
+  /\/api\/app\/c[\w]+/,
   /\/api\/apps/,
   /\/api\/app/,
-  /\/api\/library\/[0-9]+/,
+  /\/api\/library\/c[\w]+/,
   /\/api\/libraries/,
   /\/api\/library/,
   /\/api\/auth\/refresh/
 ];
 
 const open = [
-  /\/api\/u\/username\/[\w]+/,
-  /\/api\/user\/[0-9]+\/libraries/,
-  /\/api\/user\/[0-9]+\/apps/,
+  /\/api\/u\/username\/c[\w]+/,
+  /\/api\/user\/c[\w]+\/libraries/,
+  /\/api\/user\/c[\w]+\/apps/,
   /\/api\/auth\/login/,
   /\/api\/auth\/logout/,
   /\/u\/[\w]+/,

@@ -79,5 +79,5 @@ var getCurrentUser = function( obj ){
                     }
                   };
 
-    return a7.remote.fetch( "api/userconfirmation/" + obj.userConfirmationID, params, true );
+    return a7.remote.fetch( "/api/userconfirmation/" + obj.userConfirmationID, params, true );
   };

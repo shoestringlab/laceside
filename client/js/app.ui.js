@@ -6,13 +6,13 @@ export var ui = (function() {
   return {
     //	templates: _templates,
     setLayout: function( mode ){
-      let secure = ( a7.model.get( "user" ).userID > 0 );
+      let secure = ( a7.model.get( "user" ).userID != '0' );
 
       // remove any open modals
-      a7.ui.getNode( a7.ui.getSelector("authModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
+/*       a7.ui.getNode( a7.ui.getSelector("authModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
       a7.ui.getNode( a7.ui.getSelector("profileModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
       a7.ui.getNode( a7.ui.getSelector("signupModal") ).parentElement.classList.remove( 'gadgetui-showModal' );
-
+ */
       switch( mode ){
         case "ide":
           //a7.ui.getNode( a7.ui.selectors['sandBox'] ).style.display='grid';
@@ -20,7 +20,7 @@ export var ui = (function() {
           a7.ui.getNode( a7.ui.getSelector("base") ).classList.add( "hidden" );
 
           break;
-        case "auth":
+/*         case "auth":
           a7.ui.getNode( a7.ui.getSelector("authModal") ).parentElement.classList.add( 'gadgetui-showModal' );
           break;
         case "signup":
@@ -28,7 +28,7 @@ export var ui = (function() {
           break;
         case "profile":
           a7.ui.getNode( a7.ui.getSelector("profileModal") ).parentElement.classList.add( 'gadgetui-showModal' );
-          break;
+          break; */
         case "home":
           a7.ui.getNode( a7.ui.getSelector("home") ).classList.remove( "hidden" );
           a7.ui.getNode( a7.ui.getSelector("userHome") ).classList.add( "hidden" );

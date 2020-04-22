@@ -6,8 +6,12 @@ export var Profile = function Profile(props) {
   var profile = a7.components.Constructor(a7.components.View, [props], true);
 
   profile.components.modal = constructor( modal,
-          [ document.querySelector("#authModal"),
-            {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
+          [ document.querySelector("#profileModal"),
+            {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
+
+  profile.components.modal.on( "closed", function( obj ){
+    history.back();
+  });
 
   profile.state = {
     user: props.user,
@@ -99,7 +103,7 @@ export var Profile = function Profile(props) {
     let profileContainer = document.querySelector( "#profileContainer" );
 
     let options = {
-      uploadURI: "/files",
+      uploadURI: "/api/files",
       tags: "file upload",
       willGenerateThumbnails: true,
       title: "Upload Profile Pic",

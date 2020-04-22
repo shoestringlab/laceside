@@ -48,7 +48,7 @@ module.exports = {
 
           let now = new Date();
           let valid = false;
-          if( user.userID > 0 && new Date( auth.expires ).getTime() > now.getTime() ){
+          if( user.userID.length  > 1 && new Date( auth.expires ).getTime() > now.getTime() ){
             valid = true;
             // remove the password hash from the token so we don't send it outside the system
             delete user.hash;

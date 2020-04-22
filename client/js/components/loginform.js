@@ -10,21 +10,21 @@ export var LoginForm = function LoginForm(props) {
     };
 
     loginform.components.modal = constructor( modal,
-      [ document.querySelector("#profileModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
+      [ document.querySelector("#authModal"),
+        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
 
     loginform.template = `<form><div id="loginForm" name="loginDiv" class="pane">
 					<div class="right-align">
 						<div class="col md right-align"><label for="username">Username</label></div>
-						<div class="col md"><input name="username" type="text" data-onchange="handleUsername"/></div>
+						<div class="col md"><input name="username" type="text" value="${loginform.state.username}" data-onchange="handleUsername"/></div>
 					</div>
 					<div class="right-align">
 						<div class="col md right-align"><label for="password">Password</label></div>
-						<div class="col md"><input name="password" type="password" data-onchange="handlePassword"/></div>
+						<div class="col md"><input name="password" type="password" value="${loginform.state.password}" data-onchange="handlePassword"/></div>
 					</div>
 					<div class="right-align">
 						<div class="col md"></div>
-						<div class="col md"><input name="login" type="button" value="Login" data-onclick="handleClick"/></div>
+						<div class="col md"><button name="login" type="button" data-onclick="handleClick">Login</button></div>
 					</div>
 				</div>
         </form>
@@ -46,7 +46,7 @@ export var LoginForm = function LoginForm(props) {
         a7.events.publish('auth.login', {
           username: loginform.state.username,
           password: loginform.state.password,
-          success: "/",
+          success: "/auth/success",
           failure: "/auth/failed"
           //callback: auth.loginHandler
         });

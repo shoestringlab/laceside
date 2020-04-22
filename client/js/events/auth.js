@@ -1,10 +1,10 @@
-import {a7} from '/lib/altseven/dist/a7.js';
+ import {a7} from '/lib/altseven/dist/a7.js';
 import {ui} from '/js/app.ui.js';
 
 export var authEvents = function init(){
 
   a7.events.subscribe( "auth.showLogin", function( obj ){
-    ui.setLayout( "auth" );
+    a7.ui.getView( "loginForm" ).components.modal.open();
   });
 
   a7.events.subscribe( "auth.showSignup", function( obj ){
@@ -21,5 +21,12 @@ export var authEvents = function init(){
     signup.setState( state );
     signup.components.modal.open();
     //ui.setLayout( "signup" );
+  });
+
+  a7.events.subscribe( "auth.success", function( obj ){
+    let lf = a7.ui.getView( "loginForm" );
+    lf.setState( { username: "", password: ""} );
+    lf.components.modal.close();
+    a7.events.publish( "main.home", {} );
   });
 };

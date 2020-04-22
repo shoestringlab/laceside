@@ -21,12 +21,11 @@ export var mainEvents = function init(){
 
     UserHome( { id: 'userHome', selector: "#userHome", user: a7.model.get( "appUser" ), apps: a7.model.get("apps") || [] } );
     Header( { id: 'header', user: a7.model.get( "user" ), selector: "#headerRight" } );
-    Profile( { id: 'profile', selector: "#profile", user: a7.model.get( "user" ) } );
 
     // default appUser to the current user, which may be the anon user
     //obj.appUser = obj.appUser || user;
 
-    if( a7.model.get( "appUser" ).userID  ){
+    if( a7.model.get( "appUser" ).userID != '0'  ){
       obj.offset = 0;
       obj.user = a7.model.get( "appUser" );
 
@@ -36,5 +35,13 @@ export var mainEvents = function init(){
     }
     a7.events.publish( "menu.update", { user: a7.model.get( "appUser" ) } );
     ui.setLayout( obj.view );
+  });
+
+  a7.events.subscribe( "main.showMessage", function( obj ){
+
+        let mState = a7.ui.getView( "message" ).getState();
+        mState.message = obj.message;
+        a7.ui.getView( "message" ).setState(mState);
+        a7.ui.getView( "message" ).components.modal.open();
   });
 };

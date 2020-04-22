@@ -11,7 +11,7 @@ export var profileEvents = function init(){
       state.visible = true;
       state.activeTab = 'pTab1';
       a7.ui.getView( 'profile' ).setState( state );
-      ui.setLayout( "profile" );
+      a7.ui.getView( 'profile' ).components.modal.open();
     }else{
       a7.remote.invoke( "user.getByUsername", obj )
         .then( function( response ){

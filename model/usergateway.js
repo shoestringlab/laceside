@@ -13,7 +13,7 @@ gateway = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
       .then( connection => {
-        connection.query('SELECT userID, username, hash, firstName, lastName, nickName from users ORDER BY userID' )
+        connection.query('SELECT userID, username, hash, firstName, lastName, nickName, emailAddress from users ORDER BY userID' )
           .then( ( results ) =>{
             connection.end();
             resolve( results );
@@ -32,7 +32,7 @@ gateway = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query(`SELECT u.userID, u.username, u.hash, u.firstName, u.lastName, u.dateCreated, u.nickName, up.profilePic
+          connection.query(`SELECT u.userID, u.username, u.hash, u.firstName, u.lastName, u.dateCreated, u.nickName, u.emailAddress, up.profilePic
                             FROM users u
                             JOIN userProfile up on u.userID = up.userID
                             WHERE u.username = ?`, [ username ] )

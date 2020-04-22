@@ -24,10 +24,8 @@ export var userEvents = function init(){
         return response.json();
       })
       .then( function( user ){
-        let mState = a7.ui.getView( "message" ).getState();
-        mState.message = "Your account has been confirmed, you may login to continue.";
-        a7.ui.getView( "message" ).setState(mState);
-        a7.ui.getView( "message" ).components.modal.open();
+        a7.events.publish( "main.home" );
+        a7.events.publish( "main.showMessage", { message: "Your account has been confirmed, you may login to continue." } );
       });
   });
 

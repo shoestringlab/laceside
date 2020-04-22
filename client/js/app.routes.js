@@ -1,6 +1,7 @@
 export var routes = [
   [ '/auth/login', 'auth.login' ],
   [ '/auth/logout', 'auth.logout' ],
+  [ '/auth/success', 'auth.success' ],
   [ '/auth/failed', 'auth.failed' ],
   [ '/u/:username/profile', 'profile.show' ],
   [ '/u/:username/:appID', 'ide.show' ],

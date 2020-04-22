@@ -1,7 +1,7 @@
 const FilePartDAO = require( './filepartdao' );
 const cuid = require( '../libs/cuid' );
 const concat = require('concat-files');
-const uploadPath = './upload/';
+const uploadPath = './client/img/profilePics/';
 const fs = require('fs');
 
 const dao = FilePartDAO();
@@ -37,7 +37,7 @@ module.exports = {
 
       let result = {
         fileId: id,
-        path: "/upload/",
+        path: "/img/profilePics/",
         filename: filename,
         disabled: 0,
         filesize: filesize,
@@ -57,13 +57,12 @@ module.exports = {
           let files = fileparts.map( filepart => filepart.filepath );
 
           concat(files, uploadPath + newFilename, function(err) {
-            if (err) throw err
-
-            console.log('file uploaded');
+            if (err) console.log( err );
 
             // clean up
             dao.delete( id )
             .then( function( success ){
+
               deleteFiles( files, function(err){
                 if (err) {
                   console.log(err);

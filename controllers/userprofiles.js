@@ -3,13 +3,14 @@ const fs = require('fs');
 
 module.exports = {
   update: function( request, response ){
-    let oldPic = request.user.profilePic;
+
+    let oldPic = "client" + request.user.profilePic;
     // update the user record with the new profile pic
     userProfileService.update( request.user.userID, request.body.profilePic )
       .then( function( success ){
         // delete the old profile pic from the system
         if( oldPic !== null && oldPic !== request.body.profilePic ){
-          fs.unlink( "." + oldPic, function( err ){
+          fs.unlink( oldPic, function( err ){
             if( err ){
               console.log( err );
             }

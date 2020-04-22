@@ -16,10 +16,10 @@ export var SignupForm = function signupform(props) {
       passwordIsValid: props.passwordIsValid || false,
       passwordMatches:  props.passwordMatches || false
     };
-    
+
     signupform.components.modal = constructor( modal,
       [ document.querySelector("#signupModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
+        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
 
     signupform.template = function(){
 

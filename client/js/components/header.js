@@ -26,6 +26,9 @@ export var Header = function Header(props) {
     },
     createAccount: function( event ){
       a7.events.publish( 'auth.showSignup', {} ) ;
+    },
+    showMessage: function( event ){
+      a7.events.publish( 'main.showMessage', { message: "Some message." } ) ;
     }
 	};
 
@@ -48,7 +51,9 @@ export var Header = function Header(props) {
         { label: "Create Account",
           link: header.eventHandlers.createAccount },
         { label: "Sign In",
-          link: header.eventHandlers.signIn }
+          link: header.eventHandlers.signIn },
+          { label: "Show a Message",
+            link: header.eventHandlers.showMessage }
       ];
     }
 

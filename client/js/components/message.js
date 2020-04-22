@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
 import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
-
+import {cuid} from '/lib/cuid/index.mjs';
 export var Message = function Message(props) {
     var message = a7.components.Constructor(a7.components.View, [props], true);
     message.state = {
@@ -12,9 +12,13 @@ export var Message = function Message(props) {
       [ document.querySelector("#messageModal"),
         {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
 
-    message.template = `<h3>${message.getState().message}</h3>
-        <button type="button" data-onclick="close">Close</button>
-      `;
+    message.template = function(){
+      let templ = `<h3>${message.getState().message}</h3>
+          <button type="button" data-onclick="close">Close</button>
+        `;
+        console.log( cuid());
+      return templ;
+    };
 
     message.eventHandlers = {
       close: function(){
