@@ -1,3 +1,11 @@
+0.15.0 Beta Release
+===================
+
+- This release migrates all existing IDs to cuids.
+- Many bug fixes
+- Completion of new account creation code
+- Email address confirmation 
+
 0.14.0 Beta Release
 ===================
 

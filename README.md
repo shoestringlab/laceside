@@ -1,7 +1,7 @@
 # Laces IDE
 in-browser JavaScript IDE
 
-v 0.14.0
+v 0.15.0
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
@@ -9,6 +9,9 @@ Requirements:
 
 * NodeJS runtime
 * MariaDB server
+
+Optional
+* Email address that can send messages. You can use a mail trap like PaperCut if you only need to test email capabilities. 
 
 ***Installation:***
 
@@ -20,7 +23,11 @@ Requirements:
 
 3. Restore the backup of the database from the ./database folder into your MariaDB server.
 
-4. The database login information is located in config/db.config.js. Either copy these credentials or create db credentials of your own and copy them into this file.
+4. The configuration information is located in the /config folder.
+    a. Database login information is located in config/dbconfig.js. Either copy these credentials or create db credentials of your own and copy them into this file.
+    b. Email server configuration information is located in config/emailconfig.js. You will need to set this information in order to send email address confirmation emails.
+    c. Site configuration information is located in config/siteconfig.js. The server host can be set here and is used in the user confirmation emails as the hostname to direct the user to.
+
 
 5. In the console from the root folder of the project, type:
 
@@ -28,18 +35,5 @@ Requirements:
 
 ***Changing the User Password***
 
-Since there is as yet no admin console, if you want to change the password for the initial user, in the console from the root folder of the project, type:
 
-    $ node hashpassword.js <password>
-
-Copy the resulting hash and use a SQL editor to update the hash field in the users table:
-
-    UPDATE users set hash = '<hash>' WHERE userID = 6;
-
-*** There are now two users in the database, "user" and "rmunn". Both use a password of "password". ***
-
-
-Notes
-------
-
-There are a couple of example apps saved as part of the default user's account.
+*** There are now three users in the database, "user", "rmunn", and "robert". All use a password of "password". ***
