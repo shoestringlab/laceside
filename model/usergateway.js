@@ -1,4 +1,6 @@
 const dbConfig = require( "../config/dbconfig.js" );
+const bcrypt = require('bcryptjs');
+const cuid = require( '../libs/cuid' );
 
 module.exports = init;
 
@@ -70,5 +72,28 @@ gateway = {
           reject( err );
         });
     });
+  },
+  changePassword: function( userID, password ){
+    let salt = bcrypt.genSaltSync( 10 );
+    let hash = bcrypt.hashSync( password, salt );
+    return new Promise( function( resolve, reject ){
+      pool.getConnection()
+        .then( connection => {
+          connection.query(`UPDATE  users
+                            SET     hash = ?
+                            WHERE   userID = ?`, [ hash, userID ] )
+            .then( ( results ) =>{
+              connection.end();
+              resolve( true );
+            })
+            .catch( err =>{
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err =>{
+          reject( err );
+        });
+    });
   }
-}
+};

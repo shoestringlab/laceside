@@ -16,7 +16,6 @@ export var Message = function Message(props) {
       let templ = `<h3>${message.getState().message}</h3>
           <button type="button" data-onclick="close">Close</button>
         `;
-        console.log( cuid());
       return templ;
     };
 

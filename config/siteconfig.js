@@ -1,8 +1,10 @@
 const host = "http://laceside.shoestringlab.com";
 
-const userConfirmationURI = host + "/u/userconfirmation/";
+const userConfirmationURI = host + "/auth/userconfirmation/";
+const passwordResetURI = host + "/auth/resetpassword/";
 
 module.exports = {
   host: host,
-  userConfirmationURI: userConfirmationURI
+  userConfirmationURI: userConfirmationURI,
+  passwordResetURI: passwordResetURI
 };

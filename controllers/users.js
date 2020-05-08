@@ -1,8 +1,10 @@
 
 const userservice = require( '../model/userservice' );
+const passwordresetservice = require( '../model/passwordresetservice' );
 const utils = require( '../model/utils' );
 const emailConfig = require( "../config/emailconfig.js" );
 const siteConfig = require( "../config/siteconfig.js" );
+const bcrypt = require('bcryptjs');
 
 function sendConfirmationMail( user, userConfirmationID ){
     let message = {};
@@ -31,6 +33,24 @@ function sendConfirmationMail( user, userConfirmationID ){
 
   utils.sendEmail( to, from, subject, message )
     .catch( console.error);
+}
+
+function sendResetMessage( emailAddress, resetID ){
+  let message = {};
+  message.plainText = `A request to reset your account password was made at ${siteConfig.host}.
+        Go to the URL below to create a new password. This link will expire in one hour.
+        ${siteConfig.passwordResetURI + resetID}
+        `;
+  message.htmlText = `<p>A request to reset your account password was made at ${siteConfig.host}.</p>
+        <p>Go to the URL below to create a new password. This link will expire in one hour.</p>
+        <p><a href="${siteConfig.passwordResetURI + resetID}">${siteConfig.passwordResetURI + resetID}</a></p>
+        `;
+let from = '"' + emailConfig.emailUser.name + '" ' + '<' + emailConfig.emailUser.emailaddress + '>';
+let to = emailAddress;
+let subject = 'LacesIDE - Password reset request.';
+
+utils.sendEmail( to, from, subject, message )
+  .catch( console.error);
 }
 
 module.exports = {
@@ -70,6 +90,31 @@ module.exports = {
       .then( function( results ){
         let exists = results.length;
         response.send( JSON.stringify( exists ) );
+      })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      });
+  },
+
+  sendResetEmail: function( request, response ){
+    passwordresetservice.create( request.body.emailAddress )
+      .then( function( resetID ){
+
+        sendResetMessage( request.body.emailAddress, resetID );
+        response.send( JSON.stringify( true ) );
+      })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      });
+
+  },
+
+  getPasswordReset: function( request, response ){
+    passwordresetservice.read( request.params.ID )
+      .then( function( results ){
+        response.send( JSON.stringify( results ) );
       })
       .catch( function( error ){
         console.log( error );
@@ -174,5 +219,54 @@ module.exports = {
           console.log( error );
           response.send( JSON.stringify( error ) );
         });
-    }
+  },
+  checkPassword: function( request, response ){
+    userservice.getByUsername( request.params.username )
+      .then( function( results ){
+        let valid = false;
+        if( results.length ){
+          valid = bcrypt.compareSync( request.body.currentPassword, results[0].hash );
+        }
+        response.send( JSON.stringify( valid ) );
+      })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      });
+  },
+  changePassword: function( request, response ){
+    userservice.changePassword( request.params.ID, request.body.newPassword )
+    .then( function( results ){
+      response.send( JSON.stringify( results ) );
+    })
+    .catch( function( error ){
+      console.log( error );
+      response.send( JSON.stringify( error ) );
+    });
+  },
+  resetPassword: function( request, response ){
+    passwordresetservice.getUserByResetID( request.params.ID )
+      .then( function( user ){
+        userservice.changePassword( user.userID, request.body.newPassword )
+        .then( function( results ){
+          // expire the reset request
+          passwordresetservice.update( request.params.ID )
+            .then( function( success ){
+              response.send( JSON.stringify( results ) );
+            })
+            .catch( function( error ){
+              console.log( error );
+              response.send( JSON.stringify( error ) );
+            });
+        })
+        .catch( function( error ){
+          console.log( error );
+          response.send( JSON.stringify( error ) );
+        });
+      })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      });
+  }
 };

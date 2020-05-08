@@ -1,4 +1,5 @@
 import {a7} from '/lib/altseven/dist/a7.js';
+import * as utils from '/js/app.utils.js';
 
 export var userEvents = function init(){
 
@@ -94,6 +95,82 @@ export var userEvents = function init(){
         }
       });
   });
+
+  a7.events.subscribe( "user.changePassword", function( obj ){
+    a7.remote.invoke( "user.changePassword", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( success ){
+        if( success ){
+          utils.showNotice( "Password changed." );
+          let profile = a7.ui.getView( "profile" );
+          let updated = { passwordIsValid: false, passwordMatches: false, currentPasswordMatches: false };
+          profile.setState( Object.assign( profile.getState(), updated ) );
+        }
+      });
+  });
+
+  a7.events.subscribe( "user.sendResetEmail", function( obj ){
+    a7.remote.invoke( "user.sendResetEmail",  obj )
+      .then( function( response ){
+        return response.json();
+      })
+      .then( function( success ){
+        if( success ){
+          let fpf = a7.ui.getView( "forgotPasswordForm" );
+          fpf.setState( { emailAddress: "", message: "" } );
+          fpf.components.modal.close();
+          let msg = a7.ui.getView( "message" );
+          msg.setState( { message: "An email message with a link to reset your password has been sent to you." } );
+          msg.components.modal.open();
+        }
+      });
+  });
+
+  a7.events.subscribe( "user.showResetPasswordForm", function( obj ){
+    a7.remote.invoke( "user.getPasswordReset",  obj )
+      .then( function( response ){
+        return response.json();
+      })
+      .then( function( passwordReset ){
+        if( new Date( passwordReset.expires ) < new Date() ){
+          let msg = a7.ui.getView( "message" );
+          msg.setState( { message: "That link has expired. Please request another password reset link." } );
+          msg.components.modal.open();
+        }else{
+          let rp = a7.ui.getView( "resetPasswordForm" );
+          rp.setState( { passwordIsValid: false, passwordMatches: false, resetID: obj.resetID, message: "" } );
+          rp.components.modal.open();
+        }
+      });
+  });
+
+  a7.events.subscribe( "user.resetPassword", function( obj ){
+    a7.remote.invoke( "user.resetPassword", obj )
+      .then( function( response ) {
+        // get json response and pass to handler to resolve
+        return response.json();
+      })
+      .then( function( success ){
+
+        let rpf = a7.ui.getView( "resetPasswordForm" );
+        if( success ){
+          // close the form
+          rpf.setState( {  passwordIsValid: false, passwordMatches: false, resetID: 0, message: "" } );
+          rpf.components.modal.close();
+
+          utils.showNotice( "Password reset successful." );
+          let msg = a7.ui.getView( "message" );
+          msg.setState( { message: "Your password has been reset. You may now login using your new password." } );
+          msg.components.modal.open();
+        }else{
+          rpf.setState( Object.assign( rpf.getState(), { passwordIsValid: false, passwordMatches: false, message: "There was an error attempting to reset your password." } ) );
+        }
+      });
+  });
+
 
 /*   // get apps and libraries together
   a7.events.subscribe( "user.getUserData", function( obj ){

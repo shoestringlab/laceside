@@ -31,10 +31,10 @@ export var Tabs = function Tabs(props){
 
   tabs.on( "rendered", function(){
 
-    tabs.tabs = constructor( gtabs, [ tabs.element.querySelector("#editorTabs"), {} ], true );
-    tabs.tabs.on( "tabSelected", function( obj, activeTab ){
+    tabs.components.tabs = constructor( gtabs, [ tabs.element.querySelector("#editorTabs"), {} ], true );
+    tabs.components.tabs.on( "tabSelected", function( obj, activeTab ){
       console.log( activeTab );
-      a7.ui.getView( activeTab.toLowerCase() ).props.editor.refresh();
+      a7.ui.getView( activeTab.toLowerCase() ).components.editor.refresh();
     });
 
     // add modLazy to the iframe so it renders correctly on first execution
@@ -48,7 +48,7 @@ export var Tabs = function Tabs(props){
       let editors = document.querySelectorAll( ".editor" );
       let selectedEditor;
       editors.forEach( function( editor ){
-        if( editor.id === tabs.tabs.activeTab ){
+        if( editor.id === tabs.components.tabs.activeTab ){
           selectedEditor = editor;
         }
         editor.setAttribute( "style", "display:none;" );

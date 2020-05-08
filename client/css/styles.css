@@ -342,7 +342,8 @@ textarea[name='codeWindow']{
   grid-area: htmlFrame;
   padding:.25em;
 }
-4nav ul {
+
+nav ul {
   list-style: none;
 }
 
@@ -550,7 +551,7 @@ div.titlebar{
   text-align:center;
 }
 
-#messageModal{
+#messageModal, #forgotPasswordModal, #resetPasswordModal{
   z-index:6;
   width:50%;
   min-width: 500px;
@@ -585,9 +586,12 @@ div.titlebar{
   margin: .0 0 .5em .5em !important;
 }
 
-
 .vtabContent{
-	display:inline-grid;
+  width:99%;
+}
+
+.vtabContentSplit{
+ 	display:inline-grid;
   grid-template-columns: 50% auto;
   width:99%;
 }
@@ -606,13 +610,12 @@ div.titlebar{
 
 div.form{
   padding: 1em 3em;
-  display:inline-grid;
-  grid-template-columns: 10em auto !important;
-}
 
+}
+/*
 div.form div{
   padding-bottom: 1em;
-}
+} */
 
 div.form input{
   width: 20em;
@@ -662,10 +665,14 @@ div.label{
   display:none !important;
 }
 
-#loginForm{
-  width: 370px;
+#loginForm, #forgotPasswordForm{
+  width: 450px;
   margin-left: auto;
   margin-right: auto;
+}
+
+#forgotPasswordMessages span{
+  color: red;
 }
 
 .gadget-ui-tabs-h{
@@ -684,31 +691,35 @@ div.label{
 	background-color: #99f !important;
 }
 
-#passwordValidator{
+#passwordValidator, #newPasswordValidator{
   margin-top: .5em;
 }
 
-#passwordValidator span{
+#passwordValidator span, #newPasswordValidator span{
   /* border: 3px solid black; */
   border-radius: 5px;
   padding: .2em;
 }
 
-#passwordValidator span.Strong{
+#passwordValidator span.Strong, #newPasswordValidator span.Strong{
   border: 5px solid green;
   font-weight: bold;
 }
 
-#passwordValidator span.Medium{
+#passwordValidator span.Medium, #newPasswordValidator span.Medium{
   border: 5px solid yellow;
   font-weight: bold;
 }
 
-#passwordValidator span.Weak{
+#passwordValidator span.Weak, #newPasswordValidator span.Weak{
   border: 5px solid red;
   font-weight: bold;
 }
 
-#passwordMatched, #emailValidator{
+#passwordMatched, #emailValidator, #newPasswordMatched{
   margin-top:.5em;
+}
+
+#loginMessages span{
+  color:red;
 }

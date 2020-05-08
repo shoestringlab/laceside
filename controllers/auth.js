@@ -35,7 +35,7 @@ module.exports = {
       .catch( function( error ){
         console.log( error );
         response.send( JSON.stringify( error ) );
-      })
+      });
   },
   logout: function( request, response ){
     response.send( { success: true } );

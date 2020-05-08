@@ -9,22 +9,19 @@ function notAuthorized( request, response ){
 
 module.exports = {
   checkHTTPAuth : function( request, response, next ){
-    //console.log( "checkHTTPAuth: " + request.url );
     let openRoute;
     let securedRoute = securityconfig.routes.secured.find( function( route ){
       return request.url.match( route );
     });
     if( securedRoute !== undefined ){
-      console.log( request.url + " matches " + securedRoute );
+      //console.log( request.url + " matches " + securedRoute );
     }else{
       openRoute = securityconfig.routes.open.find( function( route ){
         return request.url.match( route );
       });
     }
     // check token
-    //console.log( "Secured route check" );
     let token = request.headers[ "x-token" ];
-    //console.log( "token: " + token );
     // anonymous access
     if( token === undefined || token.length === 0 ){
       if( securedRoute !== undefined ){
@@ -39,7 +36,6 @@ module.exports = {
         next();
       }
     }else{
-      console.log( "token: " + token );
       let auth = utils.checkAuthToken( token, securityconfig.ttl );
 
       userservice.read( auth.userID )

@@ -28,5 +28,8 @@ module.exports = {
   },
   confirmUser: function( userConfirmationID ){
     return( dao.confirmUser( userConfirmationID ) );
+  },
+  changePassword: function( userID, password ){
+    return( gateway.changePassword( userID, password ) );
   }
 };

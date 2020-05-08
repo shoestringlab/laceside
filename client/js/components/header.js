@@ -1,5 +1,4 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import {auth} from '/js/app.auth.js';
 import {menu,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
 
 export var Header = function Header(props) {
@@ -11,24 +10,20 @@ export var Header = function Header(props) {
 
 	header.eventHandlers = {
 		logout: function(){
-			a7.events.publish( 'auth.logout', { callback: function(){
-        auth.authenticate();
-      }}) ;
+			a7.events.publish( 'auth.logout', {
+        success: "/auth/logoutsuccess",
+        failure: "/auth/logoutfailure"
+      }) ;
 		},
     showProfile: function(){
       //a7.events.publish( 'profile.show' );
       a7.router.open( '/u/' + header.getState().user.username + '/profile', { userID: header.getState().user.userID } );
-      /* var currentState = a7.ui.getView('profile').getState();
-      a7.ui.getView('profile').setState( { user: currentState.user, visible: true, activeTab: currentState.activeTab } ); */
     },
     signIn: function( event ){
       a7.events.publish( 'auth.showLogin', {} ) ;
     },
     createAccount: function( event ){
       a7.events.publish( 'auth.showSignup', {} ) ;
-    },
-    showMessage: function( event ){
-      a7.events.publish( 'main.showMessage', { message: "Some message." } ) ;
     }
 	};
 
@@ -51,9 +46,7 @@ export var Header = function Header(props) {
         { label: "Create Account",
           link: header.eventHandlers.createAccount },
         { label: "Sign In",
-          link: header.eventHandlers.signIn },
-          { label: "Show a Message",
-            link: header.eventHandlers.showMessage }
+          link: header.eventHandlers.signIn }
       ];
     }
 
@@ -64,7 +57,7 @@ export var Header = function Header(props) {
 					}}
     ];
 
-    var md = constructor( menu, [ document.querySelector("#profileMenu"), { data: menuData } ] );
+    header.components.menu = constructor( menu, [ document.querySelector("#profileMenu"), { data: menuData } ] );
   });
 
   header.template = function(){

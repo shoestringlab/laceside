@@ -8,6 +8,8 @@ import {Message} from '/js/components/message.js';
 import {Libraries} from '/js/components/libraries.js';
 import {Apps} from '/js/components/apps.js';
 import {Profile} from '/js/components/profile.js';
+import {ForgotPasswordForm} from '/js/components/forgotpasswordform.js';
+import {ResetPasswordForm} from '/js/components/resetpasswordform.js';
 import {Tabs} from '/js/components/tabs.js';
 import {Home} from '/js/components/home.js';
 import {UserHome} from '/js/components/userhome.js';
@@ -24,6 +26,7 @@ export var main = (function() {
       a7.ui.setSelector( 'signup', "#signup" );
       a7.ui.setSelector( 'signupModal', "#signupModal" );
       a7.ui.setSelector( 'profileModal', "#profileModal" );
+
       a7.ui.setSelector( 'secureDiv', "#secure");
       a7.ui.setSelector( 'sandBox', "#sandBox");
       a7.ui.setSelector( 'ide', "#ide");
@@ -42,6 +45,8 @@ export var main = (function() {
       LoginForm( { id: 'loginForm', selector: a7.ui.selectors['auth'] } );
       SignupForm( { id: 'signupForm', selector: a7.ui.selectors['signup'] } );
       Profile( { id: 'profile', selector: "#profile", user: user } );
+      ForgotPasswordForm( { id: 'forgotPasswordForm', selector: "#forgotPassword" } );
+      ResetPasswordForm( { id: 'resetPasswordForm', selector: "#resetPassword" } );
 
       let menuItems = [
         { label: 'Home', path: '/'}

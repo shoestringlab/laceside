@@ -6,7 +6,7 @@ import * as utils from '/js/app.utils.js';
 export var profileEvents = function init(){
 
   a7.events.subscribe( "profile.show", function( obj ){
-    if( obj.userID == a7.model.get( "user" ).userID ){
+    if ( obj.userID && obj.userID == a7.model.get( "user" ).userID ){
       let state = a7.ui.getView( 'profile' ).getState();
       state.visible = true;
       state.activeTab = 'pTab1';
@@ -17,10 +17,24 @@ export var profileEvents = function init(){
         .then( function( response ){
           return response.json();
         })
-        .then( function( json ){
-
+        .then( function( user ){
+          if( user.userID === a7.model.get( "user" ).userID ){
+            a7.events.publish( "profile.setProfile", { user: user } );
+            let state = a7.ui.getView( 'profile' ).getState();
+            state.visible = true;
+            state.activeTab = 'pTab1';
+            a7.ui.getView( 'profile' ).setState( state );
+            a7.ui.getView( 'profile' ).components.modal.open();
+          }else{
+            a7.router.open( "/u/" + user.username );
+          }
         });
     }
+  });
+
+  a7.events.subscribe( "profile.setProfile", function( obj ){
+    let currentState = a7.ui.getView('profile').getState();
+    a7.ui.getView('profile').setState( { user: obj.user, visible: currentState.visible, activeTab: currentState.activeTab } );
   });
 
   a7.events.subscribe( "profile.update", function( obj ){
@@ -31,6 +45,7 @@ export var profileEvents = function init(){
       })
       .then( function( success ){
         if( success ){
+          utils.showNotice( "Profile saved." );
           a7.events.publish( "profile.refreshProfile");
         }
       });
