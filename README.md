@@ -1,9 +1,16 @@
 # Laces IDE
 in-browser JavaScript IDE
 
-v 0.15.0
+v 1.0.0-beta
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
+
+
+***About this version***
+
+
+Whew! Big release, as this is the initial beta candidate for 1.0.0 release. Missing functions like changing your password, resetting a lost password, and a cleanup of route-based security and client-side routing are the most important changes for this release. While the application should be considered feature complete, if you wish to run it in production as a public site, you may want to put the application behind NGINX, Apache HTTPD or another web server. The static files could be served by the web server rather than NodeJS, which will require some minimal re-configuration.
+
 
 Requirements:
 
@@ -11,7 +18,7 @@ Requirements:
 * MariaDB server
 
 Optional
-* Email address that can send messages. You can use a mail trap like PaperCut if you only need to test email capabilities. 
+* Email address that can send messages. You can use a mail trap like PaperCut if you only need to test email capabilities.
 
 ***Installation:***
 

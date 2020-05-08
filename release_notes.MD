@@ -1,10 +1,19 @@
+1.0.0-Beta
+===================
+
+- Forgot password
+- Reset password
+- cleanup of route-based security
+- cleanup of client-side routing
+- new database dump
+
 0.15.0 Beta Release
 ===================
 
 - This release migrates all existing IDs to cuids.
 - Many bug fixes
 - Completion of new account creation code
-- Email address confirmation 
+- Email address confirmation
 
 0.14.0 Beta Release
 ===================
