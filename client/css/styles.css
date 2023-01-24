@@ -332,10 +332,10 @@ textarea[name='codeWindow']{
 .consolePane{
   border-radius: 0 0 5px 5px !important;
   border: 0 !important;
-  width: 24em !important;
+  //width: 24em !important;
   overflow: hidden;
-  bottom: 8px;
-  position: absolute;
+  //bottom: 8px;
+  //position: absolute;
 }
 
 .htmlFrame{
@@ -722,4 +722,8 @@ div.label{
 
 #loginMessages span{
   color:red;
+}
+
+#sidebar > .gadget-ui-collapsiblePane{
+  width:100% !important;
 }

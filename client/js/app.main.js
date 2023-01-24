@@ -57,7 +57,7 @@ export var main = (function() {
       Libraries( { id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } } );
       Apps( { id: 'apps', selector: "#apps" } );
       Tabs( { id: 'tabs', selector: "#editors" } );
-      Console( { id: 'console', consoleText: '', selector: "div[name='console']" } );
+      Console( { id: 'console', consoleText: '', selector: "#console" } );
       Home( { id: 'home', selector: "#home" } );
       Header( { id: 'header', user: user, selector: "#headerRight" } );
           //this.run( user );

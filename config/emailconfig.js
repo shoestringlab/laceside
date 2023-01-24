@@ -3,13 +3,13 @@
 const nodemailer = require("nodemailer");
 
 const smtpServer = {
-  host: 'mail.shoestringlab.com' // email server host
+  host: 'mail.famili.io' // email server host
 };
 
 const emailUser = {
-  name: "LacesIDE Admin",
-  emailaddress: "lacesadmin@shoestringlab.com", // your admin email address
-  user: "lacesadmin", // your admin email username
+  name: "Famili Admin",
+  emailaddress: "admin@famili.io", // your admin email address
+  user: "admin", // your admin email username
   pass: "pwd123" // your admin email password
 };
 

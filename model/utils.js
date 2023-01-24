@@ -21,10 +21,13 @@ module.exports = {
     let tokenhash = JSON.parse( authtoken );
     let token = tokenhash.token;
     let hashCode = tokenhash.hash;
-
+    console.log( "base auth:" );
+    console.table( auth );
     if( hashCode == new shajs.sha512().update( token ).digest('hex') ){
       // token is valid
       auth = JSON.parse( Base64.decode( token ) );
+      console.log( "Authenticated" );
+      console.table( auth );
     }
     return auth;
   },

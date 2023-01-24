@@ -1,6 +1,6 @@
 {
   "name": "laceside",
-  "version": "1.0.0-beta-2",
+  "version": "1.0.0-beta-3",
   "description": "In-browser JavaScript IDE and execution environment",
   "main": "index.js",
   "scripts": {
@@ -23,16 +23,16 @@
   "dependencies": {
     "altseven": "^6.0.0-beta-8",
     "bcryptjs": "^2.4.3",
-    "codemirror": "^5.43.0",
+    "codemirror": "^5.65.3",
     "concat-files": "^0.1.1",
     "cuid": "^2.1.8",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "feather-icons": "^4.21.0",
     "gadget-ui": "^7.1.1",
     "js-base64": "^2.5.1",
     "mariadb": "^2.0.3",
     "modlazy": "^1.0.0",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.7.3",
     "password-strength-score": "^1.1.2",
     "sha.js": "^2.4.11",
     "url-router": "^11.0.2",
