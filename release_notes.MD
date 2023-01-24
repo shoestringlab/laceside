@@ -1,3 +1,8 @@
+1.0.1
+===================
+
+- Updated semver for release on npm.
+
 1.0.0-Beta
 ===================
 
