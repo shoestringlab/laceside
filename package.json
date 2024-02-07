@@ -1,6 +1,6 @@
 {
   "name": "laceside",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "In-browser JavaScript IDE and execution environment",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "cuid": "^2.1.8",
     "express": "^4.18.2",
     "feather-icons": "^4.21.0",
-    "gadget-ui": "^7.1.1",
+    "gadget-ui": "^8.3.0",
     "js-base64": "^2.5.1",
     "mariadb": "^2.0.3",
     "modlazy": "^1.0.0",

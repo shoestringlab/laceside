@@ -1,3 +1,8 @@
+1.0.2
+==================
+
+- Updated gadget-ui library and import references.
+
 1.0.1
 ===================
 

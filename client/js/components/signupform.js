@@ -1,6 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {checkPasswordStrength} from '/js/app.utils.js';
-import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 export var SignupForm = function signupform(props) {
     var signupform = a7.components.Constructor(a7.components.View, [props], true);

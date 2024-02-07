@@ -2,7 +2,7 @@ import {a7} from '/lib/altseven/dist/a7.js';
 import {Editor} from '/js/components/editor.js';
 import * as utils from '/js/app.utils.js';
 import {ButtonBar} from '/js/components/buttonbar.js';
-import {tabs as gtabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+import {tabs as gtabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 export var Tabs = function Tabs(props){
   const tabs =  a7.components.Constructor(a7.components.View, [props], true);

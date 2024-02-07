@@ -20,7 +20,7 @@ import * as user from '/js/remote/user.js';
 import {routes} from '/js/app.routes.js';
 
 // you only need to import the floatingpane if you use it as the container for the console
-//import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+//import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 var app = {
   main: main,

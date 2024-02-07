@@ -1,5 +1,5 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import {bubble, constructor, dialog} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
+import {bubble, constructor, dialog} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 export { formatDate, addModLazy, showNotice, showDialog, addTag, formatDateByOffset, takeOverConsole, detectClickOutside, debounce, checkPasswordStrength };
 
