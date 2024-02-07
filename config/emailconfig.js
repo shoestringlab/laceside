@@ -7,8 +7,8 @@ const smtpServer = {
 };
 
 const emailUser = {
-  name: "Famili Admin",
-  emailaddress: "admin@famili.io", // your admin email address
+  name: "LacesIDE Admin",
+  emailaddress: "admin@example.com", // your admin email address
   user: "admin", // your admin email username
   pass: "pwd123" // your admin email password
 };
