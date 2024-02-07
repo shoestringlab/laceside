@@ -1,3 +1,8 @@
+1.0.3
+==================
+
+- Update user/pass data to make it clear these values must be changed by the implementor.
+
 1.0.2
 ==================
 
