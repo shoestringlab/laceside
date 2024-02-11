@@ -1,6 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
-import {Paging} from '/js/components/paging.js';
+import {Paging} from '/js/view/paging.js';
 import * as utils from '/js/app.utils.js';
 
 export var Libraries = function Libraries(props) {

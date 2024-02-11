@@ -1,8 +1,8 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {ui} from '/js/app.ui.js';
 import * as utils from '/js/app.utils.js';
-import {UserHome} from '/js/components/userhome.js';
-import {Profile} from '/js/components/profile.js';
+import {UserHome} from '/js/view/userhome.js';
+import {Profile} from '/js/view/profile.js';
 
 export var mainEvents = function init(){
 

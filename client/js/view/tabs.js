@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import {Editor} from '/js/components/editor.js';
+import {Editor} from '/js/view/editor.js';
 import * as utils from '/js/app.utils.js';
-import {ButtonBar} from '/js/components/buttonbar.js';
+import {ButtonBar} from '/js/view/buttonbar.js';
 import {tabs as gtabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 export var Tabs = function Tabs(props){

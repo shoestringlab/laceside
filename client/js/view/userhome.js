@@ -1,5 +1,5 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import {Paging} from '/js/components/paging.js';
+import {Paging} from '/js/view/paging.js';
 
 export var UserHome = function UserHome(props) {
   var userHome = a7.components.Constructor(a7.components.View, [props], true);

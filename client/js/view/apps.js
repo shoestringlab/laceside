@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
 import * as utils from '/js/app.utils.js';
-import {Paging} from '/js/components/paging.js';
+import {Paging} from '/js/view/paging.js';
 
 export var Apps = function Apps(props) {
   var apps = a7.components.Constructor(a7.components.View, [props], true);

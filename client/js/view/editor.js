@@ -10,20 +10,12 @@ export var Editor = function Editor(props){
 
   editor.on( "rendered", function(){
 
-   //editor.element.querySelector( "textarea" ).style.width = width;
-
-   editor.components.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
+      editor.components.editor = CodeMirror.fromTextArea( document.querySelector( editor.props.selector +  " textarea[name='codeWindow']" ), {
     lineNumbers: true,
     mode: editor.state.mode,
     lineWrapping: true
     });
 
-/*     let editorSize = a7.model.get( "editorSize" );
-    let height = editorSize.height;
-    //let width = editorSize.width;
-    //console.log( editor.element.querySelector( ".CodeMirror-scroll" ) );
-    editor.element.querySelector( ".CodeMirror" ).setAttribute( "style", "height:" + ( height -60 ) + "px !important");
- */
     editor.components.editor.refresh();
 
     editor.components.editor.on( "change", function(){

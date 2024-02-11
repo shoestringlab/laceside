@@ -23,15 +23,15 @@ import {routes} from '/js/app.routes.js';
 //import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.mjs';
 
 var app = {
-  main: main,
-  auth: auth,
-  remote: {
-    apps: apps,
-    libraries: libraries,
-    profile: profile,
-    user: user
+	main: main,
+	auth: auth,
+	remote: {
+	apps: apps,
+	libraries: libraries,
+	profile: profile,
+	user: user
 	},
-  ui: ui,
+	ui: ui,
 	utils: utils
 };
 

@@ -1,6 +1,4 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-//import {ui} from '/js/app.ui.js';
-//import {main} from '/js/app.main.js';
 import * as utils from '/js/app.utils.js';
 
 export var appEvents = function init(){
