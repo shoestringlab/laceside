@@ -60,7 +60,7 @@ export var main = (function() {
       Console( { id: 'console', consoleText: '', selector: "#console" } );
       Home( { id: 'home', selector: "#home" } );
       Header( { id: 'header', user: user, selector: "#headerRight" } );
-          //this.run( user );
+
       a7.router.match( document.location.pathname + document.location.search );
     }
   };

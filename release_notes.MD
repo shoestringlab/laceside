@@ -1,3 +1,9 @@
+1.0.4
+==================
+
+- Changed conventions for view components to js/view
+- Change convention for events to js/event
+
 1.0.3
 ==================
 

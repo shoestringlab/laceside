@@ -14,9 +14,7 @@ export var UserHome = function UserHome(props) {
 	userHome.eventHandlers = {
     editApp: function( event ){
       let state = userHome.getState();
-      /* a7.events.publish( "ide.show", {
-        appID: event.currentTarget.attributes['data-id'].value
-      }); */
+
       a7.router.open( '/u/' + state.user.username + '/' + event.currentTarget.attributes['data-id'].value );
     },
     showIde:function( event ){

@@ -5,7 +5,7 @@ const pool = mysql.createPool({
   connectionLimit : 50,
   host            : 'localhost', // your db host
   user            : 'laceside', // your db user
-  password        : 'pwdIDE@', // your db password
+  password        : 'password', // your db password
   database        : 'laceside' // your database name for laceside
 });
 
