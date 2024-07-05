@@ -12,3 +12,4 @@ export var routes = [
   [ '/', 'main.home' ],
   [ '', 'main.home' ]
 ];
+ 

@@ -8,8 +8,7 @@ module.exports = {
   generateToken: function( user ){
     let authtoken = Object.assign( {}, user );
     let now = new Date();
-    authtoken.expires =  new Date( now );
-    authtoken.expires.setMinutes( now.getMinutes() + securityconfig.ttl );
+	authtoken.expires =  new Date( new Date( now ).getTime() + securityconfig.ttl * 60000);
     let base64Token = Base64.encode( JSON.stringify( authtoken ) );
     let hash = new shajs.sha512().update( base64Token ).digest('hex');
 

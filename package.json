@@ -1,6 +1,6 @@
 {
   "name": "laceside",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "In-browser JavaScript IDE and execution environment",
   "main": "index.js",
   "scripts": {

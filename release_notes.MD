@@ -1,3 +1,8 @@
+1.0.5
+==================
+- Code cleanup
+- Fixed bug in auth token creation expiration time
+
 1.0.4
 ==================
 

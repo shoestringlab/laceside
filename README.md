@@ -1,7 +1,7 @@
 # Laces IDE
 in-browser JavaScript IDE
 
-v 1.0.4
+v 1.0.5
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
