@@ -1,14 +1,20 @@
 
-module.exports = function(app) {
-  const authcontroller = require( "../controllers/auth.js" );
-  const bodyParser = require('body-parser');
-  var jsonParser = bodyParser.json();
+import bodyParser from 'body-parser';
+import { auth as authController } from "../controllers/auth.js";
 
-  // get a auth by ID
-  app.post( "/api/auth/login", authcontroller.login );
+export var auth = (function () {
 
-  app.post( "/api/auth/logout", authcontroller.logout );
+	return {
+		init: function (app) {
+			var jsonParser = bodyParser.json();
 
-  app.get( "/api/auth/refresh", authcontroller.refresh );
+			// get a auth by ID
+			app.post("/api/auth/login", jsonParser, authController.login);
 
-};
+			app.post("/api/auth/logout", jsonParser, authController.logout);
+
+			app.get("/api/auth/refresh", jsonParser, authController.refresh);
+
+		}
+	}
+})();

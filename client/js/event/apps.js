@@ -1,6 +1,12 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 
+function setEditorValue( cm, text ){
+	cm.dispatch({
+		changes: {from: 0, to: cm.state.doc.length, insert: text}
+	});
+}
+
 export var appEvents = function init(){
 
   a7.events.subscribe( "apps.create", function( obj ){
@@ -66,9 +72,10 @@ export var appEvents = function init(){
 
     a7.model.set( "esModule", app.esModule );
     a7.model.set( "activeLibraries", activeLibs );
-    a7.ui.getView('jseditor').components.editor.setValue( app.jsCode );
-    a7.ui.getView('htmleditor').components.editor.setValue( app.htmlCode );
-    a7.ui.getView('csseditor').components.editor.setValue( app.cssCode );
+    setEditorValue( a7.ui.getView('jseditor').components.editor, app.jsCode );
+    setEditorValue( a7.ui.getView('htmleditor').components.editor, app.htmlCode );
+    setEditorValue( a7.ui.getView('csseditor').components.editor, app.cssCode );
+ 
 
     let editorSize = a7.model.get( "editorSize" );
     let height = editorSize.height;
@@ -115,9 +122,9 @@ export var appEvents = function init(){
 
   a7.events.subscribe( "apps.new", function( obj ){
     if( a7.ui.getView('jseditor') !== undefined && a7.ui.getView('jseditor').components.editor ){
-        a7.ui.getView('jseditor').components.editor.setValue( "" );
-        a7.ui.getView('htmleditor').components.editor.setValue( "" );
-        a7.ui.getView('csseditor').components.editor.setValue( "" );
+        setEditorValue( a7.ui.getView('jseditor').components.editor, "" );    //.viewState.state.update({changes: {from: 0, to: state.doc.length, insert: ""}});
+        setEditorValue( a7.ui.getView('htmleditor').components.editor, "" );
+        setEditorValue( a7.ui.getView('csseditor').components.editor, "" );
         a7.ui.getView('buttonbar').setState( { esModule: 0 } );
     }
     a7.model.set( "jsCode", "" );

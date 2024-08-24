@@ -28,12 +28,17 @@ export var main = (function() {
       a7.ui.setSelector( 'profileModal', "#profileModal" );
 
       a7.ui.setSelector( 'secureDiv', "#secure");
-      a7.ui.setSelector( 'sandBox', "#sandBox");
-      a7.ui.setSelector( 'ide', "#ide");
+/*       a7.ui.setSelector( 'sandBox', "#sandBox");
+      a7.ui.setSelector( 'ide', "#ide"); */
       a7.ui.setSelector( 'base', "#base");
+	  a7.ui.setSelector( 'layout', "#layout");
+	  
       a7.ui.setSelector( 'userHome', "#userHome");
       a7.ui.setSelector( 'home', "#home");
       a7.ui.setSelector( 'message', "#message");
+	  a7.ui.setSelector( 'editors', "#editors");
+	  a7.ui.setSelector( 'sidebar', "#sidebar");
+	  a7.ui.setSelector( 'htmlFrame', "#htmlFrame");
 
       let user = a7.model.get("user");
 

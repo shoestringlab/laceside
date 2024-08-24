@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
 import {checkPasswordStrength} from '/js/app.utils.js';
-import {modal,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
+import {modal,constructor} from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var ResetPasswordForm = function ResetPasswordForm(props) {
     var resetPasswordForm = a7.components.Constructor(a7.components.View, [props], true);

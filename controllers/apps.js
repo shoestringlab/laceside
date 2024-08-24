@@ -1,13 +1,13 @@
 
-const service = require( '../model/appsservice' );
-const appLibraryService = require( '../model/applibrariesservice' );
+import {appsservice as service}  from '../model/appsservice.js';
+import {applibrariesservice} from '../model/applibrariesservice.js';
 
-module.exports = {
+export var apps = {
 
    getApps: function( request, response ){
     service.getApps( request.user.userID )
       .then( function( results ){
-        appLibraryService.getByUserID( request.user.userID )
+        applibrariesservice.getByUserID( request.user.userID )
           .then( function( alResults ){
               results.forEach( function( result ){
               // find the libraries used for each app
@@ -32,7 +32,7 @@ module.exports = {
   getByUserID: function( request, response ){
    service.getApps( request.params.ID )
      .then( function( results ){
-       appLibraryService.getByUserID( request.params.ID )
+		applibrariesservice.getByUserID( request.params.ID )
          .then( function( alResults ){
              results.forEach( function( result ){
              // find the libraries used for each app
@@ -103,7 +103,7 @@ module.exports = {
   },
 
   delete: function( request, response){
-    appLibraryService.deleteByAppID( request.params.ID, request.user.userID )
+    applibrariesservice.deleteByAppID( request.params.ID, request.user.userID )
       .then( function( success ){
         service.delete( request.params.ID, request.user.userID )
           .then( function( results ){

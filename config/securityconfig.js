@@ -37,7 +37,7 @@ const open = [
   /\/api\/auth\/logout/
   ];
 
-module.exports = {
+export var securityConfig = {
   routes:{
     secured: secured,
     open: open

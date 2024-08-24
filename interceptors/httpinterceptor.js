@@ -1,91 +1,97 @@
-const securityconfig = require( "../config/securityconfig.js" );
-const utils = require( '../model/utils' );
-const userservice = require( '../model/userservice' );
+import {securityConfig} from "../config/securityconfig.js";
+import {utils} from '../model/utils.js';
+import {userservice} from '../model/userservice.js';
 
 function notAuthorized( request, response ){
-  response.status( 401 );
-  response.send( JSON.stringify( { error: "Not authorized." } ) );
-}
-
-module.exports = {
-  checkHTTPAuth : function( request, response, next ){
-    let openRoute;
-    let securedRoute = securityconfig.routes.secured.find( function( route ){
-      return request.url.match( route );
-    });
-    if( securedRoute !== undefined ){
-      //console.log( request.url + " matches " + securedRoute );
-    }else{
-      openRoute = securityconfig.routes.open.find( function( route ){
-        return request.url.match( route );
-      });
-    }
-    // check token
-    let token = request.headers[ "x-token" ];
-    // anonymous access
-    if( token === undefined || token.length === 0 ){
-      if( securedRoute !== undefined ){
-        // no anon access to secured routes
-        notAuthorized( request, response );
-        return;
-      }else{
-        if( openRoute === undefined ){
-          console.log( "WARN: Route not found for URL:" + request.url );
-        }
-        // open routes pass through
-        next();
-      }
-    }else{
-      let auth = utils.checkAuthToken( token, securityconfig.ttl );
-
-      userservice.read( auth.userID )
-        .then( function( results ){
-          let user = results;
-
-          let now = new Date();
-          let valid = false;
-          if( user.userID.length  > 1 && new Date( auth.expires ).getTime() > now.getTime() ){
-            valid = true;
-            // remove the password hash from the token so we don't send it outside the system
-            delete user.hash;
-            //console.log( "checkHTTPAuth: user: " );
-            //console.log( user );
-
-            // this call sets a user into the request
-            request.user = user;
-            // set a new header token
-            response.setHeader( "X-Token", utils.generateToken( user ) );
-            // move on to the route handlers
-            next();
-          }else if( securedRoute !== undefined ){
-            // denied
-            //response.messages = "Authorization expired.";
-            notAuthorized( request, response );
-          }else{
-            //catch-all - no valid user, but not a secured route
-            if( openRoute === undefined ){
-                console.log( "WARN: Route not found for URL:" + request.url );
-            }
-            // open routes pass through
-            next();
-          }
-        })
-        .catch( function( error ){
-          console.log( error );
-          response.status( 500 );
-          response.send( "Error" );
-        });
-    }
-
-
-    /* }else{
-
-      if( openRoute === undefined ){
-        console.log( "WARN: Route not found for URL:" + request.url );
-      }
-
-      //open routes pass through
-      next();
-    } */
+	response.status( 401 );
+	response.send( JSON.stringify( { error: "Not authorized." } ) );
   }
-};
+  
+  export var interceptor = (function(){
+	return{
+	  checkHTTPAuth : function( request, response, next ){
+		  // is it an open route?
+		  let openRoute = securityConfig.routes.open.find( function( route ){
+			  return request.url.match( route );
+		  });
+  
+		  // is it a secured route?
+		  let securedRoute = securityConfig.routes.secured.find( function( route ){
+			  return request.url.match( route );
+		  });
+  
+		  console.log( "Checking auth");
+		  // check token
+		  let token = request.headers[ "x-token" ];
+		  // anonymous access
+		  if( token === undefined || token.length === 0 ){
+			  // not a logged in user
+			  if( openRoute !== undefined ){
+				  // if this is an open route, pass them along
+				  next();
+			  }else if( securedRoute !== undefined ){
+				  notAuthorized( request, response );
+			  }else{
+				  // route not found
+				  console.log( "WARN: Route not found for URL:" + request.url );
+				  console.log( "Pass through allowed." );
+				  next();
+			  }
+		  }else{
+			  let auth = utils.checkAuthToken( token, securityConfig.ttl );
+  
+			  userservice.read( auth.userID )
+			  .then( function( results ){
+				  let valid = false;
+				  let user = results;
+				  let now = new Date();
+				  console.log( "userID: " + user.userID );
+				  // if there is a valid logged in user, pass them
+				  if( user.userID.length > 0 && ( new Date( auth.expires ).getTime() - now.getTime() > 0 ) ){
+					  valid = true;
+					  // remove the password hash from the token so we don't send it outside the system
+					  delete user.hash;
+		  
+					  // this call sets a user into the request
+					  request.user = user;
+					  // set a new header token
+					  response.setHeader( "X-Token", utils.generateToken( user ) );
+					  console.log( "X-Token set" );
+					  // move on to the route handlers
+					  //next();
+				  }else if( user.userID.length > 0 ){
+					  console.log( "Expires: " + auth.expires );
+					  console.log( "Now: " + now.getTime() );
+					  console.log( "Authorization expired." );
+					  response.messages = "Authorization expired.";
+				  }
+  
+				  if( securedRoute !== undefined ){
+					  console.log( request.url + " matches " + securedRoute );
+					  console.log( "User validated? " + valid );
+					  if( valid === true ){
+						  // securedRoute and logged in user, forward them along
+						  next();
+					  }else{
+						  notAuthorized( request, response );
+					  }
+				  }else{
+  
+					  if( openRoute === undefined ){
+						  console.log( "WARN: Route not found for URL:" + request.url );
+						  console.log( "Pass through allowed." );
+					  }
+					  // open routes pass through
+					  next();
+				  }
+			  })
+			  .catch( function( error ){
+				  console.log( error );
+				  response.status( 500 );
+				  response.send( "Error" );
+			  });
+		  }
+	  }
+	}
+  })();
+  

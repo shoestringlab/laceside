@@ -1,20 +1,24 @@
-const interceptor = require( '../interceptors/httpinterceptor.js' );
+import { interceptor } from '../interceptors/httpinterceptor.js';
+import { libraries as librarycontroller } from "../controllers/libraries.js";
 
-module.exports = function(app) {
-  const librarycontroller = require( "../controllers/libraries.js" );
-  const bodyParser = require('body-parser');
-  var jsonParser = bodyParser.json();
+import bodyParser from 'body-parser';
 
-  // create a new library
-  app.post( "/api/library", jsonParser, librarycontroller.create );
+export var libraries = (function () {
+	return {
+		init: function (app) {
+			var jsonParser = bodyParser.json();
 
-  // get a library by ID
-  app.get( "/api/library/:ID", librarycontroller.read );
+			// create a new library
+			app.post("/api/library", jsonParser, librarycontroller.create);
 
-  // update a library
-  app.put( "/api/library/:ID", jsonParser, librarycontroller.update );
+			// get a library by ID
+			app.get("/api/library/:ID", librarycontroller.read);
 
-  //delete a library
-  app.delete( "/api/library/:ID", librarycontroller.delete );
+			// update a library
+			app.put("/api/library/:ID", jsonParser, librarycontroller.update);
 
-};
+			//delete a library
+			app.delete("/api/library/:ID", librarycontroller.delete);
+		}
+	}
+})();

@@ -1,20 +1,24 @@
-const interceptor = require( '../interceptors/httpinterceptor.js' );
+import { interceptor } from '../interceptors/httpinterceptor.js';
+import { apps as appcontroller } from "../controllers/apps.js";
 
-module.exports = function(app) {
-  const appcontroller = require( "../controllers/apps.js" );
-  const bodyParser = require('body-parser');
-  var jsonParser = bodyParser.json();
+import bodyParser from 'body-parser';
 
-  // create a new app
-  app.post( "/api/app", jsonParser, appcontroller.create );
+export var apps = (function () {
+	return {
+		init: function (app) {
+			var jsonParser = bodyParser.json();
 
-  // get an app by ID
-  app.get( "/api/app/:ID", appcontroller.read );
+			// create a new app
+			app.post("/api/app", jsonParser, appcontroller.create);
 
-  // update an aop
-  app.put( "/api/app/:ID", jsonParser, appcontroller.update );
+			// get an app by ID
+			app.get("/api/app/:ID", appcontroller.read);
 
-  //delete an app
-  app.delete( "/api/app/:ID", appcontroller.delete );
+			// update an aop
+			app.put("/api/app/:ID", jsonParser, appcontroller.update);
 
-};
+			//delete an app
+			app.delete("/api/app/:ID", appcontroller.delete);
+		}
+	}
+})();

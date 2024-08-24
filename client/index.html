@@ -1,119 +1,146 @@
 <html>
 
 <head>
-  <title>
-    Laces IDE
-  </title>
-  <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
-  <link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css"/>
-  <link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css"/>
+	<title>
+		Laces IDE
+	</title>
+	<link href="/css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css" />
+	<link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css" />
 
-  <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css"/>
-  <script src="/lib/codemirror/lib/codemirror.js"></script>
-  <script src="/lib/codemirror/mode/xml/xml.js"></script>
-  <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
-  <script src="/lib/codemirror/mode/css/css.js"></script>
-  <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-  <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
+	<!--
+	<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css" />
+	<script src="/lib/codemirror/lib/codemirror.js"></script>
+	<script src="/lib/codemirror/mode/xml/xml.js"></script>
+	<script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+	<script src="/lib/codemirror/mode/css/css.js"></script>
+	<script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
+-->
 
-  <script type="module">
-    import {application} from '/js/app.js';
-    import {collapsiblepane, constructor, sidebar} from '/lib/gadget-ui/dist/gadget-ui.mjs';
-
-    constructor( collapsiblepane, [ document.querySelector( "#apps" ),
+	<script type="importmap">
 		{
-			title : "Apps"
+			"imports": {
+			  "codemirror": "/lib/codemirror/dist/index.js",
+			  "@codemirror/autocomplete": "/lib/@codemirror/autocomplete/dist/index.js",
+			  "@codemirror/commands": "/lib/@codemirror/commands/dist/index.js",
+			  "@codemirror/lang-css": "/lib/@codemirror/lang-css/dist/index.js",
+			  "@codemirror/lang-html": "/lib/@codemirror/lang-html/dist/index.js",
+			  "@codemirror/lang-javascript": "/lib/@codemirror/lang-javascript/dist/index.js",
+			  "@codemirror/language": "/lib/@codemirror/language/dist/index.js",
+			  "@codemirror/lint": "/lib/@codemirror/lint/dist/index.js",
+			  "@codemirror/search": "/lib/@codemirror/search/dist/index.js",
+			  "@codemirror/state": "/lib/@codemirror/state/dist/index.js",
+			  "@codemirror/view": "/lib/@codemirror/view/dist/index.js",
+			  "style-mod": "/lib/style-mod/src/style-mod.js",
+			  "w3c-keyname": "/lib/w3c-keyname/index.js",
+			  "@lezer/common": "/lib/@lezer/common/dist/index.js",
+			  "@lezer/css": "/lib/@lezer/css/dist/index.js",
+			  "@lezer/highlight": "/lib/@lezer/highlight/dist/index.js",
+			  "@lezer/html": "/lib/@lezer/html/dist/index.js",
+			  "@lezer/javascript": "/lib/@lezer/javascript/dist/index.js",
+			  "@lezer/lr": "/lib/@lezer/lr/dist/index.js",
+			  "crelt": "/lib/crelt/index.js"
+			}
+		  }
+	
+	</script>
+
+	<script type="module">
+		import { application } from '/js/app.js';
+		import { collapsiblepane, constructor, sidebar } from '/lib/gadget-ui/dist/gadget-ui.es.js';
+
+		constructor(collapsiblepane, [document.querySelector("#apps"),
+		{
+			title: "Apps"
 		}]);
 
-    constructor( collapsiblepane, [ document.querySelector( "#libraries" ),
-    {
-      title : "Libraries"
-    }]);
+		constructor(collapsiblepane, [document.querySelector("#libraries"),
+		{
+			title: "Libraries"
+		}]);
 
-    constructor( collapsiblepane, [ document.querySelector( "div.console" ),
-    {
-      title : "Console",
-      class: "consolePane"
-    }]);
+		constructor(collapsiblepane, [document.querySelector("div.console"),
+		{
+			title: "Console",
+			class: "consolePane"
+		}]);
 
-    let sb = constructor( sidebar,
-				[ document.querySelector("#sidebar"),
-					{ featherPath: '/lib/feather-icons'}], true );
+		let sb = constructor(sidebar,
+			[document.querySelector("#sidebar"),
+			{ featherPath: '/lib/feather-icons', minimized: true }], true);
 
-    sb.on("minimized", function( obj ){
-      document.querySelector( "#ide" ).classList.add( "expanded" );
-      sb.wrapper.querySelector("svg[name='chevron']").classList.remove( "feather_white" );
-    });
+		sb.on("minimized", function (obj) {
+			document.querySelector("#ide").classList.add("expanded");
+			sb.wrapper.querySelector("svg[name='chevron']").classList.remove("feather_white");
+		});
 
-    sb.on("maximized", function( obj ){
-      document.querySelector( "#ide" ).classList.remove( "expanded" );
-      sb.wrapper.querySelector("svg[name='chevron']").classList.add( "feather_white" );
-    });
+		sb.on("maximized", function (obj) {
+			document.querySelector("#ide").classList.remove("expanded");
+			sb.wrapper.querySelector("svg[name='chevron']").classList.add("feather_white");
+		});
 
-    sb.wrapper.querySelector("svg[name='chevron']").classList.add( "feather_white" );
+		sb.wrapper.querySelector("svg[name='chevron']").classList.add("feather_white");
 
-    var app = application();
+		var app = application();
 
-    </script>
+	</script>
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="header">
-      <div id="headerLeft" class="headerCol"></div>
-      <div id="headerMiddle" class="headerCol">&nbsp;</div>
-      <div id="headerRight" class="headerCol"></div>
-    </div>
-    <div id="base" class="hidden">
-      <div id="home">
+	<div id="sidebar" class="box">
+		<div id="apps" width="100%">
+		</div>
+		<br>
+		<div id="libraries" width="100%">
+		</div>
+		<br>
+		<div name="console" id="console" class="console" width="100%">
+		</div>
+	</div>
 
-      </div>
-      <div id="userHome">
+	<div id="layout" class="layout">
+		<div class="header">
+			<div id="headerLeft" class="headerCol"></div>
+			<div id="headerMiddle" class="headerCol">&nbsp;</div>
+			<div id="headerRight" class="headerCol"></div>
+		</div>
+		<div id="editors">
+		</div>
+		<div id="htmlFrame" class="htmlFrame">
+			<iframe id="iframe">
+			</iframe>
+		</div>
+	</div>
 
-      </div>
-    </div>
-    <div id="ide" class="hidden">
-      <div id="sidebar" class="box sidebar">
-        <div id="apps" width="100%">
-        </div>
-        <br>
-        <div id="libraries" width="100%">
-        </div>
-        <br>
-        <div name="console" id="console" class="console" width="100%">
-        </div>
-      </div>
-      <div class="box app">
-        <div id="sandBox" class="sandBox">
-          <div id="editors">
-          </div>
-          <div name="htmlFrame" class="htmlFrame">
-            <iframe id="iframe">
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div id="base" class="hidden">
+		<div id="home">
 
-  <div id="profileModal">
-    <div id="profile"></div>
-  </div>
-  <div id="authModal">
-    <div id="auth"></div>
-  </div>
-  <div id="signupModal">
-    <div id="signup"></div>
-  </div>
-  <div id="messageModal">
-    <div id="message"></div>
-  </div>
-  <div id="forgotPasswordModal">
-    <div id="forgotPassword"></div>
-  </div>
-  <div id="resetPasswordModal">
-    <div id="resetPassword"></div>
-  </div>
-  <div id="dialog"></div>
+		</div>
+		<div id="userHome">
+
+		</div>
+	</div>
+
+	<div id="profileModal">
+		<div id="profile"></div>
+	</div>
+	<div id="authModal">
+		<div id="auth"></div>
+	</div>
+	<div id="signupModal">
+		<div id="signup"></div>
+	</div>
+	<div id="messageModal">
+		<div id="message"></div>
+	</div>
+	<div id="forgotPasswordModal">
+		<div id="forgotPassword"></div>
+	</div>
+	<div id="resetPasswordModal">
+		<div id="resetPassword"></div>
+	</div>
+	<div id="dialog"></div>
 </body>
+
 </html>

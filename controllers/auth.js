@@ -1,10 +1,10 @@
 
-const userservice = require( '../model/userservice' );
-const utils = require( '../model/utils' );
-const Base64 = require('js-base64').Base64;
-const bcrypt = require('bcryptjs');
+import {userservice} from '../model/userservice.js';
+import {utils} from '../model/utils.js';
+import {Base64} from 'js-base64';
+import bcrypt from 'bcryptjs';
 
-module.exports = {
+export var auth = {
 
   login: function( request, response ){
     let authorization = request.header( "Authorization" ) || "";

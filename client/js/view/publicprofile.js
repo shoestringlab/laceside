@@ -1,7 +1,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {auth} from '/js/app.auth.js';
 import {checkPasswordStrength} from '/js/app.utils.js';
-import {fileuploader,modal,tabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
+import {fileuploader,modal,tabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var PublicProfile = function PublicProfile(props) {
   var publicprofile = a7.components.Constructor(a7.components.View, [props], true);

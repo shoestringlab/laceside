@@ -2,7 +2,7 @@ import {a7} from '/lib/altseven/dist/a7.js';
 import {ui} from '/js/app.ui.js';
 import {auth} from '/js/app.auth.js';
 
-export var authEvents = function init(){
+export var authEvents = function (){
 
   a7.events.subscribe( "auth.showLogin", function( obj ){
     a7.ui.getView( "loginForm" ).components.modal.open();

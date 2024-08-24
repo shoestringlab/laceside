@@ -1,5 +1,5 @@
 import {a7} from '/lib/altseven/dist/a7.js';
-import {menu,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
+import {menu,constructor} from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var Header = function Header(props) {
   var header = a7.components.Constructor(a7.components.View, [props], true);

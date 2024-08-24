@@ -1,6 +1,7 @@
 "use strict";
 
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
+
 
 const smtpServer = {
   host: 'mail.famili.io' // email server host
@@ -27,7 +28,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-module.exports = {
+export var emailConfig = {
   smtpServer: smtpServer,
   emailUser: emailUser,
   transporter: transporter

@@ -2,7 +2,7 @@ import {a7} from '/lib/altseven/dist/a7.js';
 import {Editor} from '/js/view/editor.js';
 import * as utils from '/js/app.utils.js';
 import {ButtonBar} from '/js/view/buttonbar.js';
-import {tabs as gtabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.mjs';
+import {tabs as gtabs,constructor} from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var Tabs = function Tabs(props){
   const tabs =  a7.components.Constructor(a7.components.View, [props], true);
@@ -34,7 +34,7 @@ export var Tabs = function Tabs(props){
     tabs.components.tabs = constructor( gtabs, [ tabs.element.querySelector("#editorTabs"), {} ], true );
     tabs.components.tabs.on( "tabSelected", function( obj, activeTab ){
       console.log( activeTab );
-      a7.ui.getView( activeTab.toLowerCase() ).components.editor.refresh();
+      //a7.ui.getView( activeTab.toLowerCase() ).components.editor.refresh();
     });
 
     // add modLazy to the iframe so it renders correctly on first execution

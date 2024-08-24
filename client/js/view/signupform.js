@@ -1,6 +1,6 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import {checkPasswordStrength} from '/js/app.utils.js';
-import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.mjs';
+import {constructor, modal} from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var SignupForm = function signupform(props) {
     var signupform = a7.components.Constructor(a7.components.View, [props], true);
@@ -147,9 +147,9 @@ export var SignupForm = function signupform(props) {
         let password = signupform.element.querySelector( "input[name='password']" ).value;
         let strength = checkPasswordStrength( password );
         let pvs = signupform.element.querySelector( "#passwordValidator span" );
-        pvs.classList.remove( ...cls );
-        pvs.classList.add( strength.value );
-        pvs.innerText = strength.value;
+/*         pvs.classList.remove( ...cls )
+			.classList.add( strength.value )
+			.innerText = strength.value; */
         let valid = false;
         if( password.trim().length > 5 ){
           valid = true;
