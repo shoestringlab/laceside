@@ -21,7 +21,7 @@ export var auth = (function() {
         //a7.ui.views['userHome'].setState( { user: a7.model.get( "user" ), apps: ( a7.model.get( "apps" ) || [] ) } );
       a7.ui.views['apps'].setState( { apps: [], app:{ appID: 0, name: "" } } );
       a7.ui.views['libraries'].setState( { libraries: [], library: { libraryID: 0, name: "", link: "" } } );
-      a7.events.publish( "menu.update", { user: a7.model.get( "appUser" ) } );
+      a7.events.publish( "menu.update", { user: a7.model.get( "author" ) } );
       //ui.setLayout( 'home' );
       a7.router.open( "/" );
     });

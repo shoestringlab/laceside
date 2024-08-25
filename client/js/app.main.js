@@ -42,8 +42,8 @@ export var main = (function() {
 
       let user = a7.model.get("user");
 
-      // set the default appUser
-      a7.model.set( "appUser", user );
+      // set the default author
+      a7.model.set( "author", user );
       // render the initial views of the application
       // this is a good place to initialize views that should not be re-initialized
       Message( { id: 'message', selector: a7.ui.selectors['message'] } );

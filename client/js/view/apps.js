@@ -28,14 +28,14 @@ export var Apps = function Apps(props) {
   };
 
   apps.template = function(){
-    let appUser =  a7.model.get( "appUser" );
+    let author =  a7.model.get( "author" );
     let user = a7.model.get( "user" );
 
     let disabled = ( apps.state.app.name.length > 0 ? '' : 'disabled="disabled"' );
     let offset = parseInt( apps.state.offset, 10 );
     let templ = ``;
 
-    if( user.userID === appUser.userID ){
+    if( user.userID === author.userID ){
 		    templ += `<form>
                   <input type="text" name="name" placeholder="Application Name" value="${apps.state.app.name}" data-oninput="checkSavable"/><br/>
                   <button name="save" type="button" data-onclick="saveApp" ${disabled}>Save</button>
@@ -45,7 +45,7 @@ export var Apps = function Apps(props) {
 
     for( var ix = offset; ix < Math.min( apps.state.apps.length, apps.state.offset + 5 ); ix++ ){
       let app = apps.state.apps[ix];
-      if( user.userID === appUser.userID ){
+      if( user.userID === author.userID ){
         templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a> <a name="trash" data-id="${app.appID}" data-onclick="deleteApp"><svg class="feather">
                   <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
                 </svg></a></div>`;
@@ -100,7 +100,7 @@ export var Apps = function Apps(props) {
     },
     loadApp: function( event ){
       let state = apps.getState();
-      let user = a7.model.get("appUser");
+      let user = a7.model.get("author");
       let target = event.currentTarget;
       if( apps.isDirty() ){
         let dlg = utils.showDialog( " &nbsp; ", "Your changes will be discarded, proceed?",

@@ -37,7 +37,7 @@ export var userEvents = function init(){
         return response.json();
       })
       .then( function( user ){
-        a7.model.set( "appUser", user );
+        a7.model.set( "author", user );
         //reset the editor so no apps are cached in the background
         a7.events.publish( "apps.new", {} );
         a7.events.publish( "main.run", { view: 'userhome'} );

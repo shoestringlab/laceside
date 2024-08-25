@@ -16,7 +16,7 @@ export var events = function init(){
         return response.json();
       })
       .then( function( user ){
-        a7.model.set( "appUser", user );
+        a7.model.set( "author", user );
         obj.user = user;
         if( a7.model.get( "apps" ) === undefined ){
           a7.events.publish( "main.run", obj );

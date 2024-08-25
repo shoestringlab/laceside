@@ -8,7 +8,7 @@ export var mainEvents = function init(){
 
   a7.events.subscribe( "main.home", function( obj ){
     let user = a7.model.get( "user" );
-    a7.model.set( "appUser", user );
+    a7.model.set( "author", user );
     let view = ( user.userID ? 'userhome' : 'home' );
     //reset the editor so no apps are cached in the background
     a7.events.publish( "apps.new", {} );
@@ -18,21 +18,21 @@ export var mainEvents = function init(){
 
   a7.events.subscribe( "main.run", function( obj ){
 
-    UserHome( { id: 'userHome', selector: "#userHome", user: a7.model.get( "appUser" ), apps: a7.model.get("apps") || [] } );
+    UserHome( { id: 'userHome', selector: "#userHome", user: a7.model.get( "author" ), apps: a7.model.get("apps") || [] } );
     a7.events.publish( "main.refreshHeader", {} );
     //Header( { id: 'header', user: a7.model.get( "user" ), selector: "#headerRight" } );
-    // default appUser to the current user, which may be the anon user
-    //obj.appUser = obj.appUser || user;
+    // default author to the current user, which may be the anon user
+    //obj.author = obj.author || user;
 
-    if( a7.model.get( "appUser" ).userID != '0'  ){
+    if( a7.model.get( "author" ).userID != '0'  ){
       obj.offset = 0;
-      obj.user = a7.model.get( "appUser" );
+      obj.user = a7.model.get( "author" );
 
       // initial actions after login
       a7.events.publish( "user.getUserLibraries", obj );
       a7.events.publish( "user.getUserApps",  obj );
     }
-    a7.events.publish( "menu.update", { user: a7.model.get( "appUser" ) } );
+    a7.events.publish( "menu.update", { user: a7.model.get( "author" ) } );
     ui.setLayout( obj.view );
   });
 

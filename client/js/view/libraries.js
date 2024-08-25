@@ -25,7 +25,7 @@ export var Libraries = function Libraries(props) {
   },
 
   libraries.template = function(){
-    let appUser =  a7.model.get( "appUser" );
+    let author =  a7.model.get( "author" );
     let user = a7.model.get( "user" );
 
     let disabled = ( libraries.state.library.name.length > 0 ? '' : 'disabled="disabled"' );
@@ -33,7 +33,7 @@ export var Libraries = function Libraries(props) {
 
     let templ = `<form>`;
 
-    if( user.userID === appUser.userID ){
+    if( user.userID === author.userID ){
 		  templ += `<input type="text" name="name" placeholder="Name - e.g. jQuery 3.4.0" value="${libraries.state.library.name}" data-oninput="checkSavable"/><br/>
                 <input type="text" name="link" placeholder="URI - e.g. https://code.jquery.com/jquery-3.4.0.min.js" value="${libraries.state.library.link}"/><br/>
                 <button name="save" type="button" data-onclick="saveLibrary" ${disabled}>Save</button>
@@ -44,7 +44,7 @@ export var Libraries = function Libraries(props) {
       let library = libraries.state.libraries[ix];
       templ += `<div class="row"><div class="inline">`;
 
-      if( user.userID === appUser.userID ){
+      if( user.userID === author.userID ){
         templ+=`<input type="checkbox" name="libraryID" value="${library.libraryID}" data-link="${library.link}" data-onClick="setLibrary"/><a name="lib" data-onClick="editLibrary" data-id="${library.libraryID}">${library.name}</a>
                 </div>
                 <a name="trash" data-id="${library.libraryID}" data-onclick="deleteLibrary">
@@ -67,7 +67,7 @@ export var Libraries = function Libraries(props) {
 
   libraries.on( "rendered", function(){
     let state = libraries.getState();
-    let appUser =  a7.model.get( "appUser" );
+    let author =  a7.model.get( "author" );
     let user = a7.model.get( "user" );
     let activeLibs = state.activeLibraries;
     //if( activeLibs ){
@@ -76,7 +76,7 @@ export var Libraries = function Libraries(props) {
       if( activeLibs !== undefined && activeLibs.filter( library => library.libraryID === lib.libraryID ).length ){
         cbSelector.checked = true;
       }else{
-        if( user.userID !== appUser.userID ){
+        if( user.userID !== author.userID ){
           cbSelector.parentElement.parentElement.style="display:none";
         }
       }

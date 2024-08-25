@@ -43,14 +43,14 @@ export var UserHome = function UserHome(props) {
   });
 
   userHome.template = function(){
-    let appUser =  a7.model.get( "appUser" );
+    let author =  a7.model.get( "author" );
     let user = a7.model.get( "user" );
     let state = userHome.getState();
 		let templ = `<div id="userPanel" class="panel">
 
                   <h3>Applications</h3>`;
 
-    if( user.userID === appUser.userID ){
+    if( user.userID === author.userID ){
       console.log('foo');
       if( state.showNewAppForm ){
         templ +=`<div class="block row link"><input name="name" placeholder="Application Name">

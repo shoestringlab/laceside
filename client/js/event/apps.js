@@ -89,7 +89,7 @@ export var appEvents = function init(){
     a7.ui.getView('buttonbar').setState( { esModule: app.esModule } );
     a7.ui.getView('libraries').setState( { libraries: a7.model.get( "libraries" ), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs, offset: libsState.offset } );
     a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: app, offset: appsState.offset } );
-    a7.events.publish( "menu.update", { user: a7.model.get("appUser"), app: app } );
+    a7.events.publish( "menu.update", { user: a7.model.get("author"), app: app } );
     a7.events.publish( "sandbox.execute", {} );
   });
 
