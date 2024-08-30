@@ -19,7 +19,7 @@ export var SignupForm = function signupform(props) {
 
     signupform.components.modal = constructor( modal,
       [ document.querySelector("#signupModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
+        {autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle'}], true ) ;
 
     signupform.template = function(){
 

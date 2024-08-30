@@ -71,12 +71,12 @@
 			{ featherPath: '/lib/feather-icons', minimized: true }], true);
 
 		sb.on("minimized", function (obj) {
-			document.querySelector("#ide").classList.add("expanded");
+			//document.querySelector("#ide").classList.add("expanded");
 			sb.wrapper.querySelector("svg[name='chevron']").classList.remove("feather_white");
 		});
 
 		sb.on("maximized", function (obj) {
-			document.querySelector("#ide").classList.remove("expanded");
+			//document.querySelector("#ide").classList.remove("expanded");
 			sb.wrapper.querySelector("svg[name='chevron']").classList.add("feather_white");
 		});
 

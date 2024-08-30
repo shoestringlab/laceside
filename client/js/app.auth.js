@@ -1,43 +1,48 @@
-import {a7} from '/lib/altseven/dist/a7.js';
-import {ui} from '/js/app.ui.js';
-import {main} from '/js/app.main.js';
+import { a7 } from '/lib/altseven/dist/a7.js';
+import { ui } from '/js/app.ui.js';
+import { main } from '/js/app.main.js';
 
-export var auth = (function() {
-  "use strict";
+export const auth = (function () {
+	"use strict";
 
-  var _authenticate = function() {
-    var promise = new Promise(function(resolve, reject) {
-      // check whether user is authenticated
-      a7.security.isAuthenticated(resolve, reject);
-    });
+	// this function performs a refresh against the server and returns true or false based on whether the current user is logged in.
+	// the auth token is stored in sessionStorage, so even if the browser is refreshed, the token will be available
+	var _isAuthenticated = function ( handler ) {
+		let promise = new Promise(function (resolve, reject) {
+			// check whether user is authenticated
+			a7.security.isAuthenticated(resolve, reject);
+		});
 
-    promise.then(function(secure) {
-      //reset apps and libraries
-      a7.model.set( "apps", [] );
-      a7.model.set( "libraries", [] );
+		promise.then(function ( authenticated ) {
+			// run the handler function 
+			handler( authenticated );
+		});
+	},
+	
+	_isCurrentUserAnon = function(){
+		// check whether there is a valid logged in user in the model
+		let user = a7.model.get("user");
+		if( user === undefined || user === null || user.userID === undefined || user.userID === null ){
+			return true;
+		}
+		if( user.userID.length > 0 ) return false;
+	};
 
-      a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
-      a7.events.publish( "profile.setProfile", { user: a7.model.get( "user" ) }  );
-        //a7.ui.views['userHome'].setState( { user: a7.model.get( "user" ), apps: ( a7.model.get( "apps" ) || [] ) } );
-      a7.ui.views['apps'].setState( { apps: [], app:{ appID: 0, name: "" } } );
-      a7.ui.views['libraries'].setState( { libraries: [], library: { libraryID: 0, name: "", link: "" } } );
-      a7.events.publish( "menu.update", { user: a7.model.get( "author" ) } );
-      //ui.setLayout( 'home' );
-      a7.router.open( "/" );
-    });
-  };
 
-  var _logout;
 
-  return {
-    authenticate: _authenticate,
-    loginHandler: function(json) {
-      let user = a7.model.get( "user" );
-      if( json.success ){
+	var _logout;
 
-        a7.ui.views['header'].setState( { user: user } );
-      }
-      main.run( user );
-    }
-  };
+	return {
+		isAuthenticated: _isAuthenticated,
+		isCurrentUserAnon: _isCurrentUserAnon
+		/* loginHandler: function (json) {
+
+			//let user = a7.model.get("user");
+			if (json.success) {
+				
+				a7.ui.views['header'].setState({ user: user });
+			}
+			main.run(user);
+		} */
+	};
 })();

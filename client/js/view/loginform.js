@@ -12,7 +12,7 @@ export var LoginForm = function LoginForm(props) {
 
     loginform.components.modal = constructor( modal,
       [ document.querySelector("#authModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
+        {autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle'}], true ) ;
 
     loginform.template = function(){
       let state = loginform.getState();

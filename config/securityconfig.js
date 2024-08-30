@@ -42,5 +42,5 @@ export var securityConfig = {
     secured: secured,
     open: open
   },
-  ttl: 30 // in minutes
+  ttl: 30 * 60 * 1000 // in milliseconds
 }

@@ -12,7 +12,7 @@ export var ForgotPasswordForm = function ForgotPasswordForm(props) {
 
     forgotPasswordForm.components.modal = constructor( modal,
       [ document.querySelector("#forgotPasswordModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
+        {autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle'}], true ) ;
 
     forgotPasswordForm.template = function(){
       let state = forgotPasswordForm.getState();

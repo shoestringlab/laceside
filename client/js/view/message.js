@@ -10,7 +10,7 @@ export var Message = function Message(props) {
 
     message.components.modal = constructor( modal,
       [ document.querySelector("#messageModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}] ) ;
+        {autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle'}] ) ;
 
     message.template = function(){
       let templ = `<h3>${message.getState().message}</h3>

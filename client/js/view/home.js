@@ -5,7 +5,6 @@ export var Home = function Home(props) {
   var home = a7.components.Constructor(a7.components.View, [props], true);
 
   home.state = {
-    user: props.user,
     apps: props.apps,
     offset: 0
   };

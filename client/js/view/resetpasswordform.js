@@ -14,7 +14,7 @@ export var ResetPasswordForm = function ResetPasswordForm(props) {
 
     resetPasswordForm.components.modal = constructor( modal,
       [ document.querySelector("#resetPasswordModal"),
-        {autoOpen: false, featherPath: '/lib/feather-icons'}], true ) ;
+        {autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle'}], true ) ;
 
     resetPasswordForm.template = function(){
       let state = resetPasswordForm.getState();
