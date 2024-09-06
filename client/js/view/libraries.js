@@ -150,14 +150,14 @@ export var Libraries = function Libraries(props) {
 			let activeLibs = a7.model.get("activeLibraries") || [];
 			if (event.currentTarget.checked) {
 				let lib = libraries.state.libraries.find(function (library) {
-					if (library.libraryID === parseInt(event.currentTarget.value, 10)) {
+					if (library.libraryID === event.currentTarget.value) {
 						return library;
 					}
 				});
 				activeLibs.push(lib);
 			} else {
 				for (var ix = 0; ix < activeLibs.length; ix++) {
-					if (activeLibs[ix].libraryID === parseInt(event.currentTarget.value, 10)) {
+					if (activeLibs[ix].libraryID === event.currentTarget.value) {
 						activeLibs.splice(ix, 1);
 					}
 				}

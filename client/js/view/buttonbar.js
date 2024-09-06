@@ -23,7 +23,7 @@ export var ButtonBar = function ButtonBar(props) {
 
   buttonBar.template = function(){
     var str = `<div class="buttonRow">
-      <button type="button" data-onclick="executeCode">Run</button> <input type="checkbox" name="esModule" data-onclick="setEsModule"> ES Module
+      <button type="button" id="execButton" data-onclick="executeCode">Run</button> <input type="checkbox" name="esModule" data-onclick="setEsModule"> ES Module
     </div>`;
 		return str;
 	};

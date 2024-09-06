@@ -335,7 +335,7 @@ nav ul li {
 li.menuItem:before {
 	position: absolute;
 	top: 1em;
-	margin: 8px 0 0 -12px;
+	margin: 0 0 0 -12px;
 	vertical-align: middle;
 	display: inline-block;
 	width: .5em;
@@ -601,6 +601,7 @@ div.titlebar {
 
 .gadgetui-modal {
 	z-index: 6;
+	height:92% !important;
 }
 
 div.form {
@@ -748,6 +749,11 @@ div.label {
 
 .gadgetui-sidebar {
 	position: absolute !important;
-	z-index: 1100;
+	z-index: 2;
 	border: 0 !important;
+	width:30%;
+}
+
+#execButton{
+	cursor: pointer;
 }

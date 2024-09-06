@@ -1,3 +1,11 @@
+1.1.0
+==================
+
+- CodeMirror 6 implementation
+- Made the sidebar collapsed by default, absolute positioned, and on a different z-index than the editor and sandbox divs
+- General cleanup of code
+- bug fix on attaching libraries to apps failing 
+
 1.0.5
 ==================
 - Code cleanup
@@ -26,6 +34,8 @@
 
 1.0.0-Beta
 ===================
+
+Whew! Big release, as this is the initial beta candidate for 1.0.0 release. Missing functions like changing your password, resetting a lost password, and a cleanup of route-based security and client-side routing are the most important changes for this release. While the application should be considered feature complete, if you wish to run it in production as a public site, you may want to put the application behind NGINX, Apache HTTPD or another web server. The static files could be served by the web server rather than NodeJS, which will require some minimal re-configuration.
 
 - Forgot password
 - Reset password
