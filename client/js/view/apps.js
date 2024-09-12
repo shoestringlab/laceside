@@ -46,11 +46,11 @@ export var Apps = function Apps(props) {
     for( var ix = offset; ix < Math.min( apps.state.apps.length, apps.state.offset + 5 ); ix++ ){
       let app = apps.state.apps[ix];
       if( user.userID === author.userID ){
-        templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a> <a name="trash" data-id="${app.appID}" data-onclick="deleteApp"><svg class="feather">
+        templ += `<div class="flexrow"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a> <a name="trash" data-id="${app.appID}" data-onclick="deleteApp"><svg class="feather">
                   <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
                 </svg></a></div>`;
       }else{
-        templ += `<div class="row"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a></div>`;
+        templ += `<div class="flexrow"><a data-id="${app.appID}" data-onClick="loadApp"/>${app.name}</a></div>`;
       }
     }
     templ+=`<div class="paging"></div>`;

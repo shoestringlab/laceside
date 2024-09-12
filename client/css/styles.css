@@ -15,6 +15,13 @@ body {
 	overflow: clip;
 }
 
+.homeLayout{
+	display:block;
+	/* display: flex;
+	align-items:stretch;
+	justify-content: space-around; */
+}
+
 .header {
 	grid-area: header;
 	display: flex;
@@ -201,13 +208,24 @@ div.block {
 div.col {
 	display: inline-block;
 	vertical-align: top;
+	padding:.5em;
 }
 
-div.row {
+div.row{
+	display:block;
+	width:100%;
+}
+
+div.flexrow {
 	vertical-align: top;
 	display: flex;
 	justify-content: space-between;
 	padding: .25em;
+}
+
+div.flexrowcentered{
+	display: flex;
+	justify-content: center;
 }
 
 div.row a {
@@ -218,14 +236,15 @@ div.row a:hover {
 	color: #aaf;
 }
 
+.w70{
+	width:70% !important;
+}
+
 div.inline {
 	display: inline;
 }
 
-div.col {
-	display: inline-block;
-	padding: .5em;
-}
+
 
 div.headerCol {
 	width: auto;
@@ -239,6 +258,10 @@ div.w20 {
 	width: 20em;
 }
 
+div.w15 {
+	width: 10em;
+}
+
 div.w10 {
 	width: 10em;
 }
@@ -246,6 +269,8 @@ div.w10 {
 div.w5 {
 	width: 5em;
 }
+
+
 
 div.md {
 	/* width: 10em; */
@@ -260,11 +285,12 @@ div.pane {
 div.completedTask div {
 	text-decoration: line-through;
 }
-
+/* 
 div.centered {
 	text-align: center;
-}
 
+}
+ */
 .right-align {
 	text-align: right;
 }
@@ -278,7 +304,8 @@ div.centered {
 input[type='text'],
 input[type='password'],
 input[type='email'] {
-	width: 100%;
+	width: 95%;
+	height: 2em;
 }
 
 input[type='text'],
@@ -292,6 +319,7 @@ input[type='date'] {
 
 button {
 	height: 2em;
+	cursor:pointer;
 }
 
 textarea[name='codeWindow'] {
@@ -523,6 +551,8 @@ button:disabled {
 
 .centered {
 	text-align: center;
+	display:flex;
+	justify-content: center;
 }
 
 span.title {
@@ -723,8 +753,10 @@ div.label {
 
 #passwordMatched,
 #emailValidator,
-#newPasswordMatched {
+#newPasswordMatched,
+#usernameValidator {
 	margin-top: .5em;
+	display:inline-flex;
 }
 
 #loginMessages span {
@@ -756,4 +788,54 @@ div.label {
 
 #execButton{
 	cursor: pointer;
+}
+
+img.screenshot_med{
+	width:500px;
+	border-radius: .5em;
+
+	border: 1px solid silver;
+}
+
+img.screenshot_lg{
+	width:800px;
+	border-radius: .5em;
+
+	border: 1px solid silver;
+}
+
+/* 
+.gadgetui-lightbox{
+	width:70%
+}
+
+
+.gadgetui-lightbox-image-container{
+	width:auto !important;
+}
+
+.gadgetui-lightbox-previousControl, .gadgetui-lightbox-nextControl{
+	position: relative !important;
+	display: block;
+ }
+
+
+.gadgetui-lightbox-nextControl{
+
+}
+
+.gadgetui-lightbox-previousControl{
+
+} */
+
+#signupMessages{
+	color:#99f;
+}
+
+#userMenu{
+
+}
+
+#userMenu .gadget-ui-menu-icon {
+	width: 5em !important;
 }

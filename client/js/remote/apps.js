@@ -1,5 +1,5 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
-import { cuid } from '/lib/cuid/index.mjs';
+import { cuid } from '/libs/cuid/index.mjs';
 
 export { create, update, read, deleteById };
 

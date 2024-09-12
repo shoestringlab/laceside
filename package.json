@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "laceside",
-  "version": "1.1.0",
+  "version": "2.0.0-alpha",
   "description": "In-browser JavaScript IDE and execution environment",
   "main": "index.js",
   "scripts": {
@@ -29,23 +29,25 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.32.0",
     "@paralleldrive/cuid2": "^2.2.2",
-    "altseven": "^6.0.3",
+    "altseven": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "codemirror": "^6.0.1",
     "concat-files": "^0.1.1",
+    "crypto": "^1.0.1",
     "cuid": "^2.1.8",
     "express": "^4.18.2",
     "feather-icons": "^4.21.0",
-    "gadget-ui": "^9.0.10",
+    "gadget-ui": "^9.4.0",
     "js-base64": "^2.5.1",
-    "mariadb": "^2.0.3",
+    "mariadb": "^3.3.1",
     "modlazy": "^1.0.0",
-    "nodemailer": "^6.7.3",
+    "nodemailer": "^6.9.15",
     "password-strength-score": "^1.1.2",
     "sha.js": "^2.4.11",
     "sha3": "^2.1.4",
     "style-mod": "^4.1.2",
     "url-router": "^11.0.2",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.48.0",
     "velocity-animate": "^1.5.2"
   }
 }

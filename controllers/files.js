@@ -33,7 +33,7 @@ function getArgs( request ){
 		let args = getArgs( request );
 		let tempFile = createId(); 
 		// post image or profile pic?
-		let path = ( args.tags.indexOf( 'postImage' ) >= 0 ? '/assets/img/postimages/' : '/assets/img/profilepics/' );
+		let path = ( args.tags.indexOf( 'postImage' ) >= 0 ? '/img/postimages/' : '/img/profilepics/' );
 	
 		writeFile( request, tempFile );
 	

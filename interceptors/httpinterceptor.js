@@ -13,13 +13,13 @@ export var interceptor = (function () {
 			
 			// is it an open route?
 			let openRoute = securityConfig.routes.open.find(function (route) {
-				console.log( "route: " + route );
+				//console.log( "route: " + route );
 				return request.url.match(route);
 			});
 
 			// is it a secured route?
 			let securedRoute = securityConfig.routes.secured.find(function (route) {
-				console.log( "route: " + route );
+				//console.log( "route: " + route );
 				return request.url.match(route);
 			});
 

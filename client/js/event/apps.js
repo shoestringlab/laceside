@@ -23,7 +23,7 @@ export var appEvents = function init() {
 			})
 			.then(function (json) {
 				var app = json;
-				app.esModule = app.esModule.data[0];
+				//app.esModule = app.esModule.data[0];
 				var apps = a7.model.get("apps") || [];
 				apps.push(app);
 				a7.model.set("apps", apps);
@@ -49,7 +49,7 @@ export var appEvents = function init() {
 			})
 			.then(function (json) {
 				var app = json;
-				app.esModule = app.esModule.data[0];
+				//app.esModule = app.esModule.data[0];
 				var apps = a7.model.get("apps");
 				for (var ix = 0; ix < apps.length; ix++) {
 					if (apps[ix].appID === app.appID) {
@@ -110,13 +110,17 @@ export var appEvents = function init() {
 						}
 					});
 				}
-
+				let currentApp = a7.ui.getView('apps').getState().app;
 				a7.model.set("apps", apps);
 				// update top bar breadcrumb
 				a7.events.publish("menu.update", { user: a7.model.get("user") });
 				a7.events.publish("apps.new", {});
 				//a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
 				utils.showNotice("The application was deleted.");
+				// go to the user homepage if the deleted app was the open app
+				if( currentApp.appID === obj.appID ){
+					a7.router.open( '/u/' +  a7.model.get("user").username );
+				}
 			});
 	});
 

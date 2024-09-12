@@ -70,7 +70,12 @@ export var application = function init(){
       router: {
         options: { useEvents: true },
         routes: routes
-      }
+      },
+	  security: {
+		options:{
+			userArgs: [{ userID: "" }]
+		}
+	  }
 		};
 	var p = new Promise(function(resolve,
 		reject) {

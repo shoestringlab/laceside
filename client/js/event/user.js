@@ -1,5 +1,6 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
+import {ui} from '/js/app.ui.js';
 
 export var userEvents = function init() {
 
@@ -80,11 +81,11 @@ export var userEvents = function init() {
 				return response.json();
 			})
 			.then(function (json) {
-				if (json.length) {
+				/* if (json.length) {
 					json.forEach(function (app, idx) {
 						app.esModule = app.esModule.data[0];
 					});
-				}
+				} */
 				a7.model.set("apps", json);
 				a7.ui.getView('apps').setState({ apps: a7.model.get("apps"), app: { appID: 0, name: "" }, offset: 0 });
 				a7.ui.getView('userHome').setState({ user: obj.user, apps: a7.model.get("apps"), offset: 0 });
@@ -135,6 +136,7 @@ export var userEvents = function init() {
 				return response.json();
 			})
 			.then(function (passwordReset) {
+				ui.setLayout("home");
 				if (new Date(passwordReset.expires) < new Date()) {
 					let msg = a7.ui.getView("message");
 					msg.setState({ message: "That link has expired. Please request another password reset link." });

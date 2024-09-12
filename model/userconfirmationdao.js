@@ -1,5 +1,5 @@
 import {dbConfig} from "../config/dbconfig.js";
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const pool = dbConfig.pool;
 

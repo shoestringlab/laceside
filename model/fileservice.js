@@ -77,6 +77,7 @@ export var fileservice = (function () {
 										console.log(error);
 									});
 								result.filename = newFilename;
+								console.dir( result );
 								resolve(result);
 							});
 						})

@@ -16,7 +16,7 @@ export var users = (function () {
 			app.get("/api/user/passwordreset/:ID", usercontroller.getPasswordReset);
 
 			// update the password
-			app.put("/api/user/passwordreset/:ID", jsonParser, usercontroller.changePassword);
+			app.put("/api/user/passwordreset/:ID", jsonParser, usercontroller.resetPassword);
 
 			// create a new user
 			app.post("/api/user/:ID", jsonParser, usercontroller.create);

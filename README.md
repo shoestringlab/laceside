@@ -1,14 +1,17 @@
 # Laces IDE
 in-browser JavaScript IDE
 
-v 1.1.0
+
+
+
+v 2.0.0-alpha
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
 
 ***About this version***
 
-Version 1.1.0 represents an overhaul of LacesIDE to include CodeMirror 6 for the editing pane. In this rollout, there was also a general cleanup and re-factoring/simplification of the layout of the app. The sidebar containing the apps, libraries, and console has been changed to default to collapsed and moved to absolute position on a higher z-index than the editor and sandbox divs so those divs always take the same amount of horizontal space on the page.
+v.2.0.0-beta is an overhaul of the application with improvements across the application space. See release notes for details.
 
 
 Requirements:

@@ -1,3 +1,14 @@
+2.0.0-alpha
+==================
+- Replacement of bcrypt with built-in crypto package for passwords
+	 - Please use reset password function to reset user passwords
+- Bug fixes
+- Continued development of userHome
+- Clean up of homepage with screenshots of the application
+- Password reset has been fixed
+- New user creation in process
+
+
 1.1.0
 ==================
 

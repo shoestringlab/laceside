@@ -42,7 +42,7 @@ export var Libraries = function Libraries(props) {
 
 			for (var ix = offset; ix < Math.min(libraries.state.libraries.length, libraries.state.offset + 5); ix++) {
 				let library = libraries.state.libraries[ix];
-				templ += `<div class="row"><div class="inline">`;
+				templ += `<div class="flexrow"><div class="inline">`;
 
 				if (user.userID === author.userID) {
 					templ += `<input type="checkbox" name="libraryID" value="${library.libraryID}" data-link="${library.link}" data-onClick="setLibrary"/><a name="lib" data-onClick="editLibrary" data-id="${library.libraryID}">${library.name}</a>
