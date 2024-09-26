@@ -41,8 +41,8 @@ export var authEvents = function () {
 
 	a7.events.subscribe("auth.logoutsucess", function (obj) {
 		auth.isAuthenticated(function (authenticated) {
-			a7.model.set("apps", []);
-			a7.model.set("libraries", []);
+			a7.model.set("appList", []);
+			a7.model.set("libraryList", []);
 
 			a7.ui.views['header'].setState({ user: a7.model.get("user") });
 			a7.events.publish("profile.setProfile", { user: a7.model.get("user") });

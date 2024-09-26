@@ -12,6 +12,10 @@ export var Console = function Console(props){
       utils.takeOverConsole();
       console.listening = true;
     }
+	a7.log.info(console.element);
+	if( console.element.lastChild !== null ){
+		console.element.lastChild.scrollIntoView();
+	}
   });
   console.template = function(){
     return `${console.state.consoleText}`;
@@ -19,3 +23,4 @@ export var Console = function Console(props){
 
   return console;
 };
+ 

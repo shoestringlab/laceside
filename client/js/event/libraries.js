@@ -13,11 +13,11 @@ export var libraryEvents = function init() {
 			})
 			.then(function (json) {
 				var library = json;
-				var libraries = a7.model.get("libraries");
+				var libraries = a7.model.get("libraryList");
 				libraries.push(library);
-				a7.model.set("libraries", libraries);
+				a7.model.set("libraryList", libraries);
 
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: library, offset: 0 });
+				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: library, offset: 0, activeTab:"userLibs" });
 
 				utils.showNotice("New library saved.");
 
@@ -33,15 +33,15 @@ export var libraryEvents = function init() {
 			.then(function (json) {
 				var library = json;
 
-				var libraries = a7.model.get("libraries");
+				var libraries = a7.model.get("libraryList");
 				for (var ix = 0; ix < libraries.length; ix++) {
 					if (libraries[ix].libraryID === library.libraryID) {
 						libraries[ix] = library;
 						break;
 					}
 				}
-				a7.model.set("libraries", libraries);
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: library, offset: 0 });
+				a7.model.set("libraryList", libraries);
+				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: library, offset: 0 });
 				utils.showNotice("Library saved.");
 			});
 	});
@@ -54,7 +54,7 @@ export var libraryEvents = function init() {
 			})
 			.then(function (json) {
 				if (json) {
-					var libraries = a7.model.get("libraries");
+					var libraries = a7.model.get("libraryList");
 
 					var deleted = libraries.find(function (library, idx) {
 						if (library.libraryID === parseInt(obj.libraryID, 10)) {
@@ -64,8 +64,8 @@ export var libraryEvents = function init() {
 					});
 				}
 
-				a7.model.set("libraries", libraries);
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: { libraryID: 0, name: "", link: "" }, offset: 0 });
+				a7.model.set("libraryList", libraries);
+				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, offset: 0 });
 
 				utils.showNotice("Library deleted.");
 			});
@@ -73,7 +73,7 @@ export var libraryEvents = function init() {
 
 	a7.events.subscribe("library.new", function (obj) {
 		let libsState = a7.ui.getView('libraries').getState();
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: libsState.offset });
+		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: libsState.offset });
 	});
 
 };

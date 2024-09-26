@@ -50,22 +50,22 @@
 		import { application } from '/js/app.js';
 		import { collapsiblepane, constructor, sidebar } from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
-		constructor(collapsiblepane, [document.querySelector("#apps"),
+	/* 	constructor(collapsiblepane, [document.querySelector("#apps"),
 		{
 			title: "Apps"
-		}]);
+		}]); */
 
-		constructor(collapsiblepane, [document.querySelector("#libraries"),
+		/* constructor(collapsiblepane, [document.querySelector("#libraries"),
 		{
 			title: "Libraries"
-		}]);
+		}]); */
 
-		constructor(collapsiblepane, [document.querySelector("div.console"),
+		/* constructor(collapsiblepane, [document.querySelector("div.console"),
 		{
 			title: "Console",
 			class: "consolePane"
-		}]);
-
+		}]); */
+/* 
 		let sb = constructor(sidebar,
 			[document.querySelector("#sidebar"),
 			{ featherPath: '/lib/feather-icons', minimized: true }], true);
@@ -81,44 +81,41 @@
 		});
 
 		sb.wrapper.querySelector("svg[name='chevron']").classList.add("feather_white");
-
+ */
 		var app = application();
 
 	</script>
 </head>
 
 <body>
-	<div id="sidebar" class="box">
+<!-- 	<div id="sidebar" class="box">
 		<div id="apps" width="100%">
-		</div>
+		</div> 
 		<br>
-		<div id="libraries" width="100%">
-		</div>
+		
 		<br>
-		<div name="console" id="console" class="console" width="100%">
-		</div>
-	</div>
 
-	<div id="layout" class="layout">
-		<div class="header">
-			<div id="headerLeft" class="headerCol"></div>
-			<div id="headerMiddle" class="headerCol">&nbsp;</div>
-			<div id="headerRight" class="headerCol"></div>
-		</div>
+	</div> -->
+
+	<div class="header">
+		<div id="headerLeft" class="headerCol"></div>
+		<div id="headerMiddle" class="headerCol"></div>
+		<div id="headerRight" class="headerCol"></div>
+	</div>
+	<div id="home" class="homelayout">
+
+	</div>
+	<div id="userHome">
+
+	</div>
+	<div id="app">
 		<div id="editors">
 		</div>
 		<div id="htmlFrame" class="htmlFrame">
 			<iframe id="iframe">
 			</iframe>
-		</div>
-	</div>
-
-	<div id="base" class="hidden">
-		<div id="home" class="homelayout">
-
-		</div>
-		<div id="userHome">
-
+			<div name="console" id="console" class="console" width="100%">
+			</div>
 		</div>
 	</div>
 
@@ -139,6 +136,13 @@
 	</div>
 	<div id="resetPasswordModal">
 		<div id="resetPassword"></div>
+	</div>
+	<div id="appsModal">
+		<div id="apps"></div>
+	</div>
+	<div id="librariesModal">
+		<div id="libraries">
+		</div>
 	</div>
 	<div id="dialog"></div>
 </body>

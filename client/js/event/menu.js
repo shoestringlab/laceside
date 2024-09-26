@@ -10,7 +10,7 @@ export var menuEvents = function init() {
 			menuItems.push({ label: obj.user.username, path: '/u/' + obj.user.username });
 		}
 		if (obj.app) {
-			menuItems.push({ label: obj.app.name, path: '/u/' + obj.user.username + '/' + obj.app.appID });
+			menuItems.push({ label: obj.app.name, path: '/u/' + obj.user.username + '/app/' + obj.app.appID });
 		}
 		let state = a7.ui.getView('menu').getState();
 		state.menuItems = menuItems;

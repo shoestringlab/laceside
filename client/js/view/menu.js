@@ -12,7 +12,8 @@ export var Menu = function Menu(props) {
 	};
 
   menu.template = function(){
-    let str = `<nav><ul>`
+
+    let str = `<nav><ul>`;
     let idx = 1;
     menu.state.menuItems.forEach( function( item ){
       if( idx === 1 ){

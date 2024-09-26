@@ -65,10 +65,15 @@ export var userEvents = function init() {
 				return response.json();
 			})
 			.then(function (json) {
-				a7.model.set("libraries", json);
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: { libraryID: 0, name: "", link: "" }, offset: 0 });
+				a7.model.set("libraryList", json);
+				let state = a7.ui.getView('userHome').getState();
+				state.user = obj.user;
+				state.offset = 0;
+				state.libOffset = 0;
+				a7.ui.getView('userHome').setState( state );
+				//a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, offset: 0 });
 				// if appID was passed, this event came from ide.show and we need to load the app
-				if (obj.appID && a7.model.get("apps") !== undefined) {
+				if (obj.appID && a7.model.get("appList") !== undefined) {
 					a7.events.publish("apps.load", obj);
 				}
 			});
@@ -86,12 +91,17 @@ export var userEvents = function init() {
 						app.esModule = app.esModule.data[0];
 					});
 				} */
-				a7.model.set("apps", json);
-				a7.ui.getView('apps').setState({ apps: a7.model.get("apps"), app: { appID: 0, name: "" }, offset: 0 });
-				a7.ui.getView('userHome').setState({ user: obj.user, apps: a7.model.get("apps"), offset: 0 });
+				a7.model.set("appList", json);
+				a7.model.set("app", { appID: 0, name: "" });
+				
+				let state = a7.ui.getView('userHome').getState();
+				state.user = obj.user;
+				state.offset = 0;
+				state.libOffset = 0;
+				a7.ui.getView('userHome').setState( state );
 
 				// if appID was passed, this event came from ide.show and we need to load the app
-				if (obj.appID && a7.model.get("libraries") !== undefined) {
+				if (obj.appID && a7.model.get("libraryList") !== undefined) {
 					a7.events.publish("apps.load", obj);
 				}
 			});
@@ -172,26 +182,5 @@ export var userEvents = function init() {
 				}
 			});
 	});
-
-
-	/*   // get apps and libraries together
-	  a7.events.subscribe( "user.getUserData", function( obj ){
-		a7.remote.invoke( "user.getUserData", obj )
-		  .then( function( response ) {
-			// get json response and pass to handler to resolve
-			return response.json();
-		  })
-		  .then( function( json ){
-			if( json.apps.length ){
-			  json.apps.forEach( function( app, idx ){
-				app.esModule = app.esModule.data[0];
-			  });
-			}
-			a7.model.set( "apps", json.apps );
-			a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: "" }, offset: 0 } );
-			a7.ui.getView('userHome').setState( { user: obj.user, apps: a7.model.get( "apps" ), offset: 0 } );
-		  });
-	  });
-	 */
 
 };

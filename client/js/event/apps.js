@@ -1,5 +1,6 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
+import { ui } from '/js/app.ui.js';
 
 function setEditorValue(cm, text) {
 	cm.dispatch({
@@ -9,8 +10,18 @@ function setEditorValue(cm, text) {
 
 export var appEvents = function init() {
 
+	a7.events.subscribe("apps.show", function (obj) {
+		if (obj.userID && obj.userID == a7.model.get("user").userID) {
+			//let state = a7.ui.getView('apps').getState();
+			//state.visible = true;
+			//a7.ui.getView('apps').setState(state);
+			a7.ui.getView('apps').components.modal.open();
+		}
+	});
+
 	a7.events.subscribe("apps.create", function (obj) {
 		let args = Object.assign({}, obj);
+		args.name = obj.name || "New App";
 		args.jsCode = a7.model.get("jsCode") || "";
 		args.htmlCode = a7.model.get("htmlCode") || "";
 		args.cssCode = a7.model.get("cssCode") || "";
@@ -24,19 +35,21 @@ export var appEvents = function init() {
 			.then(function (json) {
 				var app = json;
 				//app.esModule = app.esModule.data[0];
-				var apps = a7.model.get("apps") || [];
+				var apps = a7.model.get("appList") || [];
 				apps.push(app);
-				a7.model.set("apps", apps);
+				a7.model.set("appList", apps);
+				a7.model.set("app", app);
 
-				a7.ui.getView('apps').setState({ apps: apps, app: app, offset: 0 });
+				//a7.ui.getView('apps').setState({ apps: apps, app: app, offset: 0 });
 
-				a7.ui.getView('userHome').setState({ apps: apps, offset: 0, showNewAppForm: false });
+				a7.ui.getView('userHome').setState({ apps: apps, offset: 0, showNewAppForm: false, activeTab: "userApps" });
 				utils.showNotice("The application was saved.");
 			});
 	});
 
 	a7.events.subscribe("apps.update", function (obj) {
 		let args = Object.assign({}, obj);
+		args.name = obj.name || a7.model.get("app").name;
 		args.jsCode = a7.model.get("jsCode") || "";
 		args.htmlCode = a7.model.get("htmlCode") || "";
 		args.cssCode = a7.model.get("cssCode") || "";
@@ -50,32 +63,36 @@ export var appEvents = function init() {
 			.then(function (json) {
 				var app = json;
 				//app.esModule = app.esModule.data[0];
-				var apps = a7.model.get("apps");
+				var apps = a7.model.get("appList");
 				for (var ix = 0; ix < apps.length; ix++) {
 					if (apps[ix].appID === app.appID) {
 						apps[ix] = app;
 						break;
 					}
 				}
-				a7.model.set("apps", apps);
-				a7.ui.getView('apps').setState({ apps: a7.model.get("apps"), app: app, offset: 0 });
-				utils.showNotice("The application was saved.");
+				a7.model.set("appList", apps);
+				//a7.ui.getView('apps').setState({ apps: a7.model.get("appList"), app: app, offset: 0 });
+				let mode = ui.getMode();
+
+				utils.showNotice("The application was saved.", mode);
+				if (mode === 'userhome') {
+					a7.router.open("/");
+				}
 			});
 	});
 
 	a7.events.subscribe("apps.load", function (obj) {
-		let app = a7.model.get("apps").filter(application => application.appID === obj.appID)[0];
+		let app = a7.model.get("appList").filter(application => application.appID === obj.appID)[0];
 		app = app || { appID: 0, name: "", libraries: "", jsCode: "", htmlCode: "", cssCode: "" };
-		let libraries = a7.model.get("libraries");
+		let libraries = a7.model.get("libraryList");
 		let appLibs = app.libraries.split(",").map(libID => libID);
 		let activeLibs = (app.libraries ? libraries.filter(lib => appLibs.indexOf(lib.libraryID) >= 0) : []);
-
+		a7.model.set("app", app);
 		a7.model.set("esModule", app.esModule);
 		a7.model.set("activeLibraries", activeLibs);
 		setEditorValue(a7.ui.getView('jseditor').components.editor, app.jsCode);
 		setEditorValue(a7.ui.getView('htmleditor').components.editor, app.htmlCode);
 		setEditorValue(a7.ui.getView('csseditor').components.editor, app.cssCode);
-
 
 		let editorSize = a7.model.get("editorSize");
 		let height = editorSize.height;
@@ -87,8 +104,8 @@ export var appEvents = function init() {
 		let appsState = a7.ui.getView('apps').getState();
 		let libsState = a7.ui.getView('libraries').getState();
 		a7.ui.getView('buttonbar').setState({ esModule: app.esModule });
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs, offset: libsState.offset });
-		a7.ui.getView('apps').setState({ apps: a7.model.get("apps"), app: app, offset: appsState.offset });
+		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs, offset: libsState.offset });
+		//a7.ui.getView('apps').setState({ apps: a7.model.get("appList"), app: app, offset: appsState.offset });
 		a7.events.publish("menu.update", { user: a7.model.get("author"), app: app });
 		a7.events.publish("sandbox.execute", {});
 	});
@@ -101,7 +118,7 @@ export var appEvents = function init() {
 			})
 			.then(function (json) {
 				if (json) {
-					var apps = a7.model.get("apps");
+					var apps = a7.model.get("appList");
 
 					var deleted = apps.find(function (app, idx) {
 						if (app.appID === obj.appID) {
@@ -110,16 +127,16 @@ export var appEvents = function init() {
 						}
 					});
 				}
-				let currentApp = a7.ui.getView('apps').getState().app;
-				a7.model.set("apps", apps);
+				let currentApp = a7.model.get("app");
+				a7.model.set("appList", apps);
 				// update top bar breadcrumb
 				a7.events.publish("menu.update", { user: a7.model.get("user") });
 				a7.events.publish("apps.new", {});
 				//a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
 				utils.showNotice("The application was deleted.");
 				// go to the user homepage if the deleted app was the open app
-				if( currentApp.appID === obj.appID ){
-					a7.router.open( '/u/' +  a7.model.get("user").username );
+				if (currentApp.appID === obj.appID) {
+					a7.router.open('/u/' + a7.model.get("user").username);
 				}
 			});
 	});
@@ -137,9 +154,15 @@ export var appEvents = function init() {
 		a7.model.set("esModule", 0);
 		a7.model.set("activeLibraries", []);
 
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraries") || [], library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: 0 });
-		a7.ui.getView('apps').setState({ apps: a7.model.get("apps") || [], app: { appID: 0, name: "" }, offset: 0 });
+		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList") || [], library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: 0 });
+		//a7.ui.getView('apps').setState({ apps: a7.model.get("appList") || [], app: { appID: 0, name: "" }, offset: 0 });
 		a7.events.publish("sandbox.execute", {});
+		a7.events.publish("menu.update", { user: a7.model.get("user") });
 	});
+
+	a7.events.subscribe("apps.download", function (obj) {
+			
+		});
+
 
 };

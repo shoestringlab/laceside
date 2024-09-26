@@ -21,10 +21,12 @@ export var mainEvents = function init() {
 	a7.events.subscribe("main.run", function (obj) {
 
 		if( obj.view === "userhome"){
-			UserHome({ id: 'userHome', selector: "#userHome", apps: a7.model.get("apps") || [] });
+			UserHome({ id: 'userHome', selector: "#userHome" });
 		/* }else{
 			Home({ id: 'home', selector: "#home"}); */
 		}
+		// set the layout
+		//ui.setLayout( obj.view );
 		a7.events.publish("main.refreshHeader", {});
 		//Header( { id: 'header', user: a7.model.get( "user" ), selector: "#headerRight" } );
 		// default author to the current user, which may be the anon user

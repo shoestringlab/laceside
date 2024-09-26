@@ -23,7 +23,7 @@ var formatDate = function( dateString, format ){
 },
 
 showNotice = function( message ){
-  constructor( bubble, [document.querySelector( "#headerMiddle" ),
+  /* constructor( bubble, [document.querySelector( "#headerMiddle" ),
     message,
     {
       position: "middle center",
@@ -32,7 +32,12 @@ showNotice = function( message ){
       autoClose: true,
       autoCloseDelay: 3000,
       featherPath: '/lib/feather-icons'
-    }]);
+    }]); */
+	document.getElementById("headerMiddle").innerHTML = message;
+	setTimeout( ()=>{
+		document.getElementById("headerMiddle").innerHTML = '';
+	},3000 );
+	
 },
 
 showDialog = function( title, message, buttons ){

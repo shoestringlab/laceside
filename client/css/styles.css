@@ -4,33 +4,31 @@ body {
 	/* padding:.5em; */
 	font-family: Geneva, Arial, Helevtica, sans;
 	position: relative;
-
-}
-
-.layout {
-	display: grid;
-	grid: "header header" auto "editors htmlFrame" 1fr / 1fr 1fr;
-	gap: 8px;
 	height: 100%;
 	overflow: clip;
 }
 
-.homeLayout{
-	display:block;
+#app {
+	display: flex;
+/* 	gap: 8px; */
+	height: 96%;
+	overflow: clip;
+}
+
+.homeLayout {
+	display: block;
 	/* display: flex;
 	align-items:stretch;
 	justify-content: space-around; */
 }
 
 .header {
-	grid-area: header;
 	display: flex;
 	justify-content: space-between;
 }
 
-.htmlFrame {
-	grid-area: htmlFrame;
-	padding: .25em;
+#headerMiddle{
+	align-self: center;
 }
 
 #editors {
@@ -38,6 +36,17 @@ body {
 	overflow-y: scroll;
 	height: 100%;
 	scrollbar-width: none;
+	width: 50%;
+	overflow: clip;
+}
+
+#htmlFrame {
+	width: 50%;
+}
+
+#iframe {
+	width: 100%;
+	height: 98%;
 }
 
 #sidebar {
@@ -47,7 +56,6 @@ body {
 .tabs {
 	background-color: #ccf;
 	padding: 0 .5em;
-	margin-top: .25em;
 	display: flex;
 	justify-content: space-between;
 }
@@ -92,10 +100,55 @@ a {
 	color: blue;
 }
 
-nav ul li {
-	cursor: pointer;
+
+nav ul {
+	list-style: none;
 }
 
+nav ul li {
+	cursor: pointer;
+	display: inline-block;
+	padding-right: 1em;
+}
+
+li.menuItem:before {
+	position: absolute;
+	top: 1em;
+	margin: 0 0 0 -12px;
+	vertical-align: middle;
+	display: inline-block;
+	width: .5em;
+	height: .5em;
+	background: #ccc;
+	content: '\BB';
+}
+
+#cmdButtons{
+	display: inline-flex;
+	background-color: #ccf;
+	margin-top: .25em;
+	padding: .5em 0 0 2em;
+}
+
+#cmdButtons .feather{
+	width: 1.5em !important;
+	height: 1.5em !important;
+}
+
+#btnwrapper{
+	background-color: #ccf;
+	display:flex;
+	width:100%;
+	align-content: space-between;
+	border-top: 1px solid #bbf;
+	border-bottom: 1px solid #bbf;
+}
+
+#msgs{
+	width: 100%;
+  	text-align: center;
+  	align-content: center;
+}
 
 #libraries,
 #apps {
@@ -111,7 +164,9 @@ nav ul li {
 	cursor: pointer;
 }
 
-
+.listrow:hover{
+	background-color: #ccf;
+}
 
 .expanded {
 	grid-template-columns: 2em auto !important;
@@ -140,6 +195,7 @@ nav ul li {
 .profileHeader {
 	padding-top: .5em;
 	padding-right: 2em;
+	display: inline;
 }
 
 .topleft {
@@ -172,14 +228,8 @@ nav ul li {
 }
 
 #userHome {
-	display: grid;
-	grid-template-columns: auto 10em;
-	grid-template-rows: 10em auto;
-	grid-template-areas:
-		"userPanel userInfo"
-		"userApps userInfo";
-	background-color: #fff;
-	grid-gap: .5em;
+	width: 100%;
+	height: 100%;
 }
 
 #userPanel {
@@ -190,30 +240,50 @@ nav ul li {
 	grid-area: userApps;
 }
 
+
+#userLibs label{
+	font-weight: bold;
+}
+
+#userLibs input, #userApps input{
+	font-size:1em;
+}
+
+#userHome col {
+	padding:0;
+}
+
 #userInfo {
 	grid-area: userInfo;
 }
 
 div.panel {
-	max-width: 1160px;
+	/* max-width: 1160px; */
 }
 
 div.block {
-	padding: 2em !important;
-	margin: 3em;
+	padding: 1em !important;
+	margin: 1em;
 	border: 1px solid silver;
-	width: 400px;
+	width: 40em;
+}
+
+div.bigBlock {
+	padding: 1em !important;
+	margin: 1em;
+	border: 1px solid silver;
+	width: 40em;
 }
 
 div.col {
 	display: inline-block;
 	vertical-align: top;
-	padding:.5em;
+	padding: .5em;
 }
 
-div.row{
-	display:block;
-	width:100%;
+div.row {
+	display: block;
+	width: 100%;
 }
 
 div.flexrow {
@@ -223,7 +293,7 @@ div.flexrow {
 	padding: .25em;
 }
 
-div.flexrowcentered{
+div.flexrowcentered {
 	display: flex;
 	justify-content: center;
 }
@@ -236,8 +306,8 @@ div.row a:hover {
 	color: #aaf;
 }
 
-.w70{
-	width:70% !important;
+.w70 {
+	width: 70% !important;
 }
 
 div.inline {
@@ -250,23 +320,39 @@ div.headerCol {
 	width: auto;
 }
 
-div.w30 {
+.w50 {
+	width: 50em;
+}
+
+.w45 {
+	width: 45em;
+}
+
+.w40 {
+	width: 40em;
+}
+
+.w35 {
+	width: 35em;
+}
+
+.w30 {
 	width: 30em;
 }
 
-div.w20 {
+.w20 {
 	width: 20em;
 }
 
-div.w15 {
+.w15 {
 	width: 10em;
 }
 
-div.w10 {
+.w10 {
 	width: 10em;
 }
 
-div.w5 {
+.w5 {
 	width: 5em;
 }
 
@@ -285,6 +371,7 @@ div.pane {
 div.completedTask div {
 	text-decoration: line-through;
 }
+
 /* 
 div.centered {
 	text-align: center;
@@ -301,7 +388,7 @@ div.centered {
 	height: 500px;
 }
 
-input[type='text'],
+/* input[type='text'],
 input[type='password'],
 input[type='email'] {
 	width: 95%;
@@ -311,7 +398,7 @@ input[type='email'] {
 input[type='text'],
 input[type='date'] {
 	height: 2em;
-}
+} */
 
 .bold {
 	font-weight: bold;
@@ -319,7 +406,7 @@ input[type='date'] {
 
 button {
 	height: 2em;
-	cursor:pointer;
+	cursor: pointer;
 }
 
 textarea[name='codeWindow'] {
@@ -338,7 +425,11 @@ textarea[name='codeWindow'] {
 	white-space: nowrap;
 	border-radius: 0 0 .25em .25em;
 	background-color: #fff;
-	height: 150px;
+	height: 50%;
+	position:fixed;
+	bottom:0;
+	z-index:2;
+	width:100%;
 }
 
 .consolePane {
@@ -350,27 +441,6 @@ textarea[name='codeWindow'] {
 	position: absolute; */
 }
 
-
-nav ul {
-	list-style: none;
-}
-
-nav ul li {
-	display: inline-block;
-	padding-right: 1em;
-}
-
-li.menuItem:before {
-	position: absolute;
-	top: 1em;
-	margin: 0 0 0 -12px;
-	vertical-align: middle;
-	display: inline-block;
-	width: .5em;
-	height: .5em;
-	background: #ccc;
-	content: '\BB';
-}
 
 .CodeMirror {
 	border-radius: .25em;
@@ -417,7 +487,7 @@ li.menuItem:before {
 }
 
 #iframe {
-	border-radius: .25em;
+/* 	border-radius: .25em; */
 	width: 100%;
 	height: 100%;
 	border: 1px solid silver;
@@ -476,20 +546,30 @@ button:disabled {
 }
 
 .feather {
-	width: 1em;
-	height: 1em;
-	stroke: currentColor;
-	stroke-width: 2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	fill: none;
+	width: 1em !important;
+	height: 1em !important;
+	stroke: #77f !important;
+	stroke-width: 2 !important;
+	stroke-linecap: round !important;
+	stroke-linejoin: round !important;
+	fill: none !important;
 	/* vertical-align: sub; */
 }
+
+.feather:hover {
+	stroke: #eef !important;
+	/* background-color: #99f; */
+} 
 
 .feather_bigger {
 	width: 2em;
 	height: 2em;
 }
+/* 
+.feather_bigger:hover {
+	color: #ccf;
+} */
+
 
 .feather_white {
 	color: white;
@@ -551,7 +631,7 @@ button:disabled {
 
 .centered {
 	text-align: center;
-	display:flex;
+	display: flex;
 	justify-content: center;
 }
 
@@ -567,11 +647,16 @@ div.titlebar {
 
 #profileModal,
 #authModal,
-#signupModal {
+#signupModal{
 	z-index: 6;
 	width: 80%;
 	min-width: 800px;
 	text-align: center;
+}
+
+#appsModal, #librariesModal {
+	z-index: 6;
+	width: 500px;
 }
 
 #messageModal,
@@ -631,7 +716,7 @@ div.titlebar {
 
 .gadgetui-modal {
 	z-index: 6;
-	height:92% !important;
+	height: 92% !important;
 }
 
 div.form {
@@ -756,7 +841,7 @@ div.label {
 #newPasswordMatched,
 #usernameValidator {
 	margin-top: .5em;
-	display:inline-flex;
+	display: inline-flex;
 }
 
 #loginMessages span {
@@ -783,22 +868,22 @@ div.label {
 	position: absolute !important;
 	z-index: 2;
 	border: 0 !important;
-	width:30%;
+	width: 30%;
 }
 
-#execButton{
+#execButton {
 	cursor: pointer;
 }
 
-img.screenshot_med{
-	width:500px;
+img.screenshot_med {
+	width: 500px;
 	border-radius: .5em;
 
 	border: 1px solid silver;
 }
 
-img.screenshot_lg{
-	width:800px;
+img.screenshot_lg {
+	width: 800px;
 	border-radius: .5em;
 
 	border: 1px solid silver;
@@ -828,13 +913,11 @@ img.screenshot_lg{
 
 } */
 
-#signupMessages{
-	color:#99f;
+#signupMessages {
+	color: #99f;
 }
 
-#userMenu{
-
-}
+#userMenu {}
 
 #userMenu .gadget-ui-menu-icon {
 	width: 5em !important;

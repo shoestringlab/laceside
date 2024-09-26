@@ -2,16 +2,30 @@ import { a7 } from '/lib/altseven/dist/a7.js';
 import { auth } from '/js/app.auth.js';
 import { Paging } from '/js/view/paging.js';
 import * as utils from '/js/app.utils.js';
+import { modal, constructor } from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var Libraries = function Libraries(props) {
 	var libraries = a7.components.Constructor(a7.components.View, [props], true);
-
+	const newLibrary = { libraryID: 0, name: "", link: "" };
+	
 	libraries.state = {
 		libraries: [],
-		library: props.library || { libraryID: 0, name: "", link: "" },
+		library: props.library || newLibrary,
 		activeLibraries: [],
-		offset: 0
+		offset: 0,
+		visible: false
 	};
+
+	libraries.components.modal = constructor(modal,
+		[document.querySelector("#librariesModal"),
+		{ autoOpen: false, closeIcon: '/lib/feather-icons/dist/feather-sprite.svg#x-circle' }], true);
+
+		libraries.components.modal.on("closed", function (obj) {
+		let user = a7.model.get("user");
+		let library = a7.model.get("library");
+		//history.back();
+		//a7.router.open( "/u/" + user.username + "/" + library.libraryID );
+	});
 
 	libraries.isDirty = function () {
 		let isDirty = false;

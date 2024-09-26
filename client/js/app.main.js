@@ -27,12 +27,11 @@ export var main = (function () {
 			a7.ui.setSelector('signup', "#signup");
 			a7.ui.setSelector('signupModal', "#signupModal");
 			a7.ui.setSelector('profileModal', "#profileModal");
-
+			a7.ui.setSelector('appsModal', "#appsModal");
+			a7.ui.setSelector('librariesModal', "#librariesModal");
 			a7.ui.setSelector('secureDiv', "#secure");
-			/*       a7.ui.setSelector( 'sandBox', "#sandBox");
-				  a7.ui.setSelector( 'ide', "#ide"); */
-			a7.ui.setSelector('base', "#base");
-			a7.ui.setSelector('layout', "#layout");
+
+			a7.ui.setSelector('app', "#app");
 
 			a7.ui.setSelector('userHome', "#userHome");
 			a7.ui.setSelector('home', "#home");
@@ -53,6 +52,12 @@ export var main = (function () {
 
 					// set default author until we check the route
 					a7.model.set( "author", user );
+					// default empty appList
+					a7.model.set( "appList", [] );
+					a7.model.set( "libraryList", [] );
+
+
+					a7.model.set( "app", { appID: 0, name: "" } );
 					// render the initial views of the application
 					// this is a good place to initialize views that should not be re-initialized
 					Message({ id: 'message', selector: a7.ui.selectors['message'] });

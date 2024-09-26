@@ -20,7 +20,7 @@ export var PublicProfile = function PublicProfile(props) {
       <div>
       <h2>${publicprofile.state.user.nickName}</h2>
       </div>
-      <div class="right-align"><img style="max-width:300px;" src="${publicprofile.state.user.publicprofilePic || '/img/publicprofilePics/anon.png'}"/></div>
+      <div class="right-align"><img style="max-width:300px;" src="${publicprofile.state.user.publicprofilePic || '/img/publicprofilepics/anon.png'}"/></div>
 
     `;
 	};

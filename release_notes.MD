@@ -1,3 +1,11 @@
+2.0.0-beta
+==================
+
+userHome is being made into the start of the workflow for creating applications. This process is on-going.
+
+This release may not be stable.
+
+
 2.0.0-alpha
 ==================
 - Replacement of bcrypt with built-in crypto package for passwords

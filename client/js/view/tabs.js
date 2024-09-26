@@ -10,7 +10,28 @@ export var Tabs = function Tabs(props){
   };
 
   tabs.template = function(){
-    let templ = `<div class="tabs">
+    let templ = `<div id="btnwrapper">
+						<div id="cmdButtons">
+						<a title="Save" name="save" data-onclick="saveApp">
+							<svg class="feather">
+							<use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#save"/>
+							</svg>
+						</a>
+						<a title="Download" name="save" data-onclick="DownloadApp">
+							<svg class="feather">
+							<use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#download"/>
+							</svg>
+						</a>
+						<a title="Delete" name="save" data-onclick="deleteApp">
+							<svg class="feather">
+							<use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#trash"/>
+							</svg>
+						</a>
+					</div>
+					<div id="msgs">
+					</div>
+				</div>
+				<div class="tabs">
                 <div style="display:inline;" id="editorTabs">
                     <div name="JSEditor" data-tab="JSEditor">JavaScript</div>
                     <div name="HTMLEditor" data-tab="HTMLEditor">HTML</div>
@@ -65,6 +86,59 @@ export var Tabs = function Tabs(props){
   });
 
   tabs.eventHandlers = {
+	saveApp: function (event) {
+		let app = a7.model.get("app");
+		
+		if (app.appID === 0) {
+			a7.events.publish("apps.create", {
+			});
+		}
+		else {
+			a7.events.publish("apps.update", {
+				appID: app.appID
+			});
+		}
+	},
+	deleteApp: function (event) {
+		let appID = a7.model.get( "app" ).appID;
+		//let appID = event.currentTarget.attributes['data-id'].value;
+		let dlg = utils.showDialog(" &nbsp; ", "You are about to delete this app, proceed?",
+			[{
+				label: 'Yes', click: function () {
+					dlg.close();
+					a7.events.publish("apps.delete", {
+						appID: appID
+					});
+				}
+			},
+			{
+				label: "No", click: function () {
+					dlg.close();
+				}
+			}
+			]);
+	},
+	newApp: function (event) {
+		let user = a7.model.get("user");
+		if (apps.isDirty()) {
+			let dlg = utils.showDialog(" &nbsp; ", "Your changes will be discarded, proceed?",
+				[{
+					label: 'Yes', click: function () {
+						dlg.close();
+						//a7.events.publish( "apps.new", {} );
+						a7.router.open('/u/' + user.username + '/app');
+					}
+				},
+				{
+					label: "No", click: function () {
+						dlg.close();
+					}
+				}
+				]);
+		} else {
+			a7.router.open('/u/' + user.username + '/app');
+		}
+	}
   };
 
   return tabs;

@@ -164,7 +164,7 @@ export var Profile = function Profile(props) {
       			<div id="pTab3">
               <div class="vtabContentSplit">
                 <div id="profilePicUploadDiv"></div>
-                <div class="right-align"><img style="max-width:300px;" src="${user.profilePic || '/img/profilePics/anon.png'}"/></div>
+                <div class="right-align"><img style="max-width:300px;" src="${user.profilePic || '/img/profilepics/anon.png'}"/></div>
               </div>
             </div>
       		</div>

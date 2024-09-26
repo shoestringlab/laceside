@@ -8,7 +8,7 @@ export var sandboxEvents = function init() {
 		let jsCode = a7.model.get('jsCode') || '';
 		let htmlCode = a7.model.get('htmlCode') || '';
 		let cssCode = a7.model.get('cssCode') || '';
-
+	
 		var doc = document.getElementById('iframe').contentWindow.document;
 		let libs = doc.querySelectorAll(".jsapp");
 		// get any third party libraries specified
