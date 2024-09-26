@@ -27,6 +27,7 @@ export var Paging = function Paging(props) {
   });
 
   paging.template = function(){
+
     let state = paging.getState();
     let templ = ``;
     let offset = parseInt( state.offset, 10 );

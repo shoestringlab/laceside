@@ -1,6 +1,7 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 import { Paging } from '/js/view/paging.js';
-import { menu, tabs, textinput, constructor } from '/lib/gadget-ui/dist/gadget-ui.es.js';
+import * as utils from '/js/app.utils.js';
+import { dialog, menu, tabs, textinput, constructor } from '/lib/gadget-ui/dist/gadget-ui.es.js';
 
 export var UserHome = function UserHome(props) {
 	var userHome = a7.components.Constructor(a7.components.View, [props], true);
@@ -12,7 +13,61 @@ export var UserHome = function UserHome(props) {
 		showNewLibForm: props.showNewLibForm || false,
 		libraryID: 0,
 		appID: 0,
-		activeTab: 'userApps'
+		appName: "",
+		activeTab: 'userApps',
+		appNameIsDirty: false,
+		libNameIsDirty: false
+	};
+
+	userHome.IsOKToCancel = function( type, val ){
+		let state = userHome.getState();
+		let result = false;
+		if( state[ type + "NameIsDirty" ] ){
+	
+			let fp1 = constructor( dialog,
+				[ null,
+					{
+						top: 200,
+						left: 200,
+						width: '400px',
+						zIndex:2,
+						title : "Confirm",
+						message: "Abandon Changes?",
+						path : "/lib/gadget-ui/dist/",
+						enableShrink : false,
+						overflow: "hidden",
+						buttons: [
+							{ label: 'Yes', click: function(){ 
+								result = true;
+								fp1.close();
+							}},
+							{ label: 'No', click: function(){ 
+								fp1.close();
+							}}
+						]
+					}], true );
+	
+			fp1.on( "closed", function( obj ){
+				if( result ){
+					let state = userHome.getState();
+					if( type === "app"){
+						userHome.skipRender = false;
+						state.showNewAppForm = false;
+						state.appID = 0;
+						state.app = {};
+						userHome.setState(state);
+					}
+					console.log( "closed dialog" );
+				}
+			});
+		}else{
+			userHome.skipRender = false;
+			state.showNewAppForm = false;
+			state.appID = 0;
+			state.appName = "";
+			state.app = {};
+			userHome.setState(state);
+		}
 	};
 
 	userHome.eventHandlers = {
@@ -20,7 +75,10 @@ export var UserHome = function UserHome(props) {
 			let user = a7.model.get("user");
 			let state = userHome.getState();
 			let id = event.currentTarget.getAttribute('data-id');
+			let appList = a7.model.get( "appList" );
+			let app = a7.model.get("appList").filter(application => application.appID === id)[0];
 			state.appID = id;
+			state.app = app;
 			state.activeTab = 'userApps';
 			userHome.setState(state);
 		},
@@ -34,6 +92,7 @@ export var UserHome = function UserHome(props) {
 			state.showNewAppForm = true;
 			state.libraryID = 0;
 			state.appID = 0;
+			state.app = {};
 			state.activeTab = 'userApps';
 			userHome.setState(state);
 		},
@@ -52,22 +111,24 @@ export var UserHome = function UserHome(props) {
 			userHome.setState(state);
 		},
 		saveApp: function (event) {
+			userHome.skipRender = false;
+			
+			//editAppForm.querySelector("input[name='appName']").value;
 			let state = userHome.getState();
-			let editAppForm = document.getElementById("editAppForm");
-			let name = editAppForm.querySelector("input[name='appName']").value;
-			a7.events.publish("apps.update", { name: name, appID: state.appID });
+			let appName = state.appName;
+			a7.events.publish("apps.update", { name: appName, appID: state.appID });
 		},
-		cancelApp: function (event) {
-			let state = userHome.getState();
-			state.showNewAppForm = false;
-			state.appID = 0;
-			userHome.setState(state);
+		cancelEditAppName: function (event) {
+			userHome.skipRender = true;
+			let appName = editAppForm.querySelector("input[name='appName']").value;
+			userHome.IsOKToCancel( "app", appName );
 		},
 		createLibrary: function (event) {
 			let state = userHome.getState();
 			state.showNewLibForm = true;
 			state.libraryID = 0;
 			state.appID = 0;
+			state.app = {};
 			state.activeTab = 'userLibs';
 			userHome.setState(state);
 		},		
@@ -102,33 +163,64 @@ export var UserHome = function UserHome(props) {
 			constructor(textinput, [
 				libForm.querySelector("input[name='name']"),
 				{
-					emitEvents: true,
 					enforceMaxWidth: true,
 					hideable: true
 				}
-			]);
+			], true);
 
 			constructor(textinput, [
 				libForm.querySelector("input[name='link']"),
 				{
-					emitEvents: true,
 					enforceMaxWidth: true,
 					hideable: true
 				}
-			]);
+			], true);
 		}
 
 		let appForm = document.getElementById("editAppForm");
 		if (appForm !== null) {
-			constructor(textinput, [
+			const appNameInput = constructor(textinput, [
 				appForm.querySelector("input[name='appName']"),
 				{
-					emitEvents: true,
 					enforceMaxWidth: true,
 					hideable: true
 				}
-			]);
+			], true);
 
+			appNameInput.on( "mouseenter", function( obj ){
+				obj.selector.nextElementSibling.style.display='inline';
+			});
+
+			appNameInput.on( "change", function( obj ){
+				let state = userHome.getState();
+				state.appNameIsDirty = ( obj.selector.value !== state.app.name );
+				state.appName = obj.selector.value;
+				userHome.skipRender = true;
+				userHome.setState( state );
+				userHome.skipRender = false;
+			});
+			
+			appNameInput.on( "keyup", function( obj ){
+				let state = userHome.getState();
+				state.appNameIsDirty = ( obj.selector.value !== state.app.name );
+				state.appName = obj.selector.value;
+				userHome.skipRender = true;
+				userHome.setState( state );
+				userHome.skipRender = false;
+			});
+		}
+
+		let apps = a7.model.get("appList");
+		let libs = a7.model.get("libraryList");
+		let offset = parseInt(state.offset, 10);
+		let libOffset = parseInt(state.libOffset, 10);
+ 
+		if (apps.length) {
+			Paging({ id: 'userHomeAppsPaging', parentID: userHome.props.id, selector: userHome.props.selector + ' div.paging', records: apps, offset: offset, pageSize: 10 });
+		}
+		
+		if (libs.length) {
+			Paging({ id: 'userHomeLibsPaging', parentID: userHome.props.id, selector: userHome.props.selector + ' div.paging', records: libs, offset: libOffset, pageSize: 10 });
 		}
 	});
 
@@ -149,7 +241,7 @@ export var UserHome = function UserHome(props) {
 
 		if (user.userID === author.userID) {
 			if (state.showNewAppForm) {
-				templ += `<form><div class="block flexrow link"><input name="name" placeholder="Application Name" type="text" class="w30">
+				templ += `<form><div class="block flexrow link"><input name="name" placeholder="Application Name" type="text" class="w20">
 				<div style="display:inline;">
 					<button type="button" data-onclick="saveNewApp">Save</button>
 					<button type="button" data-onclick="cancelNewApp">Cancel</button>
@@ -163,28 +255,27 @@ export var UserHome = function UserHome(props) {
 		let offset = parseInt(state.offset, 10);
 
 		if (apps.length) {
-			for (var ix = offset; ix < Math.min(apps.length, state.offset + 20); ix++) {
+			for (var ix = offset; ix < Math.min(apps.length, state.offset + 10); ix++) {
 				let app = apps[ix];
 				if (state.appID === app.appID) {
-					templ += `<div class="bigBlock flexrow link" data-id="${app.appID}">`;
+					templ += `<div class="block flexrow link" data-id="${app.appID}">`;
 					// app editing form
 					templ += `	<form id="editAppForm">
 									<div class="row">
-										<div class="col w40">
+										<div class="col w30">
 										<button type="button" data-onclick="editApp">Open this app for editing</button>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col w40">
-											<!--<label for="appName">Name</label>-->
+										<div class="col w30">
+						
 											<input type="text" id="appName" name="appName" placeholder="App Name" value="${app.name}" class="w20">
 											<div style="display:none;" name="btns">
 												<button type="button" data-onclick="saveApp">Save</button>
-												<button type="button" data-onclick="cancelApp">Cancel</button>
+												<button type="button" data-onclick="cancelEditAppName">Cancel</button>
 											</div> 
 										</div>
 									</div>
-									
 								</form>
 								</div>`;
 				} else {
@@ -196,13 +287,9 @@ export var UserHome = function UserHome(props) {
 			}
 		}
 
-		templ += `</div><div class="paging"></div></div>
-            
-            `;
-		if (apps.length) {
-			Paging({ id: 'userHomeAppsPaging', parentID: userHome.props.id, selector: userHome.props.selector + ' div.paging', records: apps, offset: offset, pageSize: 20 });
-		}
+		templ += `</div><div class="paging"></div></div>`;
 
+		
 		// libraries
 		let libs = a7.model.get("libraryList");
 		templ += `<div id="userLibs" class="panel"><div class="col">`;
@@ -223,24 +310,24 @@ export var UserHome = function UserHome(props) {
 		let libOffset = parseInt(state.libOffset, 10);
 
 		if (libs.length) {
-			for (var ix = libOffset; ix < Math.min(libs.length, state.libOffset + 20); ix++) {
+			for (var ix = libOffset; ix < Math.min(libs.length, state.libOffset + 10); ix++) {
 				let lib = libs[ix];
 
 				if (state.libraryID === lib.libraryID) {
-					templ += `<div class="bigBlock flexrow link" data-id="${lib.libraryID}">`;
+					templ += `<div class="block flexrow link" data-id="${lib.libraryID}">`;
 					// library editing form
 					templ += `	<form id="editLibForm">
 								<div class="row">
 									<div class="col w5"><label for="libName">Name</label></div>
 								</div>
 								<div class="row">	
-									<div class="col w40"><input type="text" id="libName" name="name" placeholder="Library Name" value="${lib.name}" class="w35"></div>
+									<div class="col w30"><input type="text" id="libName" name="name" placeholder="Library Name" value="${lib.name}" class="w20"></div>
 								</div>
 								<div class="row">
 									<div class="col w5"><label for="libLink">Link</label></div>
 								</div>
 								<div class="row">	
-									<div class="col w40"><input type="text" id="libLink" name="link" placeholder="Library Location" value="${lib.link}" class="w35"></div>
+									<div class="col w30"><input type="text" id="libLink" name="link" placeholder="Library Location" value="${lib.link}" class="w20"></div>
 								</div>
 								</form>`;
 				} else {
@@ -256,12 +343,7 @@ export var UserHome = function UserHome(props) {
 			}
 		}
 
-		templ += `</div><div class="paging"></div></div>
-            
-            `;
-		if (libs.length) {
-			Paging({ id: 'userHomeLibsPaging', parentID: userHome.props.id, selector: userHome.props.selector + ' div.paging', records: libs, offset: libOffset, pageSize: 20 });
-		}
+		templ += `</div><div class="paging"></div></div>`;
 
 		return templ;
 	};

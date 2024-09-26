@@ -265,7 +265,7 @@ div.block {
 	padding: 1em !important;
 	margin: 1em;
 	border: 1px solid silver;
-	width: 40em;
+	width: 30em;
 }
 
 div.bigBlock {
@@ -921,4 +921,8 @@ img.screenshot_lg {
 
 #userMenu .gadget-ui-menu-icon {
 	width: 5em !important;
+}
+
+div.gadget-ui-floatingPane{
+	background-color: #fff;
 }
