@@ -73,7 +73,7 @@ addTag = function( arr, doc, type, href, code ){
     arr[ arr.length - 1 ].setAttribute(  "rel", "stylesheet" );
     arr[ arr.length - 1 ].setAttribute(  "href", href );
   }
-  if( a7.model.get( 'esModule' ) && type === 'script' ){
+  if( a7.model.get( "app" ).esModule && type === 'script' ){
     arr[ arr.length - 1 ].setAttribute( "type", "module" );
   }
   if( code !== undefined ){

@@ -19,11 +19,6 @@ export var Header = function Header(props) {
 			let user = a7.model.get("user");
 			a7.router.open('/u/' + user.username + '/profile', { userID: user.userID });
 		},
-		showApps: function () {
-			//a7.events.publish( 'profile.show' );
-			let user = a7.model.get("user");
-			a7.router.open('/u/' + user.username + '/apps', { userID: user.userID });
-		},
 		signIn: function (event) {
 			a7.events.publish('auth.showLogin', {});
 		},
@@ -41,10 +36,6 @@ export var Header = function Header(props) {
 				{
 					label: "Profile",
 					link: header.eventHandlers.showProfile
-				},
-				{
-					label: "Apps",
-					link: header.eventHandlers.showApps
 				},
 				{
 					label: "Sign out",

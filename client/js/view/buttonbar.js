@@ -12,13 +12,18 @@ export var ButtonBar = function ButtonBar(props) {
       a7.events.publish( "sandbox.execute", {} );
     },
     setEsModule: function( event ){
-      a7.model.set( "esModule", ( event.currentTarget.checked ? 1 : 0 ) );
+		let app = a7.model.get( "app" );
+		app.esModule = ( event.currentTarget.checked ? 1 : 0 );
+    	a7.model.set( "app", app );
     }
 	};
 
   buttonBar.on( "rendered", function(){
     document.querySelector( buttonBar.props.selector + " input[name='esModule']" ).checked = buttonBar.state.esModule;
-    a7.model.set( "esModule", buttonBar.state.esModule );
+    //a7.model.set( "app.esModule", buttonBar.state.esModule );
+	let app = a7.model.get( "app" );
+	app.esModule = buttonBar.state.esModule ;
+	a7.model.set( "app", app );
   });
 
   buttonBar.template = function(){

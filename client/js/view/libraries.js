@@ -161,7 +161,7 @@ export var Libraries = function Libraries(props) {
 				]);
 		},
 		setLibrary: function (event) {
-			let activeLibs = a7.model.get("activeLibraries") || [];
+			let activeLibs = a7.model.get("app").libraries || [];
 			if (event.currentTarget.checked) {
 				let lib = libraries.state.libraries.find(function (library) {
 					if (library.libraryID === event.currentTarget.value) {
@@ -176,7 +176,7 @@ export var Libraries = function Libraries(props) {
 					}
 				}
 			}
-			a7.model.set("activeLibraries", activeLibs);
+			a7.model.set("app.libraries", activeLibs);
 			libraries.setState({ libraries: libraries.state.libraries, library: libraries.state.library, activeLibraries: activeLibs, offset: libraries.state.offset });
 		},
 		newLibrary: function (event) {

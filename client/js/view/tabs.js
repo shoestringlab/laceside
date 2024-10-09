@@ -94,9 +94,8 @@ export var Tabs = function Tabs(props){
 			});
 		}
 		else {
-			a7.events.publish("apps.update", {
-				appID: app.appID
-			});
+			let app = a7.model.get( "app" );
+			a7.events.publish("apps.update", app);
 		}
 	},
 	deleteApp: function (event) {

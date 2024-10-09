@@ -1,8 +1,6 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 import { ui } from '/js/app.ui.js';
 import * as utils from '/js/app.utils.js';
-import { UserHome } from '/js/view/userhome.js';
-import { Profile } from '/js/view/profile.js';
 
 export var mainEvents = function init() {
 
@@ -20,17 +18,7 @@ export var mainEvents = function init() {
 
 	a7.events.subscribe("main.run", function (obj) {
 
-		if( obj.view === "userhome"){
-			UserHome({ id: 'userHome', selector: "#userHome" });
-		/* }else{
-			Home({ id: 'home', selector: "#home"}); */
-		}
-		// set the layout
-		//ui.setLayout( obj.view );
 		a7.events.publish("main.refreshHeader", {});
-		//Header( { id: 'header', user: a7.model.get( "user" ), selector: "#headerRight" } );
-		// default author to the current user, which may be the anon user
-		//obj.author = obj.author || user;
 
 		if (a7.model.get("author").userID.length > 0) {
 			obj.offset = 0;

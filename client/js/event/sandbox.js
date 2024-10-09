@@ -5,27 +5,41 @@ export var sandboxEvents = function init() {
 
 	a7.events.subscribe("sandbox.execute", function (obj) {
 		a7.ui.views['console'].setState({ consoleText: '' });
-		let jsCode = a7.model.get('jsCode') || '';
-		let htmlCode = a7.model.get('htmlCode') || '';
-		let cssCode = a7.model.get('cssCode') || '';
-	
+		var app = a7.model.get("app");
+
+		var jsCode = app.jsCode || '';
+		var htmlCode = app.htmlCode || '';
+		var cssCode = app.cssCode || '';
+		var activeLibraries = "";
+		var frame = document.getElementById("iframe");
+		var docu = document.implementation.createHTMLDocument("sandbox");
+        var destDocument = frame.contentDocument;
+        var srcNode = docu.documentElement;
+        var newNode = destDocument.importNode(srcNode, true);
+        
+        destDocument.replaceChild(newNode, destDocument.documentElement);
 		var doc = document.getElementById('iframe').contentWindow.document;
-		let libs = doc.querySelectorAll(".jsapp");
+		var libs = doc.querySelectorAll(".jsapp");
 		// get any third party libraries specified
 		if (libs !== null) {
 			libs.forEach(function (lib) {
 				doc.head.removeChild(lib);
 			});
 		}
-		let styles = doc.querySelectorAll("style");
+		var styles = doc.querySelectorAll("style");
 		if (styles !== null) {
 			styles.forEach(function (style) {
 				doc.head.removeChild(style);
 			});
 		}
-		let activeLibraries = a7.model.get("activeLibraries");
-
-		let scriptTags = [];
+		var activeLibIDs = a7.model.get("app").libraries;
+		var libraries = a7.model.get( "libraryList" );
+		if( activeLibIDs !== undefined ){
+			
+		activeLibraries = libraries.filter( library => activeLibIDs.indexOf( library.libraryID ) >= 0 );
+		}
+		
+		var scriptTags = [];
 
 		// add activeLibraries to the page
 		if (activeLibraries && activeLibraries.length) {
@@ -40,8 +54,8 @@ export var sandboxEvents = function init() {
 				utils.addModLazy(doc);
 
 				let mlScript = `modlazy.load(['${jslinks}'], function(){
-          ${jsCode}
-        });`;
+					${jsCode}
+				});`;
 
 				scriptTags = utils.addTag(scriptTags, doc, 'script', '', mlScript);
 			} else {
@@ -65,6 +79,7 @@ export var sandboxEvents = function init() {
 		scriptTags.forEach(function (tag) {
 			doc.head.appendChild(tag);
 		});
+		console.log( "Rendered document.");
 
 	});
 };

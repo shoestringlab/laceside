@@ -26,9 +26,9 @@ export var Home = function Home(props) {
   home.on( "rendered", function(){
 	
 	const imageArray = [
-		'/img/laceside-userhome.png',
-		'/img/laceside-js-editing.png',
-		'/img/laceside-sidebar.png'
+		'/img/userhome.png',
+		'/img/ide.png',
+		'/img/profile.png'
 	];
 	
 	const lb = constructor( lightbox, [ document.getElementById("homeLightbox"), {images: imageArray, featherPath: "/lib/feather-icons", time: 10000 }], true );

@@ -17,11 +17,11 @@ export var libraryEvents = function init() {
 				libraries.push(library);
 				a7.model.set("libraryList", libraries);
 
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: library, offset: 0, activeTab:"userLibs" });
-
 				utils.showNotice("New library saved.");
-
 			});
+			// update the app list and library list 
+			a7.ui.getView('userApps').fireEvent("mustRender");
+			a7.ui.getView('userLibs').fireEvent("mustRender");
 	});
 
 	a7.events.subscribe("library.update", function (obj) {
@@ -41,8 +41,10 @@ export var libraryEvents = function init() {
 					}
 				}
 				a7.model.set("libraryList", libraries);
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: library, offset: 0 });
 				utils.showNotice("Library saved.");
+				// update the app list and library list 
+				a7.ui.getView('userApps').fireEvent("mustRender");
+				a7.ui.getView('userLibs').fireEvent("mustRender");
 			});
 	});
 
@@ -55,25 +57,21 @@ export var libraryEvents = function init() {
 			.then(function (json) {
 				if (json) {
 					var libraries = a7.model.get("libraryList");
-
-					var deleted = libraries.find(function (library, idx) {
-						if (library.libraryID === parseInt(obj.libraryID, 10)) {
-							libraries.splice(idx, 1);
-							return true;
-						}
-					});
+					var deleted = libraries.filter( library => library.libraryID !== obj.libraryID );
 				}
 
-				a7.model.set("libraryList", libraries);
-				a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, offset: 0 });
-
+				a7.model.set("libraryList", deleted);
+				//update userlibs
+				
+				a7.ui.getView('userLibs').setState( a7.ui.getView('userLibs').getBaseState() );
 				utils.showNotice("Library deleted.");
+				// update the app list and library list 
+				a7.ui.getView('userApps').fireEvent("mustRender");
+				//a7.ui.getView('userLibs').fireEvent("mustRender");
 			});
 	});
 
 	a7.events.subscribe("library.new", function (obj) {
-		let libsState = a7.ui.getView('libraries').getState();
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: libsState.offset });
 	});
 
 };

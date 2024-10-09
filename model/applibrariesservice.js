@@ -21,8 +21,8 @@ export var applibrariesservice = (function () {
 		create: function (appID, libraryID) {
 			return (dao.create(appID, libraryID));
 		},
-		delete: function (appID, libraryID) {
-			return (dao.delete(appID, libraryID));
+		delete: function (appID, libraryID, userID ) {
+			return (dao.delete(appID, libraryID, userID ));
 		}
 	};
 

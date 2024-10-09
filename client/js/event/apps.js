@@ -10,24 +10,17 @@ function setEditorValue(cm, text) {
 
 export var appEvents = function init() {
 
-	a7.events.subscribe("apps.show", function (obj) {
-		if (obj.userID && obj.userID == a7.model.get("user").userID) {
-			//let state = a7.ui.getView('apps').getState();
-			//state.visible = true;
-			//a7.ui.getView('apps').setState(state);
-			a7.ui.getView('apps').components.modal.open();
-		}
-	});
 
 	a7.events.subscribe("apps.create", function (obj) {
-		let args = Object.assign({}, obj);
-		args.name = obj.name || "New App";
-		args.jsCode = a7.model.get("jsCode") || "";
-		args.htmlCode = a7.model.get("htmlCode") || "";
-		args.cssCode = a7.model.get("cssCode") || "";
-		args.esModule = a7.model.get('esModule') || 0;
-		args.libraries = (a7.model.get("activeLibraries") ? a7.model.get("activeLibraries").map(library => library.libraryID).join(",") : "");
-		a7.remote.invoke("apps.create", args)
+		//let args = Object.assign({}, obj);
+		let app = obj;
+		
+		app.jsCode = "";
+		app.htmlCode = "";
+		app.cssCode = "";
+		app.esModule = 0;
+		app.libraries = "";
+		a7.remote.invoke("apps.create", app)
 			.then(function (response) {
 				// get json response and pass to handler to resolve
 				return response.json();
@@ -39,23 +32,19 @@ export var appEvents = function init() {
 				apps.push(app);
 				a7.model.set("appList", apps);
 				a7.model.set("app", app);
-
-				//a7.ui.getView('apps').setState({ apps: apps, app: app, offset: 0 });
-
-				a7.ui.getView('userHome').setState({ apps: apps, offset: 0, showNewAppForm: false, activeTab: "userApps" });
+				let state = a7.ui.getView('userApps').getBaseState();
+				state.app = app;	
+				a7.ui.getView('userApps').setState( state );
 				utils.showNotice("The application was saved.");
+				// update the app list and library list 
+				//a7.ui.getView('userApps').fireEvent("mustRender");
+				a7.ui.getView('userLibs').fireEvent("mustRender");
 			});
 	});
 
 	a7.events.subscribe("apps.update", function (obj) {
-		let args = Object.assign({}, obj);
-		args.name = obj.name || a7.model.get("app").name;
-		args.jsCode = a7.model.get("jsCode") || "";
-		args.htmlCode = a7.model.get("htmlCode") || "";
-		args.cssCode = a7.model.get("cssCode") || "";
-		args.esModule = a7.model.get('esModule');
-		args.libraries = (a7.model.get("activeLibraries") ? a7.model.get("activeLibraries").map(library => library.libraryID).join(",") : "");
-		a7.remote.invoke("apps.update", args)
+
+		a7.remote.invoke("apps.update", obj)
 			.then(function (response) {
 				// get json response and pass to handler to resolve
 				return response.json();
@@ -71,12 +60,16 @@ export var appEvents = function init() {
 					}
 				}
 				a7.model.set("appList", apps);
-				//a7.ui.getView('apps').setState({ apps: a7.model.get("appList"), app: app, offset: 0 });
 				let mode = ui.getMode();
 
 				utils.showNotice("The application was saved.", mode);
+
 				if (mode === 'userhome') {
 					a7.router.open("/");
+				}else{
+					// update the app list and library list 
+					a7.ui.getView('userApps').fireEvent("mustRender");
+					a7.ui.getView('userLibs').fireEvent("mustRender");
 				}
 			});
 	});
@@ -88,8 +81,7 @@ export var appEvents = function init() {
 		let appLibs = app.libraries.split(",").map(libID => libID);
 		let activeLibs = (app.libraries ? libraries.filter(lib => appLibs.indexOf(lib.libraryID) >= 0) : []);
 		a7.model.set("app", app);
-		a7.model.set("esModule", app.esModule);
-		a7.model.set("activeLibraries", activeLibs);
+
 		setEditorValue(a7.ui.getView('jseditor').components.editor, app.jsCode);
 		setEditorValue(a7.ui.getView('htmleditor').components.editor, app.htmlCode);
 		setEditorValue(a7.ui.getView('csseditor').components.editor, app.cssCode);
@@ -101,11 +93,7 @@ export var appEvents = function init() {
 			div.setAttribute("style", "height:" + (height - 65) + "px !important");
 		});
 
-		let appsState = a7.ui.getView('apps').getState();
-		let libsState = a7.ui.getView('libraries').getState();
 		a7.ui.getView('buttonbar').setState({ esModule: app.esModule });
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList"), library: { libraryID: 0, name: "", link: "" }, activeLibraries: activeLibs, offset: libsState.offset });
-		//a7.ui.getView('apps').setState({ apps: a7.model.get("appList"), app: app, offset: appsState.offset });
 		a7.events.publish("menu.update", { user: a7.model.get("author"), app: app });
 		a7.events.publish("sandbox.execute", {});
 	});
@@ -119,25 +107,34 @@ export var appEvents = function init() {
 			.then(function (json) {
 				if (json) {
 					var apps = a7.model.get("appList");
+					
+					var deleted = apps.filter( app => app.appID !== obj.appID );
+					console.dir( app );
+					console.dir( deleted );
 
-					var deleted = apps.find(function (app, idx) {
-						if (app.appID === obj.appID) {
-							apps.splice(idx, 1);
-							return true;
-						}
-					});
+					a7.model.set("appList", deleted);
 				}
-				let currentApp = a7.model.get("app");
-				a7.model.set("appList", apps);
-				// update top bar breadcrumb
+				
+				// update userApps page 
+				let state = a7.ui.getView("userApps").getState();
+				state.app = { appID: 0 };
+				a7.ui.getView( "userApps" ).setState( state );
+
+ 				// update top bar breadcrumb
 				a7.events.publish("menu.update", { user: a7.model.get("user") });
 				a7.events.publish("apps.new", {});
-				//a7.ui.getView('apps').setState( { apps: a7.model.get( "apps" ), app: { appID: 0, name: '' }, offset: 0 } );
 				utils.showNotice("The application was deleted.");
+				
+				let currentApp = a7.model.get("app");
+
 				// go to the user homepage if the deleted app was the open app
 				if (currentApp.appID === obj.appID) {
+					a7.model.set( "app", {appID: 0} );
 					a7.router.open('/u/' + a7.model.get("user").username);
 				}
+				// update the app list and library list 
+				a7.ui.getView('userApps').fireEvent("mustRender");
+				a7.ui.getView('userLibs').fireEvent("mustRender");
 			});
 	});
 
@@ -148,14 +145,7 @@ export var appEvents = function init() {
 			setEditorValue(a7.ui.getView('csseditor').components.editor, "");
 			a7.ui.getView('buttonbar').setState({ esModule: 0 });
 		}
-		a7.model.set("jsCode", "");
-		a7.model.set("cssCode", "");
-		a7.model.set("htmlCode", "");
-		a7.model.set("esModule", 0);
-		a7.model.set("activeLibraries", []);
 
-		a7.ui.getView('libraries').setState({ libraries: a7.model.get("libraryList") || [], library: { libraryID: 0, name: "", link: "" }, activeLibraries: a7.model.get("activeLibraries"), offset: 0 });
-		//a7.ui.getView('apps').setState({ apps: a7.model.get("appList") || [], app: { appID: 0, name: "" }, offset: 0 });
 		a7.events.publish("sandbox.execute", {});
 		a7.events.publish("menu.update", { user: a7.model.get("user") });
 	});

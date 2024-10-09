@@ -2,6 +2,7 @@
 import {a7} from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 import {events} from '/js/app.events.js';
+import {appLibraryEvents} from '/js/event/applibraries.js';
 import {appEvents} from '/js/event/apps.js';
 import {authEvents} from '/js/event/auth.js';
 import {libraryEvents} from '/js/event/libraries.js';
@@ -13,6 +14,7 @@ import {userEvents} from '/js/event/user.js';
 import {auth} from '/js/app.auth.js';
 import {main} from '/js/app.main.js';
 import {ui} from '/js/app.ui.js';
+import * as applibraries from '/js/remote/applibraries.js';
 import * as libraries from '/js/remote/libraries.js';
 import * as apps from '/js/remote/apps.js';
 import * as profile from '/js/remote/profile.js';
@@ -27,6 +29,7 @@ var app = {
 	auth: auth,
 	remote: {
 	apps: apps,
+	applibraries: applibraries,
 	libraries: libraries,
 	profile: profile,
 	user: user
@@ -37,6 +40,7 @@ var app = {
 
 //initialize pub/sub events
 events();
+appLibraryEvents();
 appEvents();
 authEvents();
 libraryEvents();

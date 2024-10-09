@@ -35,7 +35,7 @@ export var authEvents = function () {
 	a7.events.subscribe("auth.failed", function (obj) {
 		let loginForm = a7.ui.getView("loginForm");
 		let message = `Login failed. <a name="forgot" data-onclick="forgotPassword"> Forgot your password?</a>`;
-		loginForm.setState(Object.assign(lf.getState(), { message: message }));
+		loginForm.setState(Object.assign(loginForm.getState(), { message: message }));
 		a7.router.open("/auth/showlogin");
 	});
 
@@ -46,11 +46,7 @@ export var authEvents = function () {
 
 			a7.ui.views['header'].setState({ user: a7.model.get("user") });
 			a7.events.publish("profile.setProfile", { user: a7.model.get("user") });
-			//a7.ui.views['userHome'].setState( { user: a7.model.get( "user" ), apps: ( a7.model.get( "apps" ) || [] ) } );
-			a7.ui.views['apps'].setState({ apps: [], app: { appID: 0, name: "" } });
-			a7.ui.views['libraries'].setState({ libraries: [], library: { libraryID: 0, name: "", link: "" } });
 			a7.events.publish("menu.update", { user: a7.model.get("author") });
-			//ui.setLayout( 'home' );
 			a7.router.open("/");
 		});
 	});

@@ -24,13 +24,16 @@ export var applibrariesdao = (function () {
 					});
 			});
 		},
-		delete: function (appID, libraryID) {
+		delete: function ( appID, libraryID, userID ) {
 			return new Promise(function (resolve, reject) {
 				pool.getConnection()
 					.then(connection => {
 						connection.query(`DELETE FROM appLibraries
 								WHERE appID = ?
-								AND libraryID = ?`, [appID, libraryID])
+								AND libraryID = ?
+								AND appID = (SELECT appID from apps WHERE userID = ? AND appID = ?)
+								
+								`, [ appID, libraryID, userID, appID ])
 							.then((results) => {
 								connection.end();
 								resolve(true); // successful delete

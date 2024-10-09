@@ -34,8 +34,6 @@ export var profileEvents = function init() {
 
 	a7.events.subscribe("profile.setProfile", function (obj) {
 		a7.ui.getView('profile').fireEvent("mustRender");
-/* 		let currentState = a7.ui.getView('profile').getState();
-		a7.ui.getView('profile').setState({ user: obj.user, visible: currentState.visible, activeTab: currentState.activeTab }); */
 	});
 
 	a7.events.subscribe("profile.update", function (obj) {

@@ -2,8 +2,6 @@ import { a7 } from '/lib/altseven/dist/a7.js';
 import { ui } from '/js/app.ui.js';
 import { main } from '/js/app.main.js';
 import * as utils from '/js/app.utils.js';
-import { UserHome } from '/js/view/userhome.js';
-import { Profile } from '/js/view/profile.js';
 
 export var events = function init() {
 	//  this event is called when /u/:username/:appID is called by the router

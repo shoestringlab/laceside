@@ -70,8 +70,8 @@ export var main = (function () {
 						{ label: 'Home', path: '/' }
 					];
 					Menu({ id: 'menu', menuItems: menuItems, selector: "#headerLeft" });
-					Libraries({ id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } });
-					Apps({ id: 'apps', selector: "#apps" });
+					//Libraries({ id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } });
+					//Apps({ id: 'apps', selector: "#apps" });
 					Tabs({ id: 'tabs', selector: "#editors" });
 					Console({ id: 'console', consoleText: '', selector: "#console" });
 					Home({ id: 'home', selector: "#home" });
