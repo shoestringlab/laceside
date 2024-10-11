@@ -30,9 +30,7 @@ export var main = (function () {
 			a7.ui.setSelector('appsModal', "#appsModal");
 			a7.ui.setSelector('librariesModal', "#librariesModal");
 			a7.ui.setSelector('secureDiv', "#secure");
-
 			a7.ui.setSelector('app', "#app");
-
 			a7.ui.setSelector('userHome', "#userHome");
 			a7.ui.setSelector('home', "#home");
 			a7.ui.setSelector('message', "#message");
@@ -51,11 +49,11 @@ export var main = (function () {
 					a7.model.set( "user", user );
 
 					// set default author until we check the route
-					a7.model.set( "author", user );
+					//a7.model.set( "author", user );
+					
 					// default empty appList
 					a7.model.set( "appList", [] );
 					a7.model.set( "libraryList", [] );
-
 
 					a7.model.set( "app", { appID: 0, name: "" } );
 					// render the initial views of the application
@@ -70,12 +68,10 @@ export var main = (function () {
 						{ label: 'Home', path: '/' }
 					];
 					Menu({ id: 'menu', menuItems: menuItems, selector: "#headerLeft" });
-					//Libraries({ id: 'libraries', selector: "#libraries", library: { libraryID: 0, name: "", link: "" } });
-					//Apps({ id: 'apps', selector: "#apps" });
+
 					Tabs({ id: 'tabs', selector: "#editors" });
 					Console({ id: 'console', consoleText: '', selector: "#console" });
 					Home({ id: 'home', selector: "#home" });
-
 					Profile({ id: 'profile', selector: "#profile" });
 					UserHome({ id: 'userHome', selector: "#userHome", apps: [] });
 					Header({ id: 'header', selector: "#headerRight" });

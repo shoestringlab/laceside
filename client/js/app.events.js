@@ -8,7 +8,7 @@ export var events = function init() {
 	a7.events.subscribe("ide.show", function (obj) {
 		ui.setLayout("ide");
 
-		a7.remote.invoke("user.getByUsername", obj)
+		a7.remote.invoke("user.getUserByUsername", obj)
 			.then(function (response) {
 				// get json response and pass to handler to resolve
 				return response.json();

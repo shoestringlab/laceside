@@ -17,5 +17,5 @@ var update = function (obj) {
 		})
 	};
 
-	return a7.remote.fetch("/api/userprofile/" + obj.userID, params, true);
+	return a7.remote.fetch("/api/user/" + obj.userID + "/profile", params, true);
 };

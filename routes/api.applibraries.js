@@ -8,7 +8,7 @@ export var applibraries = (function () {
 		init: function (app) {
 			var jsonParser = bodyParser.json();
 
-			// create a new app
+			// create a new applibrary connection
 			app.post("/api/applibraries", jsonParser, applibrariescontroller.create);
 
 			//delete an app

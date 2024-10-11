@@ -25,6 +25,52 @@ export var usergateway = (function () {
 					});
 			});
 		},
+		//public profile access
+		getUserByUsername: function (username) {
+			return new Promise(function (resolve, reject) {
+				pool.getConnection()
+					.then(connection => {
+						connection.query(`SELECT u.userID, u.username, u.firstName, u.lastName, u.dateCreated, u.nickName, up.profilePic
+                              FROM users u
+                              JOIN userProfile up on u.userID = up.userID
+                              WHERE u.username = ?`, [username])
+							.then((results) => {
+								connection.end();
+								resolve(results);
+							})
+							.catch(err => {
+								connection.end();
+								reject(err);
+							});
+					})
+					.catch(err => {
+						reject(err);
+					});
+			});
+		},
+		//public profile access
+		getUserByUseID: function (userID) {
+			return new Promise(function (resolve, reject) {
+				pool.getConnection()
+					.then(connection => {
+						connection.query(`SELECT u.userID, u.username, u.firstName, u.lastName, u.dateCreated, u.nickName, up.profilePic
+								FROM users u
+								JOIN userProfile up on u.userID = up.userID
+								WHERE u.userID = ?`, [userID])
+							.then((results) => {
+								connection.end();
+								resolve(results);
+							})
+							.catch(err => {
+								connection.end();
+								reject(err);
+							});
+					})
+					.catch(err => {
+						reject(err);
+					});
+			});
+		},
 		getByUsername: function (username) {
 			return new Promise(function (resolve, reject) {
 				pool.getConnection()

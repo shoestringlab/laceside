@@ -10,12 +10,17 @@ export var userEvents = function init() {
 				// get json response and pass to handler to resolve
 				return response.json();
 			})
-			.then(function (user) {
-				a7.ui.getView("signupForm").components.modal.close();
-				let mState = a7.ui.getView("message").getState();
-				mState.message = "Your account has been created. Please confirm your email address to start using the site.";
-				a7.ui.getView("message").setState(mState);
-				a7.ui.getView("message").components.modal.open();
+			.then(function (response) {
+				if( response.success ){
+					a7.ui.getView("signupForm").components.modal.close();
+					let mState = a7.ui.getView("message").getState();
+					mState.message = "Your account has been created. Please confirm your email address to start using the site.";
+					a7.ui.getView("message").setState(mState);
+					a7.ui.getView("message").components.modal.open();
+				}else{
+					console.log( response.error );
+				}
+
 			});
 	});
 
@@ -89,6 +94,24 @@ export var userEvents = function init() {
 					a7.events.publish("apps.load", obj);
 				}
 				a7.ui.getView('userApps').fireEvent("mustRender");
+			});
+	});
+
+	a7.events.subscribe("user.checkPassword", function (obj) {
+		a7.remote.invoke("user.checkPassword", obj)
+			.then(function (response) {
+				// get json response and pass to handler to resolve
+				return response.json();
+			})
+			.then(function (valid) {
+				let profile = a7.ui.getView("profile");
+				let dv = profile.element.querySelector("#currentPasswordMatches");
+				let html = `<img src="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/png/check-8x.png" title="check.png" height="20">`;
+				if (!valid) {
+					html = `<img src="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/png/x-8x.png" title="x.png" height="20">`;
+				}
+				dv.innerHTML = html;
+				profile.setState(Object.assign(profile.getState(), { currentPasswordMatches: valid }));
 			});
 	});
 

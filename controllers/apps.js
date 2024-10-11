@@ -1,6 +1,7 @@
 
 import {appsservice as service}  from '../model/appsservice.js';
 import {applibrariesservice} from '../model/applibrariesservice.js';
+import {createId} from '@paralleldrive/cuid2';
 
 export var apps = {
 
@@ -55,7 +56,8 @@ export var apps = {
  },
 
   create: function( request, response){
-    service.create( request.body.appID, request.user.userID, request.body.name, request.body.jsCode, request.body.htmlCode, request.body.cssCode, request.body.esModule, request.body.libraries )
+	let appID = createId();
+	service.create( appID, request.user.userID, request.body.name, request.body.jsCode, request.body.htmlCode, request.body.cssCode, request.body.esModule, request.body.libraries )
       .then( function( results ){
         service.read( request.body.appID )
           .then( function( app ){

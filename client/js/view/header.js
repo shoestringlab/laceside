@@ -15,7 +15,6 @@ export var Header = function Header(props) {
 			});
 		},
 		showProfile: function () {
-			//a7.events.publish( 'profile.show' );
 			let user = a7.model.get("user");
 			a7.router.open('/u/' + user.username + '/profile', { userID: user.userID });
 		},

@@ -10,6 +10,7 @@ import { lintKeymap } from '@codemirror/lint';
 import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
+import * as utils from '/js/app.utils.js';
 
 export var Editor = function Editor(props) {
 	const editor = a7.components.Constructor(a7.components.View, [props], true);
@@ -60,13 +61,17 @@ export var Editor = function Editor(props) {
 				minimalSetup.push(css());
 				break;
 		}
+		const debouncedUpdate = utils.debounce( function(update){
+			// update the model
+			let app = a7.model.get("app");
+			app[props.modelKey] = update.state.doc.toString();
+			a7.model.set( "app", app );
+		}, 3000 );
 
 		let extensions = [minimalSetup,
 			EditorView.updateListener.of((viewUpdate) => {
 				if (viewUpdate.docChanged) {
-					let app = a7.model.get("app");
-					app[props.modelKey] = viewUpdate.state.doc.toString();
-					a7.model.set( "app", app );
+					debouncedUpdate(viewUpdate);
 				}
 			}),
 			EditorView.lineWrapping

@@ -9,35 +9,20 @@ export var users = (function () {
 		init: function (app) {
 			var jsonParser = bodyParser.json();
 
-			// send reset email
-			app.post("/api/user/sendresetemail", jsonParser, usercontroller.sendResetEmail);
-
-			// get a password reset object
-			app.get("/api/user/passwordreset/:ID", usercontroller.getPasswordReset);
-
-			// update the password
-			app.put("/api/user/passwordreset/:ID", jsonParser, usercontroller.resetPassword);
-
-			// create a new user
-			app.post("/api/user/:ID", jsonParser, usercontroller.create);
+			// get current user
+			app.get("/api/user", usercontroller.getCurrentUser);
 
 			// get a user by ID
 			app.get("/api/user/:ID", usercontroller.read);
 
-			// update password
-			app.put("/api/user/:ID/changePassword", jsonParser, usercontroller.changePassword);
-
 			//update a user
 			app.put("/api/user/:ID", jsonParser, usercontroller.update);
 
-			//delete a user
-			//  app.delete( "/api/user/:ID", usercontroller.delete );
+			// check a user password
+			app.post("/api/user/:ID/checkPassword", jsonParser, usercontroller.checkPassword);
 
-			// confirm a user
-			app.put("/api/userconfirmation/:ID", usercontroller.confirmUser);
-
-			// get all users
-			app.get("/api/users", usercontroller.getAll);
+			// update password
+			app.put("/api/user/:ID/changePassword", jsonParser, usercontroller.changePassword);
 
 			// get apps by userID
 			app.get("/api/user/:ID/apps", appcontroller.getByUserID);
@@ -45,17 +30,38 @@ export var users = (function () {
 			// get libraries for a user
 			app.get("/api/user/:ID/libraries", librarycontroller.getByUserID);
 
-			// check if an email address is in the system
-			app.get("/api/email/:emailAddress", usercontroller.getEmailAddress);
+			//update a user profile
+			app.put("/api/user/:ID/profile", jsonParser, userprofilecontroller.update);
 
-			// get current user
-			app.get("/api/u/user", usercontroller.getCurrentUser);
+			//delete a user
+			//  app.delete( "/api/user/:ID", usercontroller.delete );
+
+			// public methods start with /api/u/
+
+
+			// send reset email
+			app.post("/api/u/sendresetemail", jsonParser, usercontroller.sendResetEmail);
+
+			// get a password reset object
+			app.get("/api/u/passwordreset/:ID", usercontroller.getPasswordReset);
+
+			// update the password
+			app.put("/api/u/passwordreset/:ID", jsonParser, usercontroller.resetPassword);
+
+			// confirm a user
+			app.put("/api/u/userconfirmation/:ID", usercontroller.confirmUser);
+
+			// get all users
+			//app.get("/api/users", usercontroller.getAll);
+
+			// check if an email address is in the system
+			app.get("/api/u/email/:emailAddress", usercontroller.getEmailAddress);
+
+			// create a new user
+			app.post("/api/u", jsonParser, usercontroller.create);
 
 			// get a user by ID
-			app.get("/api/u/username/:username", usercontroller.getByUsername);
-
-			// check a user password
-			app.post("/api/u/username/:username/checkPassword", jsonParser, usercontroller.checkPassword);
+			app.get("/api/u/username/:username", usercontroller.getUserByUsername);
 
 		}
 	}

@@ -8,7 +8,7 @@ export var userprofiles = (function () {
 			var jsonParser = bodyParser.json();
 
 			//update a user profile
-			app.put("/api/userprofile/:ID", jsonParser, userprofilecontroller.update);
+			app.put("/api/user/profile/:ID", jsonParser, userprofilecontroller.update);
 		}
 	}
 })();

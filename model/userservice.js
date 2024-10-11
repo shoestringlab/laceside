@@ -21,6 +21,14 @@ export var userservice = (function() {
     getByUsername: function( username ){
       return( gateway.getByUsername( username ) );
     },
+	//public method call
+	getUserByUsername: function( username ){
+		return( gateway.getUserByUsername( username ) );
+	},
+	//public method call
+	getUserByUserID: function( userID ){
+		return( gateway.getUserByUserID( userID ) );
+	},
     getEmailAddress: function( emailAddress ){
       return( gateway.getEmailAddress( emailAddress) );
     },

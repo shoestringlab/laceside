@@ -1,5 +1,7 @@
 import { librariesservice } from '../model/librariesservice.js';
 import { applibrariesservice } from '../model/applibrariesservice.js';
+import {createId} from '@paralleldrive/cuid2';
+
 export var libraries = (function () {
 	return {
 		getLibraries: function (request, response) {
@@ -27,7 +29,10 @@ export var libraries = (function () {
 		},
 
 		create: function (request, response) {
-			librariesservice.create(request.body.libraryID, request.user.userID, request.body.link, request.body.name)
+			
+			let libraryID = createId();
+
+			librariesservice.create(libraryID, request.user.userID, request.body.link, request.body.name)
 				.then(function (results) {
 					//we are reading back the inserted row
 					librariesservice.read(results)

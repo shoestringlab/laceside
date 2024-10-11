@@ -1,5 +1,4 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
-import { cuid } from '/libs/cuid/index.mjs';
 
 export { create, read, update, deleteById };
 
@@ -14,7 +13,6 @@ var create = function (obj) {
 			'Content-Type': 'application/json; charset=utf-8'
 		},
 		body: JSON.stringify({
-			libraryID: cuid(),
 			name: obj.name,
 			link: obj.link
 		})

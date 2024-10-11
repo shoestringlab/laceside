@@ -5,10 +5,10 @@ import { utils } from '../model/utils.js';
 import { emailConfig } from "../config/emailconfig.js";
 import { siteConfig } from "../config/siteconfig.js";
 import crypto from 'crypto';
+import { createId } from '@paralleldrive/cuid2';
 
 
-
-function sendConfirmationMail(user, userConfirmationID) {
+async function sendConfirmationMail(user, userConfirmationID) {
 	let message = {};
 	message.plainText = `Please confirm your email address.
 
@@ -33,8 +33,13 @@ function sendConfirmationMail(user, userConfirmationID) {
 	let to = user.emailAddress;
 	let subject = 'Please confirm you email address.';
 
-	utils.sendEmail(to, from, subject, message)
-		.catch(console.error);
+	let sent = await utils.sendEmail(to, from, subject, message);
+
+	return sent;
+	/* .then( function( results ){
+
+	})
+	.catch(console.error); */
 }
 
 function sendResetMessage(emailAddress, resetID) {
@@ -52,7 +57,19 @@ function sendResetMessage(emailAddress, resetID) {
 	let subject = 'Password reset request.';
 
 	utils.sendEmail(to, from, subject, message)
+		.then()
 		.catch(console.error);
+}
+
+function readUser( userID, response ){
+	userservice.read(userID)
+		.then(function (results) {
+			response.send(JSON.stringify(results));
+		})
+		.catch(function (error) {
+			console.log(error);
+			response.send(JSON.stringify(error));
+		});
 }
 
 export var users = (function () {
@@ -61,6 +78,38 @@ export var users = (function () {
 			userservice.getAll()
 				.then(function (results) {
 					response.send(JSON.stringify(results));
+				})
+				.catch(function (error) {
+					console.log(error);
+					response.send(JSON.stringify(error));
+				});
+		},
+		// public user call
+		getUserByUsername: function (request, response) {
+			userservice.getUserByUsername(request.params.username)
+				.then(function (results) {
+
+					if (request.query.returnType !== undefined && request.query.returnType === 'boolean') {
+						response.send(JSON.stringify(results.length));
+					} else {
+						let user = results[0];
+
+						response.send(JSON.stringify(user));
+					}
+				})
+				.catch(function (error) {
+					console.log(error);
+					response.send(JSON.stringify(error));
+				});
+		},
+
+		// public user call
+		getUserByUserID: function (request, response) {
+			userservice.getUserByUserID(request.params.ID)
+				.then(function (results) {
+
+					let user = results[0];
+					response.send(JSON.stringify(user));
 				})
 				.catch(function (error) {
 					console.log(error);
@@ -76,8 +125,7 @@ export var users = (function () {
 						response.send(JSON.stringify(results.length));
 					} else {
 						let user = results[0];
-						// remove the hash from the token so we don't send it outside the system
-						delete user.hash;
+
 						response.send(JSON.stringify(user));
 					}
 				})
@@ -125,49 +173,49 @@ export var users = (function () {
 
 		create: function (request, response) {
 			//if( request.params.ID === request.user.userID ){
-			userservice.create(request.params.ID, request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress)
+			let userID = createId();
+			userservice.create(userID, request.body.username, request.body.password, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress)
 				.then(function (results) {
 					// email the user
 
 					//we are reading back the inserted row
 					userservice.read(results.userID)
-						.then(function (user) {
-							sendConfirmationMail(user, results.userConfirmationID);
-
-							response.send(JSON.stringify(user));
+						.then(async function (user) {
+							//let sent = await 
+							sendConfirmationMail(user, results.userConfirmationID)
+								.then(function (sendResult) {
+									console.dir(sendResult);
+									response.send(JSON.stringify({ success: true, user: user }));
+								})
+								.catch(function (error) {
+									response.send(JSON.stringify({ success: false, error: error }));
+								});
 						})
 						.catch(function (error) {
 							console.log(error);
-							response.send(JSON.stringify(error));
+							response.send(JSON.stringify({ success: false, error: error }));
 						});
 				})
 				.catch(function (error) {
 					console.log(error);
-					response.send(JSON.stringify(error));
+					response.send(JSON.stringify({ success: false, error: error }));
 				});
 			/* }else{
 			  response.setHeader( "Status", "401" );
 			  response.send("Not authorized" );
 			} */
 		},
-
+		// read a user record by ID
 		read: function (request, response) {
-			userservice.read(request.params.ID)
-				.then(function (results) {
-					// anon request
-					if (request.user === undefined) {
-						delete (results['hash']);
-						delete (results['emailAddress']);
-					}
-
-					response.send(JSON.stringify(results));
-				})
-				.catch(function (error) {
-					console.log(error);
-					response.send(JSON.stringify(error));
-				});
+			//read the full record for the current user
+			if (request.params.ID === request.user.userID) {
+				readUser( request.params.ID, response );
+			} else {
+				// if the current user is not the requested user, only get public profile data
+				this.getUserByUserID(request, response);
+			}
 		},
-
+		// update the current user's information
 		update: function (request, response) {
 			if (request.params.ID === request.user.userID) {
 				userservice.update(request.params.ID, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress)
@@ -191,7 +239,7 @@ export var users = (function () {
 				response.send("Not authorized");
 			}
 		},
-
+		// delete a user by ID
 		delete: function (request, response) {
 			if (request.params.ID === request.user.userID) {
 				userservice.delete(request.params.ID)
@@ -207,6 +255,7 @@ export var users = (function () {
 				response.send("Not authorized");
 			}
 		},
+		// confirm a user by userConfirmationID
 		confirmUser: function (request, response) {
 			userservice.confirmUser(request.params.ID)
 				.then(function (success) {
@@ -217,41 +266,49 @@ export var users = (function () {
 					response.send(JSON.stringify(error));
 				});
 		},
+		// get the current logged in user
 		getCurrentUser: function (request, response) {
-			userservice.read(request.user.userID)
-				.then(function (results) {
-					response.send(JSON.stringify(results));
-				})
-				.catch(function (error) {
-					console.log(error);
-					response.send(JSON.stringify(error));
-				});
+			readUser( request.user.userID, response );
 		},
+		// check the current logged in user's password
 		checkPassword: function (request, response) {
-			userservice.getByUsername(request.params.username)
-				.then(function (results) {
-					let valid = false;
-					if (results.length) {
-						let hash = crypto.pbkdf2Sync(request.body.currentPassword, results[0].salt, 1000, 64, `sha512`).toString(`hex`);
-						valid = (hash === results[0].hash);
-					}
-					response.send(JSON.stringify(valid));
-				})
-				.catch(function (error) {
-					console.log(error);
-					response.send(JSON.stringify(error));
-				});
+			if (request.params.ID === request.user.userID) {
+				userservice.read(request.user.userID)
+					.then(function (results) {
+						let valid = false;
+						if (results.length) {
+							let hash = crypto.pbkdf2Sync(request.body.currentPassword, results[0].salt, 1000, 64, `sha512`).toString(`hex`);
+							valid = (hash === results[0].hash);
+						}
+						response.send(JSON.stringify(valid));
+					})
+					.catch(function (error) {
+						console.log(error);
+						response.send(JSON.stringify(error));
+					});
+			} else {
+				response.setHeader("Status", "401");
+				response.send("Not authorized");
+			}
 		},
+		// change the current logged in user's password
 		changePassword: function (request, response) {
-			userservice.changePassword(request.params.ID, request.body.newPassword)
-				.then(function (results) {
-					response.send(JSON.stringify(results));
-				})
-				.catch(function (error) {
-					console.log(error);
-					response.send(JSON.stringify(error));
-				});
+			if (request.params.ID === request.user.userID) {
+				userservice.changePassword(request.params.ID, request.body.newPassword)
+					.then(function (results) {
+						response.send(JSON.stringify(results));
+					})
+					.catch(function (error) {
+						console.log(error);
+						response.send(JSON.stringify(error));
+					});
+			} else {
+				response.setHeader("Status", "401");
+				response.send("Not authorized");
+			}
+
 		},
+		// reset a user's password using a code sent by email
 		resetPassword: function (request, response) {
 			passwordresetservice.getUserByResetID(request.params.ID)
 				.then(function (user) {

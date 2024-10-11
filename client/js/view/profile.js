@@ -49,20 +49,7 @@ export var Profile = function Profile(props) {
 		checkCurrentPassword: function (event) {
 			profile.skipRender = true;
 			let user = a7.model.get( "user" );
-			a7.remote.invoke("user.checkPassword", { username: user.username, currentPassword: event.currentTarget.value })
-				.then(function (response) {
-					// get json response and pass to handler to resolve
-					return response.json();
-				})
-				.then(function (valid) {
-					let dv = profile.element.querySelector("#currentPasswordMatches");
-					let html = `<img src="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/png/check-8x.png" title="check.png" height="20">`;
-					if (!valid) {
-						html = `<img src="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/png/x-8x.png" title="x.png" height="20">`;
-					}
-					dv.innerHTML = html;
-					profile.setState(Object.assign(profile.getState(), { currentPasswordMatches: valid }));
-				});
+			a7.events.publish( "user.checkPassword", { userID: user.userID, currentPassword: event.currentTarget.value } );
 		},
 		checkPasswordStrength: function (event) {
 			profile.skipRender = true;
