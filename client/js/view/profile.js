@@ -123,6 +123,7 @@ export var Profile = function Profile(props) {
                   <div><button name="save" type="button" data-onclick="updateUser">Save Changes</button>
                   <button name="discard" type="button" data-onclick="discardChanges">Discard</button></div>
                 </div>
+				<div style="margin-top:3em;" id="pTab1Notice"></div>
               </div>
             </div>
             <div id="pTab2">
@@ -146,6 +147,7 @@ export var Profile = function Profile(props) {
                   <div><button name="save" type="button" data-onclick="changePassword">Save Changes</button>
                   <button name="discard" type="button" data-onclick="discardChanges">Discard</button></div>
                 </div>
+				<div style="margin-top:3em;" id="pTab2Notice"></div>
               </div>
             </div>
       			<div id="pTab3">
@@ -153,6 +155,7 @@ export var Profile = function Profile(props) {
                 <div id="profilePicUploadDiv"></div>
                 <div class="right-align"><img style="max-width:300px;" src="${user.profilePic || '/img/profilepics/anon.png'}"/></div>
               </div>
+			  <div style="margin-top:3em;" id="pTab3Notice"></div>
             </div>
       		</div>
       	</div>

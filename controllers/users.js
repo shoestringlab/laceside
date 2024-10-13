@@ -179,7 +179,7 @@ export var users = (function () {
 					// email the user
 
 					//we are reading back the inserted row
-					userservice.read(results.userID)
+					userservice.getByUserID(results.userID)
 						.then(async function (user) {
 							//let sent = await 
 							sendConfirmationMail(user, results.userConfirmationID)
@@ -221,9 +221,9 @@ export var users = (function () {
 				userservice.update(request.params.ID, request.body.firstName, request.body.lastName, request.body.nickName, request.body.emailAddress)
 					.then(function (user) {
 						//we are reading back the updated row
-						userservice.read(request.params.ID)
+						userservice.getByUserID(request.params.ID)
 							.then(function (user) {
-								response.send(JSON.stringify(user));
+								response.send(JSON.stringify({ sucess: true, user: user }));
 							})
 							.catch(function (error) {
 								console.log(error);

@@ -49,7 +49,7 @@ export var usergateway = (function () {
 			});
 		},
 		//public profile access
-		getUserByUseID: function (userID) {
+		getUserByUserID: function (userID) {
 			return new Promise(function (resolve, reject) {
 				pool.getConnection()
 					.then(connection => {
@@ -79,6 +79,28 @@ export var usergateway = (function () {
                               FROM users u
                               JOIN userProfile up on u.userID = up.userID
                               WHERE u.username = ?`, [username])
+							.then((results) => {
+								connection.end();
+								resolve(results);
+							})
+							.catch(err => {
+								connection.end();
+								reject(err);
+							});
+					})
+					.catch(err => {
+						reject(err);
+					});
+			});
+		},
+		getByUserID: function (userID) {
+			return new Promise(function (resolve, reject) {
+				pool.getConnection()
+					.then(connection => {
+						connection.query(`SELECT u.userID, u.username, u.firstName, u.lastName, u.dateCreated, u.nickName, u.emailAddress, up.profilePic
+								FROM users u
+								JOIN userProfile up on u.userID = up.userID
+								WHERE u.userID = ?`, [userID])
 							.then((results) => {
 								connection.end();
 								resolve(results);

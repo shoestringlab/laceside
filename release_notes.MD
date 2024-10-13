@@ -1,3 +1,16 @@
+
+v 2.0.0-release 
+==================
+
+cleans up the code overhaul started for 2.0.0. 
+
+- URL routes have been cleaned up and divided between open and secured (logged in) routes,
+- The application now does a better job of not sending sensitive data back to the client, even on secured routes.
+- Over application flow has been simplified and  standardized.
+- The application has been re-worked to be access through a web server proxy. 
+
+
+
 2.0.0-beta
 ==================
 

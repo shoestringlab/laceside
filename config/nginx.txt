@@ -1,0 +1,113 @@
+server {
+        listen 80;
+
+        server_name laceside.local;
+
+        root /home/rmunn/git/laceside/client;
+        index index.html index.js;
+
+        disable_symlinks off;
+
+        include mime.types;
+        types
+        {
+                application/javascript mjs;
+        }
+
+        # kill cache
+        add_header Last-Modified $date_gmt;
+        add_header Cache-Control 'no-store, no-cache';
+        if_modified_since off;
+        expires off;
+        etag off;
+
+        location /js/ {
+                 add_header Access-Control-Allow-Origin "*";
+                add_header Access-Control-Allow-Credentials "true";
+                add_header Access-Control-Allow-Methods "GET, PUT, POST, DELETE, PATCH, OPTIONS";
+                add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+                add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+        }
+
+        location /css/ {
+            alias /home/rmunn/git/laceside/client/css/;
+            add_header Access-Control-Allow-Origin "*";
+            add_header Access-Control-Allow-Credentials "true";
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+            add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+        }
+
+        location /img/ {
+            alias /home/rmunn/git/laceside/client/img/;
+            add_header Access-Control-Allow-Origin "*";
+            add_header Access-Control-Allow-Credentials "true";
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+            add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+        }
+
+        location /lib/ {
+            alias /home/rmunn/git/laceside/node_modules/;
+            add_header Access-Control-Allow-Origin "*";
+            add_header Access-Control-Allow-Credentials "true";
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+            add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+       }
+
+     location /libs/ {
+            alias /home/rmunn/git/laceside/libs/;
+            add_header Access-Control-Allow-Origin "*";
+            add_header Access-Control-Allow-Credentials "true";
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+            add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+       }
+
+       location /api/ {
+            autoindex on;
+            #add_header Access-Control-Allow-Origin "*";
+            add_header Access-Control-Allow-Credentials "true";
+            #add_header Access-Control-Allow-Methods "GET, PUT, POST, DELETE, PATCH, OPTIONS";
+            #add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+            add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+
+
+            # add_header Access-Control-Allow-Headers *;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Server $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+
+            proxy_pass http://127.0.0.1:4100/api/;
+            proxy_redirect off;
+
+       }
+
+        location / {
+                add_header Access-Control-Allow-Origin "*";
+                add_header Access-Control-Allow-Credentials "true";
+                add_header Access-Control-Allow-Methods "GET, PUT, POST, DELETE, PATCH, OPTIONS";
+                add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Token";
+                add_header Access-Control-Expose-Headers "Origin, Authorization, X-Token";
+
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-Host $host;
+                proxy_set_header X-Forwarded-Server $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+
+                proxy_pass http://127.0.0.1:4100/;
+                proxy_redirect off;
+        }
+}
+
+

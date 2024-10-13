@@ -29,6 +29,9 @@ export var userservice = (function() {
 	getUserByUserID: function( userID ){
 		return( gateway.getUserByUserID( userID ) );
 	},
+	getByUserID: function( userID ){
+		return( gateway.getByUserID( userID ) );
+	},
     getEmailAddress: function( emailAddress ){
       return( gateway.getEmailAddress( emailAddress) );
     },

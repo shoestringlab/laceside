@@ -57,6 +57,7 @@ export var interceptor = (function () {
 							valid = true;
 							// remove the password hash from the token so we don't send it outside the system
 							delete user.hash;
+							delete user.salt;
 
 							// this call sets a user into the request
 							request.user = user;

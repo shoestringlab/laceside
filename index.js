@@ -18,7 +18,6 @@ import {auth} from './routes/api.auth.js';
 import {files} from './routes/api.files.js';
 import {applibraries} from './routes/api.applibraries.js';
 import {libraries} from './routes/api.libraries.js';
-import {userprofiles} from './routes/api.userprofiles.js';
 import {users} from './routes/api.users.js';
 
 //init routes
@@ -27,7 +26,6 @@ apps.init( app );
 files.init( app );
 applibraries.init( app );
 libraries.init( app );
-userprofiles.init( app );
 users.init( app );
 
 // default route

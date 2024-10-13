@@ -22,17 +22,8 @@ var formatDate = function( dateString, format ){
   return dateStr;
 },
 
-showNotice = function( message ){
-  /* constructor( bubble, [document.querySelector( "#headerMiddle" ),
-    message,
-    {
-      position: "middle center",
-      class: "bubbleClass",
-      closable : true,
-      autoClose: true,
-      autoCloseDelay: 3000,
-      featherPath: '/lib/feather-icons'
-    }]); */
+showNotice = function( message, selector ){
+
 	document.getElementById("headerMiddle").innerHTML = message;
 	setTimeout( ()=>{
 		document.getElementById("headerMiddle").innerHTML = '';

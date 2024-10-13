@@ -37,7 +37,7 @@ export var userEvents = function init() {
 	});
 
 	a7.events.subscribe("user.show", function (obj) {
-		a7.remote.invoke("user.getByUsername", obj)
+		a7.remote.invoke("user.getUserByUsername", obj)
 			.then(function (response) {
 				// get json response and pass to handler to resolve
 				return response.json();
@@ -123,7 +123,7 @@ export var userEvents = function init() {
 			})
 			.then(function (success) {
 				if (success) {
-					utils.showNotice("Password changed.");
+					utils.showNotice("Password changed.", "#pTab2Notice");
 					let profile = a7.ui.getView("profile");
 					let updated = { passwordIsValid: false, passwordMatches: false, currentPasswordMatches: false };
 					profile.setState(Object.assign(profile.getState(), updated));
@@ -181,7 +181,7 @@ export var userEvents = function init() {
 					rpf.setState({ passwordIsValid: false, passwordMatches: false, resetID: 0, message: "" });
 					rpf.components.modal.close();
 
-					utils.showNotice("Password reset successful.");
+					utils.showNotice("Password reset successful.", "#headerMiddle");
 					let msg = a7.ui.getView("message");
 					msg.setState({ message: "Your password has been reset. You may now login using your new password." });
 					msg.components.modal.open();

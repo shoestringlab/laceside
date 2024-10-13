@@ -1,6 +1,6 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 
-export { getCurrentUser, getByUsername, getUserLibraries, getUserApps, checkEmail, sendResetEmail, checkUsername, checkPassword, changePassword, getPasswordReset, resetPassword, create, update, confirm };
+export { getCurrentUser, getUserByUsername, getUserLibraries, getUserApps, checkEmail, sendResetEmail, checkUsername, checkPassword, changePassword, getPasswordReset, resetPassword, create, update, confirm };
 // SECURED METHODS - require a logged in user, and in some cases only the current user 
 var getCurrentUser = function (obj) {
 	var params = { method: 'GET' };
@@ -14,7 +14,8 @@ var getCurrentUser = function (obj) {
 		let params = { method: 'GET' };
 		return a7.remote.fetch("/api/user/" + obj.user.userID + "/apps", params, true);
 	},
-	getByUsername = function (obj) {
+	// open route, so this call returns onl public data
+	getUserByUsername = function (obj) {
 		var params = { method: 'GET' };
 		return a7.remote.fetch("/api/u/username/" + obj.username, params, true);
 	},

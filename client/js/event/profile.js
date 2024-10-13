@@ -13,7 +13,7 @@ export var profileEvents = function init() {
 			a7.ui.getView('profile').setState(state);
 			a7.ui.getView('profile').components.modal.open();
 		} else {
-			a7.remote.invoke("user.getByUsername", obj)
+			a7.remote.invoke("user.getUserByUsername", obj)
 				.then(function (response) {
 					return response.json();
 				})
@@ -42,10 +42,12 @@ export var profileEvents = function init() {
 				// get json response and pass to handler to resolve
 				return response.json();
 			})
-			.then(function (success) {
-				if (success) {
-					utils.showNotice("Profile saved.");
+			.then(function (json) {
+				if (json.success) {
+					utils.showNotice("Profile saved.", "#pTab1Notice");
 					a7.events.publish("profile.refreshProfile");
+				}else{
+					utils.showNotice("Profile not saved.", "#pTab1Notice");
 				}
 			});
 	});

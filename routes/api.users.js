@@ -1,6 +1,8 @@
 import { interceptor } from '../interceptors/httpinterceptor.js';
 import { apps as appcontroller } from "../controllers/apps.js";
 import { libraries as librarycontroller } from "../controllers/libraries.js";
+import { userprofiles as userprofilecontroller } from "../controllers/userprofiles.js";
+
 import { users as usercontroller } from "../controllers/users.js";
 import bodyParser from 'body-parser';
 

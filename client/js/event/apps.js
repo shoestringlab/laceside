@@ -35,7 +35,7 @@ export var appEvents = function init() {
 				let state = a7.ui.getView('userApps').getBaseState();
 				state.app = app;	
 				a7.ui.getView('userApps').setState( state );
-				utils.showNotice("The application was saved.");
+				utils.showNotice("The application was saved.", "#headerMiddle");
 				// update the app list and library list 
 				//a7.ui.getView('userApps').fireEvent("mustRender");
 				a7.ui.getView('userLibs').fireEvent("mustRender");
@@ -62,7 +62,7 @@ export var appEvents = function init() {
 				a7.model.set("appList", apps);
 				let mode = ui.getMode();
 
-				utils.showNotice("The application was saved.", mode);
+				utils.showNotice("The application was saved.", "#headerMiddle");
 
 				if (mode === 'userhome') {
 					a7.router.open("/");
@@ -123,7 +123,7 @@ export var appEvents = function init() {
  				// update top bar breadcrumb
 				a7.events.publish("menu.update", { user: a7.model.get("user") });
 				a7.events.publish("apps.new", {});
-				utils.showNotice("The application was deleted.");
+				utils.showNotice("The application was deleted.", "#headerMiddle");
 				
 				let currentApp = a7.model.get("app");
 

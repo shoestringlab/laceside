@@ -17,7 +17,7 @@ export var libraryEvents = function init() {
 				libraries.push(library);
 				a7.model.set("libraryList", libraries);
 
-				utils.showNotice("New library saved.");
+				utils.showNotice("New library saved.", "#headerMiddle");
 			});
 			// update the app list and library list 
 			a7.ui.getView('userApps').fireEvent("mustRender");
@@ -41,7 +41,7 @@ export var libraryEvents = function init() {
 					}
 				}
 				a7.model.set("libraryList", libraries);
-				utils.showNotice("Library saved.");
+				utils.showNotice("Library saved.", "#headerMiddle");
 				// update the app list and library list 
 				a7.ui.getView('userApps').fireEvent("mustRender");
 				a7.ui.getView('userLibs').fireEvent("mustRender");
@@ -64,7 +64,7 @@ export var libraryEvents = function init() {
 				//update userlibs
 				
 				a7.ui.getView('userLibs').setState( a7.ui.getView('userLibs').getBaseState() );
-				utils.showNotice("Library deleted.");
+				utils.showNotice("Library deleted.", "#headerMiddle");
 				// update the app list and library list 
 				a7.ui.getView('userApps').fireEvent("mustRender");
 				//a7.ui.getView('userLibs').fireEvent("mustRender");

@@ -27,8 +27,9 @@ export var auth = {
 				}
 				if (valid) {
 					let user = results[0];
-					// remove the hash from the token so we don't send it outside the system
+					// remove the hash and salt from the token so we don't send it outside the system
 					delete user.hash;
+					delete user.salt;
 					response.setHeader("X-Token", utils.generateToken(user));
 					response.send({ user: user, success: true });
 				} else {
