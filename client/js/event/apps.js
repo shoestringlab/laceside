@@ -1,15 +1,9 @@
 import { a7 } from '/lib/altseven/dist/a7.js';
 import * as utils from '/js/app.utils.js';
 import { ui } from '/js/app.ui.js';
-
-function setEditorValue(cm, text) {
-	cm.dispatch({
-		changes: { from: 0, to: cm.state.doc.length, insert: text }
-	});
-}
+import { download } from '/js/app.download.js';
 
 export var appEvents = function init() {
-
 
 	a7.events.subscribe("apps.create", function (obj) {
 		//let args = Object.assign({}, obj);
@@ -81,10 +75,13 @@ export var appEvents = function init() {
 		let appLibs = app.libraries.split(",").map(libID => libID);
 		let activeLibs = (app.libraries ? libraries.filter(lib => appLibs.indexOf(lib.libraryID) >= 0) : []);
 		a7.model.set("app", app);
+		let JSEditor = a7.ui.getView('jseditor');
+		let cssEditor = a7.ui.getView('csseditor');
+		let HTMLEditor = a7.ui.getView('htmleditor');
 
-		setEditorValue(a7.ui.getView('jseditor').components.editor, app.jsCode);
-		setEditorValue(a7.ui.getView('htmleditor').components.editor, app.htmlCode);
-		setEditorValue(a7.ui.getView('csseditor').components.editor, app.cssCode);
+		JSEditor.setEditorValue(app.jsCode);
+		HTMLEditor.setEditorValue(app.htmlCode);
+		cssEditor.setEditorValue(app.cssCode);
 
 		let editorSize = a7.model.get("editorSize");
 		let height = editorSize.height;
@@ -140,9 +137,17 @@ export var appEvents = function init() {
 
 	a7.events.subscribe("apps.new", function (obj) {
 		if (a7.ui.getView('jseditor') !== undefined && a7.ui.getView('jseditor').components.editor) {
-			setEditorValue(a7.ui.getView('jseditor').components.editor, "");    //.viewState.state.update({changes: {from: 0, to: state.doc.length, insert: ""}});
+/* 			setEditorValue(a7.ui.getView('jseditor').components.editor, "");    //.viewState.state.update({changes: {from: 0, to: state.doc.length, insert: ""}});
 			setEditorValue(a7.ui.getView('htmleditor').components.editor, "");
-			setEditorValue(a7.ui.getView('csseditor').components.editor, "");
+			setEditorValue(a7.ui.getView('csseditor').components.editor, ""); */
+			let JSEditor = a7.ui.getView('jseditor');
+			let cssEditor = a7.ui.getView('csseditor');
+			let HTMLEditor = a7.ui.getView('htmleditor');
+	
+			JSEditor.setEditorValue("");
+			HTMLEditor.setEditorValue("");
+			cssEditor.setEditorValue("");
+	
 			a7.ui.getView('buttonbar').setState({ esModule: 0 });
 		}
 
@@ -151,8 +156,8 @@ export var appEvents = function init() {
 	});
 
 	a7.events.subscribe("apps.download", function (obj) {
-			
-		});
+		download();
+	});
 
 
 };

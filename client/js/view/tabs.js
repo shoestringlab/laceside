@@ -17,7 +17,7 @@ export var Tabs = function Tabs(props){
 							<use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#save"/>
 							</svg>
 						</a>
-						<a title="Download" name="save" data-onclick="DownloadApp">
+						<a title="Download" name="save" data-onclick="downloadApp">
 							<svg class="feather">
 							<use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#download"/>
 							</svg>
@@ -54,8 +54,7 @@ export var Tabs = function Tabs(props){
 
     tabs.components.tabs = constructor( gtabs, [ tabs.element.querySelector("#editorTabs"), {} ], true );
     tabs.components.tabs.on( "tabSelected", function( obj, activeTab ){
-      console.log( activeTab );
-      //a7.ui.getView( activeTab.toLowerCase() ).components.editor.refresh();
+
     });
 
     // add modLazy to the iframe so it renders correctly on first execution
@@ -137,6 +136,9 @@ export var Tabs = function Tabs(props){
 		} else {
 			a7.router.open('/u/' + user.username + '/app');
 		}
+	},
+	downloadApp: function( event ){
+		a7.events.publish("apps.download",{});
 	}
   };
 

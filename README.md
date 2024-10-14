@@ -11,13 +11,16 @@ An in-browser JavaScript Web Application IDE with live execution, console output
 
 ***About this version***
 
-v 2.0.0-release cleans up the code overhaul started for 2.0.0. 
+v 2.0.1
 
-- URL routes have been cleaned up and divided between open and secured (logged in) routes,
-- The application now does a better job of not sending sensitive data back to the client, even on secured routes.
-- Over application flow has been simplified and  standardized.
-- The application has been re-worked to be access through a web server proxy. 
+- Fixes the download button so you can download any JS app. The app is downloaded as a .zip archive with these files:
+    - app.js - JavaScript code
+	- app.css - CSS code
+	- app.html - HTML code
+	- index.html - the assembled web page, including any external libraries referenced. 
 
+- Enables opening the application directly to a JS app.
+- Adds a new database dump for the application.
 
 Requirements:
 

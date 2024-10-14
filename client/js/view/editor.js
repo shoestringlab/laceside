@@ -61,6 +61,7 @@ export var Editor = function Editor(props) {
 				minimalSetup.push(css());
 				break;
 		}
+
 		const debouncedUpdate = utils.debounce( function(update){
 			// update the model
 			let app = a7.model.get("app");
@@ -89,13 +90,20 @@ export var Editor = function Editor(props) {
 		EditorView.theme({
 			".cm-content, .cm-gutter": { minHeight: "300px" }
 		});
-
 	});
 
 	editor.eventHandlers = {
+
 	};
 
 	editor.template = ``;
+
+	editor.setEditorValue = function( text ){
+		//	editor.components.editor.state.update({changes: {from: 0, to: editor.components.editor.state.doc.length, insert: text}});
+		editor.components.editor.dispatch({
+			changes: { from: 0, to: editor.components.editor.state.doc.length, insert: text }
+		});
+	};
 
 	return editor;
 };
