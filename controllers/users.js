@@ -181,7 +181,7 @@ export var users = (function () {
 					userservice.getByUserID(results.userID)
 						.then(function (user) {
 							//let sent = await 
-							sendConfirmationMail(user[0], results.userConfirmationID)
+							sendConfirmationMail(user, results.userConfirmationID)
 								.then(function (sendResult) {
 									console.dir(sendResult);
 									response.send(JSON.stringify({ success: true, user: user }));

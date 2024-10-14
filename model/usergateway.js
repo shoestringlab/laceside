@@ -103,7 +103,7 @@ export var usergateway = (function () {
 								WHERE u.userID = ?`, [userID])
 							.then((results) => {
 								connection.end();
-								resolve(results);
+								resolve(results[0]);
 							})
 							.catch(err => {
 								connection.end();
