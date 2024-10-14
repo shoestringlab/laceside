@@ -32,7 +32,6 @@ async function sendConfirmationMail(user, userConfirmationID) {
 	let from = '"' + emailConfig.emailUser.name + '" ' + '<' + emailConfig.emailUser.emailaddress + '>';
 	let to = user.emailAddress;
 	let subject = 'Please confirm you email address.';
-
 	let sent = await utils.sendEmail(to, from, subject, message);
 
 	return sent;
@@ -180,9 +179,9 @@ export var users = (function () {
 
 					//we are reading back the inserted row
 					userservice.getByUserID(results.userID)
-						.then(async function (user) {
+						.then(function (user) {
 							//let sent = await 
-							sendConfirmationMail(user, results.userConfirmationID)
+							sendConfirmationMail(user[0], results.userConfirmationID)
 								.then(function (sendResult) {
 									console.dir(sendResult);
 									response.send(JSON.stringify({ success: true, user: user }));

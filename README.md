@@ -4,14 +4,16 @@ in-browser JavaScript IDE
 
 
 
-v 2.0.2
+v 2.0.3
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
 
 ***About this version***
 
-v 2.0.2
+v 2.0.3
+
+Bug fix for new user creation
 
 
 
