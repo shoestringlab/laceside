@@ -1,3 +1,10 @@
+v 2.0.5
+=================
+
+
+Bug fixes for new app creation, user creation.
+
+
 v 2.0.1
 =================
 

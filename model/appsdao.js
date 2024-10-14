@@ -58,7 +58,9 @@ export var appsdao = (function () {
                                   FROM appLibraries
                                   WHERE appID = ?`, [appID])
 									.then((nextResults) => {
-										results[0].libraries = nextResults.map(lib => lib.libraryID).join(",");
+										if(nextResults.length){
+											results[0].libraries = nextResults.map(lib => lib.libraryID).join(",");
+										}
 										connection.end();
 										resolve(results[0]);
 									})
