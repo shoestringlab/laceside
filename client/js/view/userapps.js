@@ -309,7 +309,7 @@ export var UserApps = function UserApps(props) {
 
 						//templ +=`<div class="row">`;
 						for( ix = 0; ix < libs.length; ix++ ){
-							if( state.app.libraries.indexOf( libs[ix].libraryID ) >= 0 ){
+							if( state.app.libraries !== undefined && state.app.libraries.indexOf( libs[ix].libraryID ) >= 0 ){
 								console.log(  libs[ix].libraryID + " included");
 								templ+=`<div class="row"><input name="libraryID" data-onclick="saveAppLibrary" type="checkbox" value="${libs[ix].libraryID}" checked>`;
 							}else{

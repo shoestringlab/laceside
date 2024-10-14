@@ -60,6 +60,8 @@ export var appsdao = (function () {
 									.then((nextResults) => {
 										if(nextResults.length){
 											results[0].libraries = nextResults.map(lib => lib.libraryID).join(",");
+										}else{
+											results[0].libraries = "";
 										}
 										connection.end();
 										resolve(results[0]);
