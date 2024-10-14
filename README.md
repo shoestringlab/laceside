@@ -4,12 +4,16 @@ in-browser JavaScript IDE
 
 
 
-v 2.0.0-release
+v 2.0.2
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
 
 ***About this version***
+
+v 2.0.2
+
+
 
 v 2.0.1
 
@@ -56,4 +60,4 @@ Optional
 ***Changing the User Password***
 
 
-*** There are now three users in the database, "user", "rmunn", and "robert". All use a password of "password". ***
+*** There is now one user in the database, "rmunn", password of "password". ***
