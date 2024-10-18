@@ -8,11 +8,11 @@ import crypto from 'crypto';
 import { createId } from '@paralleldrive/cuid2';
 
 
-async function sendConfirmationMail(user, userConfirmationID) {
+async function sendConfirmationMail(user, userConfirmationID, host) {
 	let message = {};
 	message.plainText = `Please confirm your email address.
 
-           This email address has been signed up for an account at ${siteConfig.host}
+           This email address has been signed up for an account at ${host}
 
            To confirm this account, please visit:
 
@@ -20,7 +20,7 @@ async function sendConfirmationMail(user, userConfirmationID) {
           `;
 	message.htmlText = `Dear ${user.firstName} ${user.lastName},
            <p>
-           This email address has been signed up for an account at ${siteConfig.host}
+           This email address has been signed up for an account at ${host}
            </p>
            <p>
            To confirm this account, please visit:
@@ -41,13 +41,13 @@ async function sendConfirmationMail(user, userConfirmationID) {
 	.catch(console.error); */
 }
 
-function sendResetMessage(emailAddress, resetID) {
+function sendResetMessage(emailAddress, resetID, host) {
 	let message = {};
-	message.plainText = `A request to reset your account password was made at ${siteConfig.host}.
+	message.plainText = `A request to reset your account password was made at ${host}.
         Go to the URL below to create a new password. This link will expire in one hour.
         ${siteConfig.passwordResetURI + resetID}
         `;
-	message.htmlText = `<p>A request to reset your account password was made at ${siteConfig.host}.</p>
+	message.htmlText = `<p>A request to reset your account password was made at ${host}.</p>
         <p>Go to the URL below to create a new password. This link will expire in one hour.</p>
         <p><a href="${siteConfig.passwordResetURI + resetID}">${siteConfig.passwordResetURI + resetID}</a></p>
         `;
@@ -89,9 +89,9 @@ export var users = (function () {
 				.then(function (results) {
 
 					if (request.query.returnType !== undefined && request.query.returnType === 'boolean') {
-						response.send(JSON.stringify(results.length));
+						response.send(JSON.stringify(results !==undefined));
 					} else {
-						let user = results[0];
+						let user = results;
 
 						response.send(JSON.stringify(user));
 					}
@@ -107,7 +107,7 @@ export var users = (function () {
 			userservice.getUserByUserID(request.params.ID)
 				.then(function (results) {
 
-					let user = results[0];
+					let user = results;
 					response.send(JSON.stringify(user));
 				})
 				.catch(function (error) {
@@ -123,7 +123,7 @@ export var users = (function () {
 					if (request.query.returnType !== undefined && request.query.returnType === 'boolean') {
 						response.send(JSON.stringify(results.length));
 					} else {
-						let user = results[0];
+						let user = results;
 
 						response.send(JSON.stringify(user));
 					}
@@ -137,7 +137,7 @@ export var users = (function () {
 		getEmailAddress: function (request, response) {
 			userservice.getEmailAddress(request.params.emailAddress)
 				.then(function (results) {
-					let exists = results.length;
+					let exists = (results !== undefined );
 					response.send(JSON.stringify(exists));
 				})
 				.catch(function (error) {
@@ -150,7 +150,7 @@ export var users = (function () {
 			passwordresetservice.create(request.body.emailAddress)
 				.then(function (resetID) {
 
-					sendResetMessage(request.body.emailAddress, resetID);
+					sendResetMessage(request.body.emailAddress, resetID, request.hostname);
 					response.send(JSON.stringify(true));
 				})
 				.catch(function (error) {
@@ -181,7 +181,7 @@ export var users = (function () {
 					userservice.getByUserID(results.userID)
 						.then(function (user) {
 							//let sent = await 
-							sendConfirmationMail(user, results.userConfirmationID)
+							sendConfirmationMail(user, results.userConfirmationID, request.hostname)
 								.then(function (sendResult) {
 									console.dir(sendResult);
 									response.send(JSON.stringify({ success: true, user: user }));
@@ -311,7 +311,7 @@ export var users = (function () {
 		resetPassword: function (request, response) {
 			passwordresetservice.getUserByResetID(request.params.ID)
 				.then(function (user) {
-					userservice.changePassword(user[0].userID, request.body.newPassword)
+					userservice.changePassword(user.userID, request.body.newPassword)
 						.then(function (results) {
 							// expire the reset request
 							passwordresetservice.update(request.params.ID)

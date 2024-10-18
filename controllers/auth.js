@@ -21,12 +21,12 @@ export var auth = {
 		userservice.getByUsername(username)
 			.then(function (results) {
 				let valid = false;
-				if (results.length) {
-					let hash = 	crypto.pbkdf2Sync(password, results[0].salt, 1000, 64, `sha512`).toString(`hex`);
-					valid = ( hash === results[0].hash );
+				if (results) {
+					let hash = 	crypto.pbkdf2Sync(password, results.salt, 1000, 64, `sha512`).toString(`hex`);
+					valid = ( hash === results.hash );
 				}
 				if (valid) {
-					let user = results[0];
+					let user = results;
 					// remove the hash and salt from the token so we don't send it outside the system
 					delete user.hash;
 					delete user.salt;

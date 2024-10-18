@@ -14,7 +14,7 @@ export var passwordresetgateway = (function(){
                               WHERE pr.resetID = ? and pr.expires > curdate()`, [resetID])
               .then( ( results ) =>{
                 connection.end();
-                resolve( results );
+                resolve( results[0] );
               })
               .catch( err =>{
                 //not connected

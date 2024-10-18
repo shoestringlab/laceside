@@ -29,7 +29,7 @@ export var applibraries = {
 	},
 
 	delete: function (request, response) {
-		appsservice.read(request.body.appID)
+		appsservice.read(request.params.appID)
 			.then(function (results) {
 				
 				if( results.userID === request.user.userID ){

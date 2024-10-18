@@ -1,3 +1,9 @@
+v 2.0.7
+=================
+
+- fix bug  in delete, request.params.appID
+- clean up model where query returns a single record so all queries work the same way
+
 v 2.0.5
 =================
 

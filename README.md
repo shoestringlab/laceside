@@ -2,31 +2,17 @@
 in-browser JavaScript IDE
 
 
-
-
-v 2.0.6
+v 2.0.7
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
 
 ***About this version***
 
-v 2.0.6
+v 2.0.7
 
-Bug fix for new app creation.
-
-
-
-v 2.0.1
-
-- Fixes the download button so you can download any JS app. The app is downloaded as a .zip archive with these files:
-    - app.js - JavaScript code
-	- app.css - CSS code
-	- app.html - HTML code
-	- index.html - the assembled web page, including any external libraries referenced. 
-
-- Enables opening the application directly to a JS app.
-- Adds a new database dump for the application.
+* fix bug  in delete, request.params.appID
+* clean up model where query returns a single record so all queries work the same way
 
 Requirements:
 
