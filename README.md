@@ -2,7 +2,7 @@
 in-browser JavaScript IDE
 
 
-v 2.0.11
+v 2.0.12
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
