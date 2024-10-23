@@ -1,3 +1,9 @@
+v 2.0.11
+=================
+
+* convert arrays to maps in handling apps and libraries.
+
+
 v 2.0.7
 =================
 

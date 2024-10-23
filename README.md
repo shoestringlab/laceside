@@ -2,17 +2,16 @@
 in-browser JavaScript IDE
 
 
-v 2.0.7
+v 2.0.11
 
 An in-browser JavaScript Web Application IDE with live execution, console output, and application display.
 
 
 ***About this version***
 
-v 2.0.7
+v 2.0.11
 
-* fix bug  in delete, request.params.appID
-* clean up model where query returns a single record so all queries work the same way
+* convert arrays to maps in handling apps and libraries.
 
 Requirements:
 
