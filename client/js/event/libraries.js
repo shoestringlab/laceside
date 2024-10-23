@@ -14,7 +14,8 @@ export var libraryEvents = function init() {
 			.then(function (json) {
 				var library = json;
 				var libraries = a7.model.get("libraryList");
-				libraries.push(library);
+				//libraries.push(library);
+				libraries.set( library.libraryID, library );
 				a7.model.set("libraryList", libraries);
 
 				utils.showNotice("New library saved.", "#headerMiddle");
@@ -34,12 +35,13 @@ export var libraryEvents = function init() {
 				var library = json;
 
 				var libraries = a7.model.get("libraryList");
-				for (var ix = 0; ix < libraries.length; ix++) {
+				libraries.set( library.libraryID, library );
+				/* for (var ix = 0; ix < libraries.size; ix++) {
 					if (libraries[ix].libraryID === library.libraryID) {
 						libraries[ix] = library;
 						break;
 					}
-				}
+				} */
 				a7.model.set("libraryList", libraries);
 				utils.showNotice("Library saved.", "#headerMiddle");
 				// update the app list and library list 
@@ -57,10 +59,10 @@ export var libraryEvents = function init() {
 			.then(function (json) {
 				if (json) {
 					var libraries = a7.model.get("libraryList");
-					var deleted = libraries.filter( library => library.libraryID !== obj.libraryID );
+					delete libraries[ obj.libraryID ];
 				}
 
-				a7.model.set("libraryList", deleted);
+				a7.model.set("libraryList", libraries);
 				//update userlibs
 				
 				a7.ui.getView('userLibs').setState( a7.ui.getView('userLibs').getBaseState() );

@@ -33,7 +33,7 @@ export var Paging = function Paging(props) {
 		let templ = ``;
 		let offset = parseInt(state.offset, 10);
 		a7.log.trace("paging offset: " + offset);
-		if (state.records.length > state.pageSize) {
+		if (state.records.size > state.pageSize) {
 			templ = `<div class="paging">`;
 			if (offset > 0) {
 				templ += `<span><a name="previousPage" data-onclick="page" data-offset="${Math.max(0, state.offset - state.pageSize)}">
@@ -43,9 +43,9 @@ export var Paging = function Paging(props) {
                   </a></span>`;
 			}
 
-			templ += `<span>${offset + 1}-${Math.min(offset + state.pageSize, state.records.length)} of ${state.records.length}</span>`;
-			if (state.offset + state.pageSize < state.records.length) {
-				templ += `<span><a name="nextPage" data-onclick="page" data-offset="${Math.min(state.records.length, offset + state.pageSize)}">
+			templ += `<span>${offset + 1}-${Math.min(offset + state.pageSize, state.records.size)} of ${state.records.size}</span>`;
+			if (state.offset + state.pageSize < state.records.size) {
+				templ += `<span><a name="nextPage" data-onclick="page" data-offset="${Math.min(state.records.size, offset + state.pageSize)}">
                   <svg class="feather">
                     <use xlink:href="/lib/feather-icons/dist/feather-sprite.svg#chevron-right"/>
                   </svg>

@@ -70,7 +70,12 @@ export var userEvents = function init() {
 				return response.json();
 			})
 			.then(function (json) {
-				a7.model.set("libraryList", json);
+				//a7.model.set("libraryList", new Map(json) );
+				let libraryList = new Map(Object.entries(json));
+				/* for( var id in json ){
+					libraryList[id] = json[id];
+				} */
+				a7.model.set("libraryList", libraryList );
 				// if appID was passed, this event came from ide.show and we need to load the app
 				if (obj.appID && a7.model.get("appList") !== undefined) {
 					a7.events.publish("apps.load", obj);
@@ -87,8 +92,12 @@ export var userEvents = function init() {
 			})
 			.then(function (json) {
 
-				a7.model.set("appList", json);
-
+				//a7.model.set("appList", new Map(json));
+				let appList = new Map(Object.entries(json));
+				/* for( var id in json ){
+					appList[id] = json[id];
+				} */
+				a7.model.set("appList", appList );
 				// if appID was passed, this event came from ide.show and we need to load the app
 				if (obj.appID && a7.model.get("libraryList") !== undefined) {
 					a7.events.publish("apps.load", obj);

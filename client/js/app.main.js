@@ -52,8 +52,8 @@ export var main = (function () {
 					//a7.model.set( "author", user );
 					
 					// default empty appList
-					a7.model.set( "appList", [] );
-					a7.model.set( "libraryList", [] );
+					a7.model.set( "appList", new Map() );
+					a7.model.set( "libraryList", new Map() );
 
 					a7.model.set( "app", { appID: 0, name: "" } );
 					// render the initial views of the application

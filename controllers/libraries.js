@@ -7,8 +7,14 @@ export var libraries = (function () {
 		getLibraries: function (request, response) {
 			librariesservice.getLibraries(request.user.userID)
 				.then(function (results) {
+					let libs = new Map();
+
+
+					results.forEach(result => {
+						libs[result.libraryID] = result;
+					});
 					response.setHeader("Cache-Control", "no-cache");
-					response.send(JSON.stringify(results));
+					response.send(JSON.stringify(libs));
 				})
 				.catch(function (error) {
 					console.log(error);
@@ -19,8 +25,13 @@ export var libraries = (function () {
 		getByUserID: function (request, response) {
 			librariesservice.getLibraries(request.params.ID)
 				.then(function (results) {
+					let libs = new Map();
+
+					results.forEach(result => {
+						libs[result.libraryID] = result;
+					});
 					response.setHeader("Cache-Control", "no-cache");
-					response.send(JSON.stringify(results));
+					response.send(JSON.stringify(libs));
 				})
 				.catch(function (error) {
 					console.log(error);

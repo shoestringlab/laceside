@@ -75,7 +75,8 @@ export var UserApps = function UserApps(props) {
 			let state = userApps.getState();
 			let id = event.currentTarget.getAttribute('data-id');
 			let appList = a7.model.get( "appList" );
-			let app = a7.model.get("appList").filter(application => application.appID === id)[0];
+			//let app = a7.model.get("appList").filter(application => application.appID === id)[0];
+			let app = appList.get(id);
 			state.app = app;
 			userApps.skipRender = false;
 			userApps.setState(state);
@@ -233,9 +234,9 @@ export var UserApps = function UserApps(props) {
 		
 		let offset = parseInt(state.offset, 10);
 
-		if (apps.length) {
-			for (var ix = offset; ix < Math.min(apps.length, state.offset + 10); ix++) {
-				let app = apps[ix];
+		let ix = 0;
+		apps.forEach(app => {
+			if( ix >=offset && ix <Math.min(apps.size, offset + 10) ){
 				if (state.app.appID === app.appID) {
 					//console.dir( app );
 					templ += `<div class="block flexrow link" data-id="${app.appID}" name="currentApp">`;
@@ -255,8 +256,9 @@ export var UserApps = function UserApps(props) {
 				}
 				templ += `</div>`;
 			}
-		}
-
+			ix++;
+		});
+			
 		templ += `</div>`;
 
 		if( state.app.appID !== 0 ){
@@ -308,7 +310,17 @@ export var UserApps = function UserApps(props) {
 						`;
 
 						//templ +=`<div class="row">`;
-						for( ix = 0; ix < libs.length; ix++ ){
+						libs.forEach( lib =>{
+							if( state.app.libraries !== undefined && state.app.libraries.indexOf( lib.libraryID ) >= 0 ){
+								console.log( lib.libraryID + " included");
+								templ+=`<div class="row"><input name="libraryID" data-onclick="saveAppLibrary" type="checkbox" value="${lib.libraryID}" checked>`;
+							}else{
+								templ+=`<div class="row"><input name="libraryID" data-onclick="saveAppLibrary" type="checkbox" value="${lib.libraryID}">`;
+							}
+							
+							templ+=`${lib.name}</div>`;
+						});
+						/* for( ix = 0; ix < libs.size; ix++ ){
 							if( state.app.libraries !== undefined && state.app.libraries.indexOf( libs[ix].libraryID ) >= 0 ){
 								console.log(  libs[ix].libraryID + " included");
 								templ+=`<div class="row"><input name="libraryID" data-onclick="saveAppLibrary" type="checkbox" value="${libs[ix].libraryID}" checked>`;
@@ -317,7 +329,7 @@ export var UserApps = function UserApps(props) {
 							}
 							
 							templ+=`${libs[ix].name}</div>`;
-						}						
+						}		 */				
 						
 		}
 

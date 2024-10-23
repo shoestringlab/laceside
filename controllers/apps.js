@@ -10,7 +10,7 @@ export var apps = {
         applibrariesservice
           .getByUserID(request.user.userID)
           .then(function (alResults) {
-            let appList = {};
+            let appList = new Map();
 
             results.forEach(function (result) {
               appList[result.appID] = result; // find the libraries used for each app
@@ -42,7 +42,7 @@ export var apps = {
         applibrariesservice
           .getByUserID(request.params.ID)
           .then(function (alResults) {
-            let appList = {};
+            let appList = new Map();
 
             results.forEach(function (result) {
               appList[result.appID] = result; // find the libraries used for each app

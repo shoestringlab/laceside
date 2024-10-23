@@ -20,8 +20,16 @@ export var appLibraryEvents = function init() {
 				let userApps = a7.ui.getView("userApps");
 				let state = userApps.getState();
 				let app = null;
+				app = apps.get( obj.appID );
+				let libs = [];
+				if( app.libraries.length )	
+					libs = app.libraries.split(",");
+
+				libs.push(obj.libraryID);
+				app.libraries = libs.toString();
+				state.app = app;
 				// update the libraries associated with the app
-				for (var ix = 0; ix < apps.length; ix++) {
+				/* for (var ix = 0; ix < apps.size; ix++) {
 					app = apps[ix];
 					if (app.appID === obj.appID) {
 						let libs = app.libraries.split(",");
@@ -29,7 +37,7 @@ export var appLibraryEvents = function init() {
 						app.libraries = libs.toString();
 						state.app = app;
 					}
-				}
+				} */
 				a7.model.set("appList", apps);
 				userApps.setState(state);
 			});
@@ -49,7 +57,12 @@ export var appLibraryEvents = function init() {
 				let state = userApps.getState();
 				let app = null;
 				// update the libraries associated with the app
-				for (var ix = 0; ix < apps.length; ix++) {
+				app = apps.get( obj.appID );
+				let libs = app.libraries.split(",");
+				libs.splice(libs.indexOf(obj.libraryID), 1);
+				app.libraries = libs.toString();
+				state.app = app;
+			/* 	for (var ix = 0; ix < apps.size; ix++) {
 					app = apps[ix];
 					if (app.appID === obj.appID) {
 						let libs = app.libraries.split(",");
@@ -57,7 +70,7 @@ export var appLibraryEvents = function init() {
 						app.libraries = libs.toString();
 						state.app = app;
 					}
-				}
+				} */
 				
 				a7.model.set("appList", apps);
 				userApps.setState(state);

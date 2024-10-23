@@ -23,7 +23,7 @@ export var appEvents = function init() {
 				var app = json;
 				//app.esModule = app.esModule.data[0];
 				var apps = a7.model.get("appList") || [];
-				apps.push(app);
+				apps.set( app.appID, app );
 				a7.model.set("appList", apps);
 				a7.model.set("app", app);
 				let state = a7.ui.getView('userApps').getBaseState();
@@ -47,12 +47,8 @@ export var appEvents = function init() {
 				var app = json;
 				//app.esModule = app.esModule.data[0];
 				var apps = a7.model.get("appList");
-				for (var ix = 0; ix < apps.length; ix++) {
-					if (apps[ix].appID === app.appID) {
-						apps[ix] = app;
-						break;
-					}
-				}
+				apps[app.appID] = app;
+
 				a7.model.set("appList", apps);
 				let mode = ui.getMode();
 
@@ -69,11 +65,9 @@ export var appEvents = function init() {
 	});
 
 	a7.events.subscribe("apps.load", function (obj) {
-		let app = a7.model.get("appList").filter(application => application.appID === obj.appID)[0];
+		let app  = a7.model.get("appList").get( obj.appID );
 		app = app || { appID: 0, name: "", libraries: "", jsCode: "", htmlCode: "", cssCode: "" };
-		let libraries = a7.model.get("libraryList");
-		let appLibs = app.libraries.split(",").map(libID => libID);
-		let activeLibs = (app.libraries ? libraries.filter(lib => appLibs.indexOf(lib.libraryID) >= 0) : []);
+		
 		a7.model.set("app", app);
 		let JSEditor = a7.ui.getView('jseditor');
 		let cssEditor = a7.ui.getView('csseditor');
@@ -104,12 +98,9 @@ export var appEvents = function init() {
 			.then(function (json) {
 				if (json) {
 					var apps = a7.model.get("appList");
-					
-					var deleted = apps.filter( app => app.appID !== obj.appID );
-					console.dir( app );
-					console.dir( deleted );
-
-					a7.model.set("appList", deleted);
+					delete apps[obj.appID];
+	
+					a7.model.set("appList", apps);
 				}
 				
 				// update userApps page 

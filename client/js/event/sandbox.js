@@ -10,7 +10,7 @@ export var sandboxEvents = function init() {
 		var jsCode = app.jsCode || '';
 		var htmlCode = app.htmlCode || '';
 		var cssCode = app.cssCode || '';
-		var activeLibraries = "";
+		var activeLibraries = [];
 
 		var doc = document.getElementById('iframe').contentWindow.document;
 		
@@ -42,9 +42,14 @@ export var sandboxEvents = function init() {
 			}
 			var activeLibIDs = a7.model.get("app").libraries;
 			var libraries = a7.model.get( "libraryList" );
-			if( activeLibIDs !== undefined ){
-				
-			activeLibraries = libraries.filter( library => activeLibIDs.indexOf( library.libraryID ) >= 0 );
+			let libIDArray = [];
+			if( activeLibIDs !== undefined && activeLibIDs !== ""){
+				libIDArray = activeLibIDs.split(",");
+				for( var id in libIDArray){
+					activeLibraries[id] = libraries.get(libIDArray[id]);
+				}
+			
+				//activeLibraries = libraries.filter( library => activeLibIDs.indexOf( library.libraryID ) >= 0 );
 			}
 			
 			var scriptTags = [];

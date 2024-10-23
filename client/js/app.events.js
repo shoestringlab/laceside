@@ -11,7 +11,7 @@ export var events = function init() {
 			let user = a7.model.get("user");
 			a7.model.set("author", user);
 			obj.user = user;
-			if (a7.model.get("appList").length === 0) {
+			if (a7.model.get("appList").size === 0) {
 				a7.events.publish("main.run", obj);
 			}
 			a7.events.publish("apps.load", obj);
@@ -24,7 +24,7 @@ export var events = function init() {
 			.then(function (user) {
 				a7.model.set("author", user);
 				obj.user = user;
-				if (a7.model.get("appList").length === 0) {
+				if (a7.model.get("appList").size === 0) {
 					a7.events.publish("main.run", obj);
 				}
 				a7.events.publish("apps.load", obj);

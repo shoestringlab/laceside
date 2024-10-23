@@ -38,8 +38,11 @@ export var UserLibs = function UserLibs(props) {
 			let state = userLibs.getState();
 			let id = event.currentTarget.getAttribute('data-id');
 			state.libraryID = id;
-			let libraryList = a7.model.get( "libraryList" );
-			let library = a7.model.get("libraryList").filter(library => library.libraryID === id)[0];
+			let libraryList = a7.model.get("libraryList");
+			//let library = a7.model.get("libraryList").filter(library => library.libraryID === id)[0];
+			let library = libraryList.get(id);
+			
+			//a7.model.get("libraryList")[id];
 			state.libName = library.name;
 			state.libLink = library.link;
 			state.library = library;
@@ -188,11 +191,10 @@ export var UserLibs = function UserLibs(props) {
 		}
 
 		let libOffset = parseInt(state.libOffset, 10);
-
-		if (libs.length) {
-			for (var ix = libOffset; ix < Math.min(libs.length, state.libOffset + 10); ix++) {
-				let lib = libs[ix];
-
+		
+		let ix = 0;
+		libs.forEach( lib => {
+			if( ix >= libOffset  && ix <Math.min(libs.size, libOffset + 10)){
 				if (state.libraryID === lib.libraryID) {
 					templ += `<div class="block flexrow link" data-id="${lib.libraryID}">`;
 					// library editing form
@@ -226,13 +228,17 @@ export var UserLibs = function UserLibs(props) {
 					templ += `${lib.name}`;
 				}
 				templ += `</div>`;
-
-				if (ix - libOffset === 9 && libs.length > 10) {
+				if (ix - libOffset === 9 && libs.size > 10) {
 					templ += `</div><div class="col">`;
 				}
 			}
-		}
 
+			ix++;
+		});
+				
+		/* 	}
+		}
+ */
 		templ += `</div><div name="libPaging" class="paging"></div>`;
 
 		Paging({ id: 'userLibsPaging', parentID: userLibs.props.id, selector: userLibs.props.selector + ' div[name="libPaging"]', records: libs, offset: libOffset, pageSize: 10 });
